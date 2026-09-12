@@ -1,0 +1,19 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-neutral-1000);
+  min-height: 100vh;
+}
+
+.body {
+  padding-bottom: var(--spacing-xl);
+}
+
+/* Vertical rhythm between in-flow sections (not the grid's own
+   column gutter, which is for the card grid inside each section). */
+.sections {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-56);
+  padding-top: var(--spacing-md);
+}

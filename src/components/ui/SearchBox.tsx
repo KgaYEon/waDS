@@ -1,7 +1,9 @@
-import { useState } from "react";
-import type { KeyboardEvent } from "react";
+import { useRef, useState } from "react";
+import type { FocusEvent, KeyboardEvent } from "react";
 import styles from "./SearchBox.module.css";
+import SearchResultsPanel from "./SearchResultsPanel";
 import { IconSearch } from "../icons";
+import { useRecentSearches } from "../../hooks/useRecentSearches";
 
 export interface SearchBoxProps {
   placeholder?: string;
@@ -18,13 +20,33 @@ export default function SearchBox({
 }: SearchBoxProps) {
   const [expanded, setExpanded] = useState(defaultExpanded);
   const [value, setValue] = useState("");
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const boxRef = useRef<HTMLDivElement>(null);
+  const recentSearches = useRecentSearches();
 
-  const submit = () => {
-    onSearch?.(value);
+  const submit = (term: string = value) => {
+    const trimmed = term.trim();
+    if (!trimmed) return;
+    recentSearches.add(trimmed);
+    setValue(trimmed);
+    onSearch?.(trimmed);
+    setDropdownOpen(false);
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") submit();
+    if (e.key === "Escape") setDropdownOpen(false);
+  };
+
+  // Closing on blur would also fire (and win the race) when the user is
+  // clicking a button inside the dropdown, so give focus a tick to land
+  // there first and only close if it didn't.
+  const handleBlur = (_e: FocusEvent<HTMLDivElement>) => {
+    window.setTimeout(() => {
+      if (!boxRef.current?.contains(document.activeElement)) {
+        setDropdownOpen(false);
+      }
+    }, 0);
   };
 
   if (!expanded) {
@@ -41,7 +63,11 @@ export default function SearchBox({
   }
 
   return (
-    <div className={[styles.box, className].filter(Boolean).join(" ")}>
+    <div
+      ref={boxRef}
+      className={[styles.box, className].filter(Boolean).join(" ")}
+      onBlur={handleBlur}
+    >
       <div className={styles.expanded}>
         <div className={styles.inputRow}>
           <input
@@ -51,18 +77,29 @@ export default function SearchBox({
             value={value}
             onChange={(e) => setValue(e.target.value)}
             onKeyDown={handleKeyDown}
+            onFocus={() => setDropdownOpen(true)}
           />
           <button
             type="button"
             className={styles.searchButton}
             aria-label="검색"
-            onClick={submit}
+            onClick={() => submit()}
           >
             <IconSearch size={32} className={styles.icon} />
           </button>
         </div>
         <hr className={styles.divider} />
       </div>
+
+      {dropdownOpen && (
+        <SearchResultsPanel
+          className={styles.dropdown}
+          recentSearches={recentSearches.items}
+          onSelect={(label) => submit(label)}
+          onRemove={(label) => recentSearches.remove(label)}
+          onClearAll={() => recentSearches.clear()}
+        />
+      )}
     </div>
   );
 }

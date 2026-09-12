@@ -1,5 +1,5 @@
 import styles from "./RecentSearchItem.module.css";
-import { IconIcon as IconInfo } from "../icons";
+import { IconClose } from "../icons";
 
 export interface RecentSearchItemProps {
   label: string;
@@ -19,7 +19,7 @@ export default function RecentSearchItem({ label, onSelect, onRemove }: RecentSe
         onClick={onRemove}
         aria-label="검색어 삭제"
       >
-        <IconInfo size={24} className={styles.icon} />
+        <IconClose size={24} className={styles.icon} />
       </button>
     </div>
   );

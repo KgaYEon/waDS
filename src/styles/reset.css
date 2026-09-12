@@ -1,0 +1,115 @@
+/**
+ * Global CSS reset.
+ *
+ * Kept separate from tokens.css (which only defines design values) and
+ * imported BEFORE it in src/main.tsx. Import order doesn't affect whether
+ * the var(--color-*) references below resolve (CSS custom properties
+ * resolve from the final cascade, not source order) — it's separated
+ * purely so "reset the browser defaults" and "our design tokens" stay
+ * two distinct concerns.
+ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  background-color: var(--color-neutral-1000);
+  color: var(--color-neutral-100);
+  font-family: var(--font-family-base);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeSpeed;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+figure,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+hr {
+  border: none;
+  margin: 0;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Form elements — strip native browser chrome (default borders,
+   backgrounds, fonts, platform-specific appearance) so every control
+   looks like our own design-system components unless a component's own
+   CSS class says otherwise. Component classes always win here: a plain
+   tag selector like `button` has lower specificity than any of our
+   `.button` / `.input` module classes, so this never overrides them. */
+button,
+input,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+/* Keep focus visible for keyboard users, but not the browser's mismatched
+   default ring for mouse clicks. Any component can still override this. */
+:focus-visible {
+  outline: 2px solid var(--color-primary-400);
+  outline-offset: 2px;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}

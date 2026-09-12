@@ -26,7 +26,12 @@
   flex-direction: column;
   gap: var(--space-12);
   align-items: stretch;
-  padding: var(--space-12) var(--space-94);
+  /* NOT --space-94 (that's the empty-state's centering padding, correct
+     only for a short centered message). With that much side padding here
+     the header row / item rows were squeezed into a sliver too narrow
+     for their own justify-content: space-between to show any separation
+     — it just looked like everything was centered. */
+  padding: var(--space-12) var(--space-16);
 }
 
 .resultsHead {

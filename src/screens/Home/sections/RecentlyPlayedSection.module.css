@@ -1,0 +1,37 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  width: 100%;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+}
+
+.heading {
+  font-family: var(--font-family-base);
+  font-size: var(--font-heading-3-size);
+  font-weight: var(--font-heading-3-weight);
+  line-height: var(--font-heading-3-line-height);
+  letter-spacing: var(--font-heading-3-letter-spacing);
+  color: var(--color-neutral-100);
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-16);
+}
+
+/* 5 cards per row — a fixed count, not the page's 12-column grid, so this
+   is its own grid; it still reuses the shared gutter token for spacing. */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--grid-gutter);
+  width: 100%;
+}

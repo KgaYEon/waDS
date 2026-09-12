@@ -1,13 +1,19 @@
+/*
+ * Header is a deliberate exception to the page layout grid: every other
+ * full-width section (Footer, Gamecont, screen content) gets its side
+ * margin from Container's --grid-margin (120px). Header instead keeps
+ * its own measured Figma padding (--space-48) — reverted back to this
+ * on request after the grid refactor, so don't "fix" it to use Container
+ * again without checking first.
+ */
 .header {
-  padding-block: var(--spacing-md);
-  background-color: var(--color-neutral-1000);
-  border-bottom: 1px solid var(--color-neutral-900);
-}
-
-.row {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: var(--space-48);
+  padding-block: var(--spacing-md);
+  background-color: var(--color-neutral-1000);
+  border-bottom: 1px solid var(--color-neutral-900);
 }
 
 .left {
@@ -37,20 +43,6 @@
   align-items: center;
   justify-content: flex-end;
   gap: var(--spacing-lg);
-}
-
-.searchButton {
-  display: inline-flex;
-  border: none;
-  background: transparent;
-  padding: 0;
-  cursor: pointer;
-  color: var(--color-neutral-100);
-}
-
-.searchIcon {
-  width: 32px;
-  height: 32px;
 }
 
 .profile {

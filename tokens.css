@@ -157,6 +157,14 @@
   --font-footer-copyright-line-height: 1.8;
   --font-footer-copyright-letter-spacing: 0;
 
+  /* Hero banner tagline — ad hoc, no matching Wa-text style (Medium 24px
+     with a tight 1.2 line-height and negative tracking; distinct from
+     Heading 3, which is Bold/24px/32 line-height). */
+  --font-hero-tagline-size: 24px;
+  --font-hero-tagline-weight: 500;
+  --font-hero-tagline-line-height: 1.2;
+  --font-hero-tagline-letter-spacing: -0.04em;
+
   /* ------------------------------------------------------------------ */
   /* Spacing                                                             */
   /* ------------------------------------------------------------------ */
@@ -183,6 +191,7 @@
   --space-22: 22px;
   --space-28: 28px;
   --space-36: 36px;
+  --space-39: 39px;
   --space-45: 45px;
   --space-48: 48px;
   --space-51: 51px;

@@ -1,0 +1,28 @@
+.dots {
+  display: flex;
+  align-items: center;
+}
+
+.dot {
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+}
+
+/* tone: light — used over a busy background image (hero banner) */
+.light {
+  background-color: var(--color-neutral-100);
+  opacity: 0.5;
+}
+.light.active {
+  opacity: 1;
+}
+
+/* tone: muted — used on the plain page background */
+.muted {
+  background-color: var(--color-neutral-600);
+}
+.muted.active {
+  background-color: var(--color-neutral-300);
+}

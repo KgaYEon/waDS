@@ -1,0 +1,24 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  width: 100%;
+}
+
+.heading {
+  font-family: var(--font-family-base);
+  font-size: var(--font-heading-3-size);
+  font-weight: var(--font-heading-3-weight);
+  line-height: var(--font-heading-3-line-height);
+  letter-spacing: var(--font-heading-3-letter-spacing);
+  color: var(--color-neutral-100);
+}
+
+/* Same 5-across card grid as RecentlyPlayedSection, just without
+   pagination — a static list instead of a carousel. */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--grid-gutter);
+  width: 100%;
+}
