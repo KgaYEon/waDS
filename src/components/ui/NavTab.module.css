@@ -1,0 +1,33 @@
+.tab {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--spacing-md);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-family: var(--font-family-base);
+  font-size: var(--font-navigation-size);
+  font-weight: var(--font-navigation-weight);
+  line-height: var(--font-navigation-line-height);
+  letter-spacing: var(--font-navigation-letter-spacing);
+  color: var(--color-neutral-100);
+  text-align: center;
+  transition: color 0.15s ease;
+}
+
+.tab:hover:not(:disabled) {
+  color: var(--color-neutral-300);
+}
+
+.tab[data-selected="true"] {
+  color: var(--color-primary-400);
+}
+
+.underline {
+  width: 100%;
+  height: 2px;
+  background-color: var(--color-primary-400);
+}

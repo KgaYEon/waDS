@@ -1,0 +1,33 @@
+.chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-12) var(--space-16);
+  border-radius: var(--radius-full);
+  border: 1px solid transparent;
+  font-family: var(--font-family-base);
+  font-size: var(--font-label-l-size);
+  font-weight: var(--font-label-l-weight);
+  line-height: var(--font-label-l-line-height);
+  letter-spacing: var(--font-label-l-letter-spacing);
+  text-align: center;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.solid {
+  background-color: var(--color-primary-400);
+  border-color: var(--color-primary-400);
+  color: var(--color-neutral-100);
+}
+
+.outline {
+  background-color: transparent;
+  border-color: var(--color-neutral-400);
+  color: var(--color-neutral-400);
+}
+.outline:hover:not(:disabled) {
+  border-color: var(--color-neutral-300);
+  color: var(--color-neutral-300);
+}

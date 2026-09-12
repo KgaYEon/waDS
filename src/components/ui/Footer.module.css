@@ -1,0 +1,108 @@
+.footer {
+  width: 100%;
+  padding-top: var(--space-120);
+  padding-bottom: var(--spacing-md);
+  background-color: var(--color-neutral-1000);
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-45);
+  width: 100%;
+}
+
+.contWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-14);
+  width: 100%;
+}
+
+.head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  width: 100%;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-22);
+}
+
+.logoMark {
+  width: 61px;
+  height: 28px;
+}
+
+.wordmark {
+  font-family: var(--font-family-base);
+  font-size: var(--font-footer-wordmark-size);
+  font-weight: var(--font-footer-wordmark-weight);
+  line-height: var(--font-footer-wordmark-line-height);
+  letter-spacing: var(--font-footer-wordmark-letter-spacing);
+  color: var(--color-neutral-300);
+}
+
+.navList {
+  display: flex;
+  align-items: center;
+  gap: var(--space-51);
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navLink {
+  font-family: var(--font-family-base);
+  font-size: var(--font-footer-nav-size);
+  font-weight: var(--font-footer-nav-weight);
+  line-height: var(--font-footer-nav-line-height);
+  letter-spacing: var(--font-footer-nav-letter-spacing);
+  text-transform: uppercase;
+  color: var(--color-neutral-400);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+.navLink:hover {
+  color: var(--color-neutral-100);
+}
+
+.tagline {
+  font-family: var(--font-family-base);
+  font-size: var(--font-footer-tagline-size);
+  font-weight: var(--font-footer-tagline-weight);
+  line-height: var(--font-footer-tagline-line-height);
+  letter-spacing: var(--font-footer-tagline-letter-spacing);
+  color: var(--color-neutral-600);
+  margin: 0;
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  border: none;
+  background-color: var(--color-neutral-700);
+  margin: 0;
+}
+
+.copyright {
+  font-family: var(--font-family-base);
+  font-size: var(--font-footer-copyright-size);
+  font-weight: var(--font-footer-copyright-weight);
+  line-height: var(--font-footer-copyright-line-height);
+  letter-spacing: var(--font-footer-copyright-letter-spacing);
+  color: var(--color-neutral-300);
+  margin: 0;
+  width: 100%;
+}

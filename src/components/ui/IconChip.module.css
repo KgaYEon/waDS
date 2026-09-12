@@ -1,0 +1,34 @@
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--spacing-xs) var(--space-12) var(--spacing-xs) var(--space-16);
+  border-radius: var(--radius-full);
+  border: none;
+  cursor: pointer;
+  background-color: var(--color-surface-subtle);
+  color: var(--color-neutral-1000);
+  transition: background-color 0.15s ease;
+}
+
+.chip:hover:not(:disabled) {
+  background-color: var(--color-neutral-300);
+}
+
+.chip:disabled {
+  cursor: not-allowed;
+}
+
+.label {
+  font-family: var(--font-family-base);
+  font-size: var(--font-label-m-size);
+  font-weight: var(--font-label-m-weight);
+  line-height: var(--font-label-m-line-height);
+  letter-spacing: var(--font-label-m-letter-spacing);
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}

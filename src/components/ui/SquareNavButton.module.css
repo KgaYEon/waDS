@@ -1,0 +1,27 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  padding: var(--space-12);
+  border-radius: var(--radius-sm);
+  border: 2px solid var(--color-neutral-600);
+  background-color: var(--color-neutral-1000);
+  color: var(--color-neutral-300);
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+}
+
+.button:hover:not(:disabled) {
+  border-color: var(--color-neutral-300);
+}
+
+.button:disabled {
+  cursor: not-allowed;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+}

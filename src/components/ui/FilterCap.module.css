@@ -1,0 +1,36 @@
+.cap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: var(--space-16);
+  border: none;
+  border-radius: var(--radius-8);
+  background-color: transparent;
+  color: var(--color-neutral-100);
+  cursor: pointer;
+  font-family: var(--font-family-base);
+  font-size: var(--font-body-m-size);
+  font-weight: var(--font-body-m-weight);
+  line-height: var(--font-body-m-line-height);
+  letter-spacing: var(--font-body-m-letter-spacing);
+  text-align: left;
+  transition: background-color 0.15s ease;
+}
+
+.cap:hover:not(:disabled) {
+  background-color: var(--color-neutral-600);
+}
+
+.cap[data-expanded="true"] {
+  background-color: color-mix(in srgb, var(--color-primary-400) 89%, transparent);
+}
+.cap[data-expanded="true"]:hover {
+  background-color: color-mix(in srgb, var(--color-primary-400) 89%, transparent);
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}

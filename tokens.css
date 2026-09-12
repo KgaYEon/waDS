@@ -1,0 +1,357 @@
+/**
+ * Waflash Design System — Design Tokens
+ * Source: Figma (SdECmcZVD0Gr8Gdlgn12iI), Frame 437 "Color / typo / spacing"
+ * https://www.figma.com/design/SdECmcZVD0Gr8Gdlgn12iI/waflash-designsystem?node-id=219-2783
+ *
+ * Base typeface: Noto Sans KR
+ * Scope: colors, typography, spacing and radius that use Noto Sans KR only.
+ * Legacy "LinkU" / "Forge" (Pretendard) styles are excluded — see PR/change notes.
+ */
+
+:root {
+  /* ------------------------------------------------------------------ */
+  /* Color — Primitive / Neutral                                        */
+  /* ------------------------------------------------------------------ */
+  --color-neutral-100: #f2f0ec;
+  --color-neutral-200: #e4e1da;
+  --color-neutral-300: #b8b5ae;
+  --color-neutral-400: #8c8a85;
+  --color-neutral-500: #6b6b6e;
+  --color-neutral-600: #4a4a4d;
+  --color-neutral-700: #2a2a2e;
+  --color-neutral-800: #1f1f22;
+  --color-neutral-900: #161618;
+  --color-neutral-1000: #0d0d0f;
+
+  /* ------------------------------------------------------------------ */
+  /* Color — Primitive / Primary                                        */
+  /* ------------------------------------------------------------------ */
+  --color-primary-100: #f6cbd1;
+  --color-primary-200: #ed9ba8;
+  --color-primary-300: #e56c7e;
+  --color-primary-400: #dd3c54;
+  --color-primary-500: #c41e3a;
+  --color-primary-600: #8c1d2b;
+  --color-primary-700: #5f111d;
+  --color-primary-800: #30080e;
+
+  /* ------------------------------------------------------------------ */
+  /* Color — Semantic                                                    */
+  /* ------------------------------------------------------------------ */
+  --color-success-light: #dcfce7;
+  --color-success-default: #4ade80;
+  --color-information-light: #dbeafe;
+  --color-information-default: #60a5fa;
+  --color-warning-light: #fef9c3;
+  --color-warning-default: #facc15;
+  --color-error-light: #f6cbd1;
+  --color-error-default: #c41e3a;
+
+  /* Extra surface color found on components (not in the original palette
+     frame) — background of the default "icon chip" component. */
+  --color-surface-subtle: #fbfaf8;
+
+  /* ------------------------------------------------------------------ */
+  /* Typography — Font family                                            */
+  /* ------------------------------------------------------------------ */
+  --font-family-base: "Noto Sans KR", -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* ------------------------------------------------------------------ */
+  /* Typography — Type scale (Wa-text/*)                                 */
+  /* Each token exposes size / weight / line-height / letter-spacing     */
+  /* All families are Noto Sans KR.                                      */
+  /* ------------------------------------------------------------------ */
+
+  /* Heading 1 */
+  --font-heading-1-size: 32px;
+  --font-heading-1-weight: 700;
+  --font-heading-1-line-height: 40px;
+  --font-heading-1-letter-spacing: 0;
+
+  /* Heading 2 */
+  --font-heading-2-size: 28px;
+  --font-heading-2-weight: 700;
+  --font-heading-2-line-height: 36px;
+  --font-heading-2-letter-spacing: 0;
+
+  /* Heading 3 */
+  --font-heading-3-size: 24px;
+  --font-heading-3-weight: 700;
+  --font-heading-3-line-height: 32px;
+  --font-heading-3-letter-spacing: 0;
+
+  /* Heading 4 */
+  --font-heading-4-size: 20px;
+  --font-heading-4-weight: 700;
+  --font-heading-4-line-height: 28px;
+  --font-heading-4-letter-spacing: 0;
+
+  /* Body - L */
+  --font-body-l-size: 20px;
+  --font-body-l-weight: 500;
+  --font-body-l-line-height: 28px;
+  --font-body-l-letter-spacing: 0;
+
+  /* Body - M */
+  --font-body-m-size: 18px;
+  --font-body-m-weight: 500;
+  --font-body-m-line-height: 26px;
+  --font-body-m-letter-spacing: 0;
+
+  /* Body - S */
+  --font-body-s-size: 16px;
+  --font-body-s-weight: 500;
+  --font-body-s-line-height: 24px;
+  --font-body-s-letter-spacing: 0;
+
+  /* Navigation */
+  --font-navigation-size: 20px;
+  --font-navigation-weight: 700;
+  --font-navigation-line-height: 28px;
+  --font-navigation-letter-spacing: 0;
+
+  /* Button */
+  --font-button-size: 18px;
+  --font-button-weight: 700;
+  --font-button-line-height: 24px;
+  --font-button-letter-spacing: 0;
+
+  /* Label - L / M / S — found on chip & tag components, not in the
+     original palette frame but defined in Figma as Wa-text styles. */
+  --font-label-l-size: 16px;
+  --font-label-l-weight: 700;
+  --font-label-l-line-height: 20px;
+  --font-label-l-letter-spacing: 0;
+
+  --font-label-m-size: 14px;
+  --font-label-m-weight: 600;
+  --font-label-m-line-height: 18px;
+  --font-label-m-letter-spacing: 0;
+
+  --font-label-s-size: 12px;
+  --font-label-s-weight: 700;
+  --font-label-s-line-height: 16px;
+  --font-label-s-letter-spacing: 0;
+
+  /* Footer text — ad hoc sizes with no matching Wa-text style in Figma
+     (the footer node carried no "styles contained in design" annotation),
+     so these are promoted from the footer's own measured values rather
+     than reusing an unrelated named style. */
+  --font-footer-wordmark-size: 16px;
+  --font-footer-wordmark-weight: 400;
+  --font-footer-wordmark-line-height: 1.8;
+  --font-footer-wordmark-letter-spacing: 0;
+
+  --font-footer-nav-size: 14px;
+  --font-footer-nav-weight: 600;
+  --font-footer-nav-line-height: 1.8;
+  --font-footer-nav-letter-spacing: 1.68px;
+
+  --font-footer-tagline-size: 14px;
+  --font-footer-tagline-weight: 400;
+  --font-footer-tagline-line-height: 1.5;
+  --font-footer-tagline-letter-spacing: 0.28px;
+
+  --font-footer-copyright-size: 12px;
+  --font-footer-copyright-weight: 300;
+  --font-footer-copyright-line-height: 1.8;
+  --font-footer-copyright-letter-spacing: 0;
+
+  /* ------------------------------------------------------------------ */
+  /* Spacing                                                             */
+  /* ------------------------------------------------------------------ */
+  --spacing-xs: 8px;
+  --spacing-sm: 20px;
+  --spacing-md: 24px;
+  --spacing-lg: 32px;
+  --spacing-xl: 64px;
+
+  /* Component spacing — padding/gap values measured directly from each
+     component's auto-layout in Figma. These are not bound to Figma
+     variables (only xs/sm/md/lg/xl above are), so they live here as the
+     single source of truth instead of being repeated as literals in
+     component files. */
+  --space-2: 2px;
+  --space-4: 4px;
+  --space-6: 6px;
+  --space-10: 10px;
+  --space-12: 12px;
+  --space-14: 14px;
+  --space-16: 16px;
+  --space-18: 18px;
+  --space-19: 19px;
+  --space-22: 22px;
+  --space-28: 28px;
+  --space-36: 36px;
+  --space-45: 45px;
+  --space-48: 48px;
+  --space-51: 51px;
+  --space-56: 56px;
+  --space-94: 94px;
+  --space-120: 120px;
+  --space-220: 220px;
+
+  /* ------------------------------------------------------------------ */
+  /* Radius                                                              */
+  /* ------------------------------------------------------------------ */
+  --radius-none: 0px;
+  --radius-sm: 4px;
+  --radius-8: 8px;
+  --radius-md: 12px;
+  --radius-full: 99px;
+
+  /* ------------------------------------------------------------------ */
+  /* Layout grid                                                         */
+  /* ------------------------------------------------------------------ */
+  --grid-columns: 12;
+  --grid-gutter: 24px;
+  --grid-margin: 120px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Optional: ready-to-use typography classes built on the tokens above */
+/* ------------------------------------------------------------------ */
+.text-heading-1 {
+  font-family: var(--font-family-base);
+  font-size: var(--font-heading-1-size);
+  font-weight: var(--font-heading-1-weight);
+  line-height: var(--font-heading-1-line-height);
+  letter-spacing: var(--font-heading-1-letter-spacing);
+}
+
+.text-heading-2 {
+  font-family: var(--font-family-base);
+  font-size: var(--font-heading-2-size);
+  font-weight: var(--font-heading-2-weight);
+  line-height: var(--font-heading-2-line-height);
+  letter-spacing: var(--font-heading-2-letter-spacing);
+}
+
+.text-heading-3 {
+  font-family: var(--font-family-base);
+  font-size: var(--font-heading-3-size);
+  font-weight: var(--font-heading-3-weight);
+  line-height: var(--font-heading-3-line-height);
+  letter-spacing: var(--font-heading-3-letter-spacing);
+}
+
+.text-heading-4 {
+  font-family: var(--font-family-base);
+  font-size: var(--font-heading-4-size);
+  font-weight: var(--font-heading-4-weight);
+  line-height: var(--font-heading-4-line-height);
+  letter-spacing: var(--font-heading-4-letter-spacing);
+}
+
+.text-body-l {
+  font-family: var(--font-family-base);
+  font-size: var(--font-body-l-size);
+  font-weight: var(--font-body-l-weight);
+  line-height: var(--font-body-l-line-height);
+  letter-spacing: var(--font-body-l-letter-spacing);
+}
+
+.text-body-m {
+  font-family: var(--font-family-base);
+  font-size: var(--font-body-m-size);
+  font-weight: var(--font-body-m-weight);
+  line-height: var(--font-body-m-line-height);
+  letter-spacing: var(--font-body-m-letter-spacing);
+}
+
+.text-body-s {
+  font-family: var(--font-family-base);
+  font-size: var(--font-body-s-size);
+  font-weight: var(--font-body-s-weight);
+  line-height: var(--font-body-s-line-height);
+  letter-spacing: var(--font-body-s-letter-spacing);
+}
+
+.text-navigation {
+  font-family: var(--font-family-base);
+  font-size: var(--font-navigation-size);
+  font-weight: var(--font-navigation-weight);
+  line-height: var(--font-navigation-line-height);
+  letter-spacing: var(--font-navigation-letter-spacing);
+}
+
+.text-button {
+  font-family: var(--font-family-base);
+  font-size: var(--font-button-size);
+  font-weight: var(--font-button-weight);
+  line-height: var(--font-button-line-height);
+  letter-spacing: var(--font-button-letter-spacing);
+}
+
+.text-label-l {
+  font-family: var(--font-family-base);
+  font-size: var(--font-label-l-size);
+  font-weight: var(--font-label-l-weight);
+  line-height: var(--font-label-l-line-height);
+  letter-spacing: var(--font-label-l-letter-spacing);
+}
+
+.text-label-m {
+  font-family: var(--font-family-base);
+  font-size: var(--font-label-m-size);
+  font-weight: var(--font-label-m-weight);
+  line-height: var(--font-label-m-line-height);
+  letter-spacing: var(--font-label-m-letter-spacing);
+}
+
+.text-label-s {
+  font-family: var(--font-family-base);
+  font-size: var(--font-label-s-size);
+  font-weight: var(--font-label-s-weight);
+  line-height: var(--font-label-s-line-height);
+  letter-spacing: var(--font-label-s-letter-spacing);
+}
+
+.text-footer-wordmark {
+  font-family: var(--font-family-base);
+  font-size: var(--font-footer-wordmark-size);
+  font-weight: var(--font-footer-wordmark-weight);
+  line-height: var(--font-footer-wordmark-line-height);
+  letter-spacing: var(--font-footer-wordmark-letter-spacing);
+}
+
+.text-footer-nav {
+  font-family: var(--font-family-base);
+  font-size: var(--font-footer-nav-size);
+  font-weight: var(--font-footer-nav-weight);
+  line-height: var(--font-footer-nav-line-height);
+  letter-spacing: var(--font-footer-nav-letter-spacing);
+}
+
+.text-footer-tagline {
+  font-family: var(--font-family-base);
+  font-size: var(--font-footer-tagline-size);
+  font-weight: var(--font-footer-tagline-weight);
+  line-height: var(--font-footer-tagline-line-height);
+  letter-spacing: var(--font-footer-tagline-letter-spacing);
+}
+
+.text-footer-copyright {
+  font-family: var(--font-family-base);
+  font-size: var(--font-footer-copyright-size);
+  font-weight: var(--font-footer-copyright-weight);
+  line-height: var(--font-footer-copyright-line-height);
+  letter-spacing: var(--font-footer-copyright-letter-spacing);
+}
+
+/* ------------------------------------------------------------------ */
+/* Layout grid — plain-CSS equivalent of Container/Grid/GridColumn      */
+/* (src/components/ui/), for non-React usage.                          */
+/* ------------------------------------------------------------------ */
+.container {
+  width: 100%;
+  box-sizing: border-box;
+  padding-inline: var(--grid-margin);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+  gap: var(--grid-gutter);
+}
+

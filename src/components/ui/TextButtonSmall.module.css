@@ -1,0 +1,30 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-family: var(--font-family-base);
+  font-size: var(--font-label-s-size);
+  font-weight: var(--font-label-s-weight);
+  line-height: var(--font-label-s-line-height);
+  letter-spacing: var(--font-label-s-letter-spacing);
+  text-align: center;
+  white-space: nowrap;
+  color: var(--color-neutral-300);
+  transition: color 0.15s ease;
+}
+
+.button:hover:not(:disabled) {
+  color: var(--color-neutral-100);
+}
+
+.button:disabled {
+  cursor: not-allowed;
+}
+
+span.button {
+  cursor: default;
+}
