@@ -1,6 +1,6 @@
 import styles from "./RecommendedGamesSection.module.css";
 import GameCard from "../../../components/ui/GameCard";
-import type { Game } from "../types";
+import type { Game } from "../../../types/game";
 
 export interface RecommendedGamesSectionProps {
   title?: string;

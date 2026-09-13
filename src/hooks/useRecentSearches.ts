@@ -25,6 +25,24 @@ function writeStorage(key: string, items: string[]) {
   }
 }
 
+function readEnabled(key: string): boolean {
+  try {
+    const raw = window.localStorage.getItem(key);
+    // Absent = never toggled off yet, so default to on.
+    return raw === null ? true : raw === "true";
+  } catch {
+    return true;
+  }
+}
+
+function writeEnabled(key: string, value: boolean) {
+  try {
+    window.localStorage.setItem(key, String(value));
+  } catch {
+    // Ignore — see writeStorage above.
+  }
+}
+
 export interface UseRecentSearchesOptions {
   /** localStorage key. Override if a screen needs its own separate history. */
   key?: string;
@@ -34,28 +52,36 @@ export interface UseRecentSearchesOptions {
 
 export interface UseRecentSearches {
   items: string[];
-  /** Adds a term to the front of the list, de-duplicating and trimming to `max`. */
+  /** Whether new searches get saved. Persisted, like `items`. */
+  enabled: boolean;
+  /** Adds a term to the front of the list, de-duplicating and trimming to
+   *  `max`. No-ops while `enabled` is false. */
   add: (term: string) => void;
   remove: (term: string) => void;
   clear: () => void;
+  setEnabled: (enabled: boolean) => void;
 }
 
 /**
  * Recent-search history backed by localStorage. This is the one place
- * that knows *where* the history is stored — swap the read/write calls
- * here for an API call later and every consumer (SearchBox, etc.) keeps
- * working unchanged.
+ * that knows *where* the history (and the on/off preference) is stored —
+ * swap the read/write calls here for an API call later and every
+ * consumer (SearchBox, etc.) keeps working unchanged.
  */
 export function useRecentSearches(options: UseRecentSearchesOptions = {}): UseRecentSearches {
   const { key = DEFAULT_KEY, max = DEFAULT_MAX } = options;
+  const enabledKey = `${key}:enabled`;
   const [items, setItems] = useState<string[]>(() => readStorage(key));
+  const [enabled, setEnabledState] = useState<boolean>(() => readEnabled(enabledKey));
 
   useEffect(() => {
     setItems(readStorage(key));
-  }, [key]);
+    setEnabledState(readEnabled(enabledKey));
+  }, [key, enabledKey]);
 
   const add = useCallback(
     (term: string) => {
+      if (!enabled) return;
       const trimmed = term.trim();
       if (!trimmed) return;
       setItems((prev) => {
@@ -64,7 +90,7 @@ export function useRecentSearches(options: UseRecentSearchesOptions = {}): UseRe
         return next;
       });
     },
-    [key, max],
+    [key, max, enabled],
   );
 
   const remove = useCallback(
@@ -83,5 +109,13 @@ export function useRecentSearches(options: UseRecentSearchesOptions = {}): UseRe
     setItems([]);
   }, [key]);
 
-  return { items, add, remove, clear };
+  const setEnabled = useCallback(
+    (value: boolean) => {
+      writeEnabled(enabledKey, value);
+      setEnabledState(value);
+    },
+    [enabledKey],
+  );
+
+  return { items, enabled, add, remove, clear, setEnabled };
 }

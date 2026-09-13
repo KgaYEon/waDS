@@ -24,14 +24,22 @@ export default function SearchBox({
   const boxRef = useRef<HTMLDivElement>(null);
   const recentSearches = useRecentSearches();
 
+  // Submitting (Enter, the search icon, or picking a recent term) adds
+  // the term and fires onSearch — it must NOT close the dropdown. The
+  // panel only closes via Escape, the "닫기" button, or blurring away.
   const submit = (term: string = value) => {
     const trimmed = term.trim();
     if (!trimmed) return;
     recentSearches.add(trimmed);
     setValue(trimmed);
     onSearch?.(trimmed);
-    setDropdownOpen(false);
   };
+
+  // Autosave being off shouldn't hide/lose the history that was already
+  // there when it was turned off — it should reappear as soon as it's
+  // turned back on. So we only mask what's *displayed* here; the hook
+  // keeps the real, persisted list untouched either way.
+  const visibleRecentSearches = recentSearches.enabled ? recentSearches.items : [];
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") submit();
@@ -94,10 +102,13 @@ export default function SearchBox({
       {dropdownOpen && (
         <SearchResultsPanel
           className={styles.dropdown}
-          recentSearches={recentSearches.items}
+          recentSearches={visibleRecentSearches}
           onSelect={(label) => submit(label)}
           onRemove={(label) => recentSearches.remove(label)}
           onClearAll={() => recentSearches.clear()}
+          autoSaveEnabled={recentSearches.enabled}
+          onToggleAutoSave={() => recentSearches.setEnabled(!recentSearches.enabled)}
+          onClose={() => setDropdownOpen(false)}
         />
       )}
     </div>

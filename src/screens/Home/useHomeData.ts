@@ -1,15 +1,6 @@
 import type { HeroSlide } from "./sections/HeroBannerSection";
-import type { Game } from "./types";
-
-/**
- * Placeholder thumbnail generator. Home has no API yet (see conversation —
- * that's deferred), so sample data needs *some* image; this stands in for
- * a real game screenshot/box-art URL until the API is wired up.
- */
-function placeholderImage(label: string, width: number, height: number): string {
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}"><rect width="${width}" height="${height}" fill="#161618"/><rect x="0" y="${height - 40}" width="${width}" height="40" fill="#2a2a2e"/><text x="24" y="${height - 14}" font-family="sans-serif" font-size="16" font-weight="700" fill="#dd3c54">${label}</text></svg>`;
-  return `data:image/svg+xml,${encodeURIComponent(svg)}`;
-}
+import type { Game } from "../../types/game";
+import { placeholderImage } from "../../utils/placeholderImage";
 
 const RECENTLY_PLAYED_TITLES = [
   "감옥탈출 리마스터",

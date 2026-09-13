@@ -3,11 +3,15 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: var(--spacing-xs);
+  /* 8px (--spacing-xs) x1.2 = 9.6, closest existing token is --space-10. */
+  gap: var(--space-10);
   /* min-width (not width: 100%) so this still works as a flex item next
      to other header content (e.g. the profile button) instead of trying
-     to claim the whole row. */
-  min-width: 280px;
+     to claim the whole row. Enlarged 1.2x on request: 280px -> 336px.
+     No matching spacing token at that value — treated as this
+     component's own intrinsic size (like RoundButton's 48px), not a
+     spacing token, same as every other fixed component dimension. */
+  min-width: 336px;
   font-family: var(--font-family-base);
 }
 
@@ -15,7 +19,9 @@
   position: absolute;
   top: calc(100% + var(--spacing-xs));
   right: 0;
-  width: 320px;
+  /* 320px x1.2 = 384px. No spacing token applies (component intrinsic
+     size, same rule as .box's min-width above). */
+  width: 384px;
   max-width: 90vw;
   z-index: 20;
 }
@@ -30,8 +36,11 @@
 }
 
 .icon {
-  width: 32px;
-  height: 32px;
+  /* 32px x1.2 = 38.4. No spacing token applies to icon/box dimensions
+     (same rule we've used everywhere else — e.g. RoundButton, GameCard),
+     so this stays a literal, exact value. */
+  width: 38.4px;
+  height: 38.4px;
   flex-shrink: 0;
 }
 
@@ -39,7 +48,7 @@
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: var(--spacing-xs);
+  gap: var(--space-10);
   width: 100%;
 }
 
@@ -48,7 +57,8 @@
   align-items: flex-end;
   justify-content: space-between;
   width: 100%;
-  gap: var(--space-12);
+  /* 12px (--space-12) x1.2 = 14.4, closest existing token is --space-14. */
+  gap: var(--space-14);
 }
 
 .input {
@@ -58,10 +68,10 @@
   border: none;
   outline: none;
   font-family: var(--font-family-base);
-  font-size: var(--font-body-s-size);
-  font-weight: var(--font-body-s-weight);
-  line-height: var(--font-body-s-line-height);
-  letter-spacing: var(--font-body-s-letter-spacing);
+  font-size: var(--font-search-input-size);
+  font-weight: var(--font-search-input-weight);
+  line-height: var(--font-search-input-line-height);
+  letter-spacing: var(--font-search-input-letter-spacing);
   color: var(--color-neutral-100);
 }
 

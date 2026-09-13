@@ -7,10 +7,14 @@
   background: transparent;
   cursor: pointer;
   font-family: var(--font-family-base);
-  font-size: var(--font-label-s-size);
-  font-weight: var(--font-label-s-weight);
-  line-height: var(--font-label-s-line-height);
-  letter-spacing: var(--font-label-s-letter-spacing);
+  /* Bumped one step (Label-S -> Label-M) for the search dropdown, its
+     only consumer today — changed directly rather than adding a size
+     prop nobody needs yet (see SearchResultsPanel/RecentSearchItem for
+     the same call). Revisit if a second, actually-small usage shows up. */
+  font-size: var(--font-label-m-size);
+  font-weight: var(--font-label-m-weight);
+  line-height: var(--font-label-m-line-height);
+  letter-spacing: var(--font-label-m-letter-spacing);
   text-align: center;
   white-space: nowrap;
   color: var(--color-neutral-300);

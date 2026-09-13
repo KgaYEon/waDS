@@ -7,7 +7,6 @@ export interface SearchResultsPanelProps {
   onSelect?: (label: string) => void;
   onRemove?: (label: string) => void;
   onClearAll?: () => void;
-  showFooter?: boolean;
   autoSaveEnabled?: boolean;
   onToggleAutoSave?: () => void;
   onClose?: () => void;
@@ -19,7 +18,6 @@ export default function SearchResultsPanel({
   onSelect,
   onRemove,
   onClearAll,
-  showFooter = false,
   autoSaveEnabled = true,
   onToggleAutoSave,
   onClose,
@@ -52,14 +50,14 @@ export default function SearchResultsPanel({
         </p>
       )}
 
-      {showFooter && (
-        <div className={styles.footer}>
-          <TextButtonSmall onClick={onToggleAutoSave}>
-            {autoSaveEnabled ? "자동 저장 끄기" : "자동 저장 켜기"}
-          </TextButtonSmall>
-          <TextButtonSmall onClick={onClose}>닫기</TextButtonSmall>
-        </div>
-      )}
+      {/* Always shown — search-result state (empty or not) shouldn't
+          affect whether these controls are reachable. */}
+      <div className={styles.footer}>
+        <TextButtonSmall onClick={onToggleAutoSave}>
+          {autoSaveEnabled ? "자동 저장 끄기" : "자동 저장 켜기"}
+        </TextButtonSmall>
+        <TextButtonSmall onClick={onClose}>닫기</TextButtonSmall>
+      </div>
     </div>
   );
 }

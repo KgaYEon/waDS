@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import Header from "../components/ui/Header";
 import Footer from "../components/ui/Footer";
 
@@ -8,9 +8,11 @@ import Footer from "../components/ui/Footer";
  * their own content and must not include their own Header/Footer.
  */
 export default function Layout() {
+  const navigate = useNavigate();
+
   return (
     <>
-      <Header />
+      <Header onSearch={(term) => navigate(`/search?q=${encodeURIComponent(term)}`)} />
       <Outlet />
       <Footer />
     </>

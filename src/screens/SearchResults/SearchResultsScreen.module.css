@@ -1,0 +1,60 @@
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  padding-top: var(--space-100);
+  padding-bottom: var(--spacing-xl);
+}
+
+.title {
+  font-family: var(--font-family-base);
+  /* Bumped one step (Heading 4 -> Heading 3) on request. Header/Footer/
+     GameCard are excluded from this pass since they're shared elsewhere. */
+  font-size: var(--font-heading-3-size);
+  font-weight: var(--font-heading-3-weight);
+  line-height: var(--font-heading-3-line-height);
+  letter-spacing: var(--font-heading-3-letter-spacing);
+  color: var(--color-neutral-100);
+  margin: 0;
+}
+
+.count {
+  font-family: var(--font-family-base);
+  /* Bumped one step (Body M -> Body L). */
+  font-size: var(--font-body-l-size);
+  font-weight: var(--font-body-l-weight);
+  line-height: var(--font-body-l-line-height);
+  letter-spacing: var(--font-body-l-letter-spacing);
+  color: var(--color-neutral-300);
+  margin: 0;
+}
+
+.body {
+  padding-bottom: var(--spacing-xl);
+}
+
+/* Same "5 cards, own grid" pattern as Home's game-card rows — 5 doesn't
+   divide the page's 12-column grid evenly, so this is its own grid
+   rather than GridColumn spans, reusing the shared gutter token. */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--grid-gutter);
+  width: 100%;
+}
+
+.empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-block: var(--space-94);
+  font-family: var(--font-family-base);
+  /* Bumped one step (Heading 4 -> Heading 3), same pass as .title. */
+  font-size: var(--font-heading-3-size);
+  font-weight: var(--font-heading-3-weight);
+  line-height: var(--font-heading-3-line-height);
+  letter-spacing: var(--font-heading-3-letter-spacing);
+  color: var(--color-neutral-300);
+  text-align: center;
+  margin: 0;
+}

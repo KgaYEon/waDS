@@ -3,7 +3,7 @@ import styles from "./RecentlyPlayedSection.module.css";
 import SquareNavButton from "../../../components/ui/SquareNavButton";
 import CarouselDots from "../../../components/ui/CarouselDots";
 import GameCard from "../../../components/ui/GameCard";
-import type { Game } from "../types";
+import type { Game } from "../../../types/game";
 
 const PAGE_SIZE = 5;
 

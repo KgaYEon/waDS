@@ -13,10 +13,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--space-56) var(--space-94);
+  /* --space-56/--space-94 x1.2 */
+  padding: var(--space-67) var(--space-113);
   text-align: center;
-  font-size: var(--font-body-s-size);
-  font-weight: var(--font-body-s-weight);
+  /* Typography bumped one step (Body-S -> Body-M) along with the 1.2x
+     size pass, on request. */
+  font-size: var(--font-body-m-size);
+  font-weight: var(--font-body-m-weight);
   line-height: 1.8;
   color: var(--color-neutral-300);
 }
@@ -24,14 +27,12 @@
 .results {
   display: flex;
   flex-direction: column;
-  gap: var(--space-12);
+  /* --space-12 x1.2 = 14.4, closest existing token is --space-14. */
+  gap: var(--space-14);
   align-items: stretch;
-  /* NOT --space-94 (that's the empty-state's centering padding, correct
-     only for a short centered message). With that much side padding here
-     the header row / item rows were squeezed into a sliver too narrow
-     for their own justify-content: space-between to show any separation
-     — it just looked like everything was centered. */
-  padding: var(--space-12) var(--space-16);
+  /* --space-12 x1.2 = 14.4 -> --space-14; --space-16 x1.2 = 19.2,
+     closest existing token is --space-19. */
+  padding: var(--space-14) var(--space-19);
 }
 
 .resultsHead {
@@ -43,13 +44,17 @@
 .list {
   display: flex;
   flex-direction: column;
-  gap: var(--space-16);
+  /* --space-16 x1.2 = 19.2, closest existing token is --space-19. */
+  gap: var(--space-19);
 }
 
 .footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--space-4) var(--space-16);
+  /* --space-4 x1.2 = 4.8 — no token within ~1px, so this one stays exact
+     (unlike the others above, which all landed within 0.4px of an
+     existing token). --space-16 x1.2 = 19.2 -> --space-19 as elsewhere. */
+  padding: 4.8px var(--space-19);
   border-top: 1px solid var(--color-neutral-700);
 }

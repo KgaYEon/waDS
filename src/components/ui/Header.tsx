@@ -1,4 +1,5 @@
 import type { HTMLAttributes } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import styles from "./Header.module.css";
 import NavTab from "./NavTab";
 import SearchBox from "./SearchBox";
@@ -11,13 +12,13 @@ export interface NavItem {
 
 export interface HeaderProps extends HTMLAttributes<HTMLElement> {
   navItems?: NavItem[];
-  activeIndex?: number;
   onSearch?: (term: string) => void;
   onProfileClick?: () => void;
 }
 
 const DEFAULT_NAV: NavItem[] = [
-  { label: "홈" },
+  { label: "홈", href: "/" },
+  // No screen behind these yet — clicking them is a no-op until one exists.
   { label: "필터 검색" },
   { label: "이달의 신작" },
   { label: "기타" },
@@ -29,12 +30,14 @@ const DEFAULT_NAV: NavItem[] = [
 // --space-48 side padding instead of the shared --grid-margin.
 export default function Header({
   navItems = DEFAULT_NAV,
-  activeIndex = 0,
   onSearch,
   onProfileClick,
   className,
   ...rest
 }: HeaderProps) {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   return (
     <header className={[styles.header, className].filter(Boolean).join(" ")} {...rest}>
       <div className={styles.left}>
@@ -42,8 +45,12 @@ export default function Header({
           <IconLogo className={styles.logoMark} />
         </div>
         <nav className={styles.nav}>
-          {navItems.map((item, i) => (
-            <NavTab key={item.label} selected={i === activeIndex}>
+          {navItems.map((item) => (
+            <NavTab
+              key={item.label}
+              selected={item.href !== undefined && item.href === location.pathname}
+              onClick={() => item.href && navigate(item.href)}
+            >
               {item.label}
             </NavTab>
           ))}
