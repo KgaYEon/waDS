@@ -14,11 +14,13 @@
   color: var(--color-neutral-100);
 }
 
-/* Same 5-across card grid as RecentlyPlayedSection, just without
-   pagination — a static list instead of a carousel. */
+/* Same 5-across card grid as RecentlyPlayedSection (at every
+   breakpoint), just without pagination — a static list instead of a
+   carousel. (A 4-up variant at 1440 was tried and reverted — the
+   redesigned GameCard itself shrinks instead.) */
 .cards {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: var(--grid-gutter);
   width: 100%;
 }

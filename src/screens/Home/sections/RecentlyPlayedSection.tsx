@@ -5,6 +5,9 @@ import CarouselDots from "../../../components/ui/CarouselDots";
 import GameCard from "../../../components/ui/GameCard";
 import type { Game } from "../../../types/game";
 
+// 5-up at every breakpoint — the 1440 redesign shrinks the GameCard
+// itself instead of dropping a column (an earlier 4-up attempt here was
+// reverted).
 const PAGE_SIZE = 5;
 
 export interface RecentlyPlayedSectionProps {

@@ -1,0 +1,24 @@
+/* Decorative top glow behind the header, present on both the
+   Announcements and Notice detail frames (1920 and 1440). Figma draws
+   this as a many-stop radial-gradient SVG (mix-blend-mode:
+   plus-lighter); approximated here as a CSS radial-gradient rather than
+   reproduced pixel-for-pixel, same treatment as HeroBannerSection's
+   arrow/dot positions. Not tokenized — one-off decorative value, same
+   precedent as HeroBannerSection's fixed heights. */
+.glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 162px;
+  mix-blend-mode: plus-lighter;
+  pointer-events: none;
+  background-image: radial-gradient(
+    ellipse 90% 140% at 50% 0%,
+    rgba(221, 60, 84, 0.49),
+    rgba(238, 158, 170, 0.375) 30%,
+    rgba(255, 255, 255, 0.26) 55%,
+    rgba(64, 64, 64, 0.6) 80%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}

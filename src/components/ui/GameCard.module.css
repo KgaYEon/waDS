@@ -3,6 +3,12 @@
   flex-direction: column;
   align-items: stretch;
   width: 100%;
+  /* This is the actual CSS Grid item in the parent card grids — without
+     this, its default min-width:auto (content-based) can outgrow its
+     1fr track and steal width from a sibling column, even though the
+     grid definitions are already even. Belt-and-suspenders alongside
+     the parent grids' minmax(0, 1fr). */
+  min-width: 0;
   cursor: pointer;
   border: none;
   background: none;
@@ -14,10 +20,27 @@
 .thumb {
   position: relative;
   width: 100%;
-  aspect-ratio: 281 / 164;
+  /* Fixed, not aspect-ratio: 281/164 as this was before. Re-measured
+     against the fill-container card and the thumbnail height stays a
+     constant 164px regardless of card width — it doesn't scale
+     proportionally with the card. */
+  height: 164px;
   overflow: hidden;
   border-radius: var(--radius-sm) var(--radius-sm) 0 0;
   background-color: var(--color-neutral-900);
+}
+
+/* Re-measured against the dedicated "game card" states frame (node
+   61:1754, "state=mini" = this card's real 1440 design). Figma's own
+   instance was 200x113 (161px card design), which isn't quite
+   proportional to the 1920 box (281x164) — corrected to 116.7px so the
+   281:164 ratio holds exactly, per request ("이미지 비율은 1920과
+   동일해야"). Body padding/gap are unchanged at 1440 (re-measured, both
+   identical to 1920); only this height and the title font change. */
+@media (max-width: 1440px) {
+  .thumb {
+    height: 116.7px;
+  }
 }
 
 .thumb img {
@@ -53,6 +76,10 @@
 }
 
 .title {
+  /* Flex items default to min-width:auto, which lets long text overflow
+     past the card instead of actually triggering the ellipsis below —
+     needed so every card stays the same height regardless of title length. */
+  min-width: 0;
   font-size: var(--font-button-size);
   font-weight: var(--font-button-weight);
   line-height: var(--font-button-line-height);
@@ -62,7 +89,25 @@
   white-space: nowrap;
 }
 
+/* Steps down from Button (18/700/24) to Label-L (16/700/20) at 1440 —
+   an exact match in the "mini" state, not a guessed "one step down". */
+@media (max-width: 1440px) {
+  .title {
+    font-size: var(--font-label-l-size);
+    font-weight: var(--font-label-l-weight);
+    line-height: var(--font-label-l-line-height);
+    letter-spacing: var(--font-label-l-letter-spacing);
+  }
+}
+
 .subtitle {
+  /* Same min-width/overflow fix as .title — the real genre data includes
+     longer strings (e.g. "스포츠·레이싱", "탈출·추리") that would otherwise
+     wrap to a second line and make that one card taller than the rest. */
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-size: var(--font-label-s-size);
   font-weight: var(--font-label-s-weight);
   line-height: var(--font-label-s-line-height);

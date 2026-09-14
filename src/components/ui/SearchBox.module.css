@@ -15,6 +15,15 @@
   font-family: var(--font-family-base);
 }
 
+/* Below 1440px, back to the pre-1.2x values (1920 keeps the enlarged
+   ones above) — same numbers this component used before that pass. */
+@media (max-width: 1440px) {
+  .box {
+    gap: var(--spacing-xs);
+    min-width: 280px;
+  }
+}
+
 .dropdown {
   position: absolute;
   top: calc(100% + var(--spacing-xs));
@@ -44,12 +53,25 @@
   flex-shrink: 0;
 }
 
+@media (max-width: 1440px) {
+  .icon {
+    width: 24px;
+    height: 24px;
+  }
+}
+
 .expanded {
   display: flex;
   flex-direction: column;
   align-items: stretch;
   gap: var(--space-10);
   width: 100%;
+}
+
+@media (max-width: 1440px) {
+  .expanded {
+    gap: var(--spacing-xs);
+  }
 }
 
 .inputRow {
@@ -59,6 +81,12 @@
   width: 100%;
   /* 12px (--space-12) x1.2 = 14.4, closest existing token is --space-14. */
   gap: var(--space-14);
+}
+
+@media (max-width: 1440px) {
+  .inputRow {
+    gap: var(--space-12);
+  }
 }
 
 .input {
@@ -73,6 +101,15 @@
   line-height: var(--font-search-input-line-height);
   letter-spacing: var(--font-search-input-letter-spacing);
   color: var(--color-neutral-100);
+}
+
+@media (max-width: 1440px) {
+  .input {
+    font-size: var(--font-body-s-size);
+    font-weight: var(--font-body-s-weight);
+    line-height: var(--font-body-s-line-height);
+    letter-spacing: var(--font-body-s-letter-spacing);
+  }
 }
 
 .input::placeholder {

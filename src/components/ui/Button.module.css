@@ -20,10 +20,23 @@
 
 .sizeS {
   padding: var(--space-12) var(--spacing-md);
+  /* Text steps down one level from the default --font-button-* (18/700/24)
+     for this size — Label-L (16/700/20) is the closest existing token,
+     same weight, one size down. Also affects HeroBannerSection's CTA
+     (its only other consumer besides Notice detail's 1440 back button). */
+  font-size: var(--font-label-l-size);
+  font-weight: var(--font-label-l-weight);
+  line-height: var(--font-label-l-line-height);
+  letter-spacing: var(--font-label-l-letter-spacing);
 }
 
 .sizeM {
   padding: var(--space-16) var(--spacing-md);
+  /* Matches size="S"'s text (Label-L, 16/700/20) on request. */
+  font-size: var(--font-label-l-size);
+  font-weight: var(--font-label-l-weight);
+  line-height: var(--font-label-l-line-height);
+  letter-spacing: var(--font-label-l-letter-spacing);
 }
 
 .sizeL {

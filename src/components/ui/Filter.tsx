@@ -7,37 +7,48 @@ import Checkbox from "./Checkbox";
 export interface FilterProps extends Omit<HTMLAttributes<HTMLDivElement>, "onChange"> {
   label: string;
   options: string[];
-  defaultOpen?: boolean;
-  defaultSelected?: string[];
-  onChange?: (selected: string[]) => void;
+  /** Controlled — the parent owns which one filter (of the group) is open. */
+  open: boolean;
+  onToggleOpen: () => void;
+  selected: string[];
+  onChange: (selected: string[]) => void;
+  /** When set and options.length exceeds it, only this many show until
+   * "더보기" is clicked (e.g. genre has 11 real values). */
+  maxVisible?: number;
+  /** Text for the "더보기" link, e.g. "장르 더보기". Required if maxVisible is set. */
+  moreLabel?: string;
 }
 
 export default function Filter({
   label,
   options,
-  defaultOpen = false,
-  defaultSelected = [],
+  open,
+  onToggleOpen,
+  selected,
   onChange,
+  maxVisible,
+  moreLabel,
   className,
   ...rest
 }: FilterProps) {
-  const [open, setOpen] = useState(defaultOpen);
-  const [selected, setSelected] = useState<string[]>(defaultSelected);
+  const [showAll, setShowAll] = useState(false);
 
   const toggleOption = (option: string) => {
     const next = selected.includes(option)
       ? selected.filter((o) => o !== option)
       : [...selected, option];
-    setSelected(next);
-    onChange?.(next);
+    onChange(next);
   };
+
+  const hasMore = maxVisible !== undefined && options.length > maxVisible;
+  const visibleOptions = hasMore && !showAll ? options.slice(0, maxVisible) : options;
 
   return (
     <div className={[styles.filter, className].filter(Boolean).join(" ")} {...rest}>
-      <FilterCap label={label} expanded={open} onClick={() => setOpen((v) => !v)} />
+      <FilterCap label={label} expanded={open} onClick={onToggleOpen} />
       {open && (
         <div className={styles.options}>
-          {options.map((option) => (
+          {visibleOptions.map((option) => (
             <div
               key={option}
               role="button"
@@ -58,6 +69,11 @@ export default function Filter({
               <span>{option}</span>
             </div>
           ))}
+          {hasMore && !showAll && (
+            <button type="button" className={styles.more} onClick={() => setShowAll(true)}>
+              {moreLabel}
+            </button>
+          )}
         </div>
       )}
     </div>

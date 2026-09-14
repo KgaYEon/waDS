@@ -24,6 +24,17 @@
   color: var(--color-neutral-300);
 }
 
+/* Dropdown-only breakpoint: step back down one level (Body-M -> Body-S)
+   at 1440 — padding is unchanged, font-size only. line-height stays the
+   custom 1.8 ratio above (not a Body-S/M token) either way. */
+@media (max-width: 1440px) {
+  .empty {
+    font-size: var(--font-body-s-size);
+    font-weight: var(--font-body-s-weight);
+    letter-spacing: var(--font-body-s-letter-spacing);
+  }
+}
+
 .results {
   display: flex;
   flex-direction: column;

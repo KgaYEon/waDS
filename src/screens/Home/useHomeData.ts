@@ -1,42 +1,33 @@
+import { useMemo } from "react";
 import type { HeroSlide } from "./sections/HeroBannerSection";
 import type { Game } from "../../types/game";
 import { placeholderImage } from "../../utils/placeholderImage";
+import { GAMES, type GameCatalogEntry } from "../../data/games";
 
-const RECENTLY_PLAYED_TITLES = [
-  "감옥탈출 리마스터",
-  "여우와 두루미",
-  "고향만두 삼촌",
-  "타향만두",
-  "동전 쌓기",
-  "탈출! 100층",
-  "젤리 매치",
-];
+// Fisher-Yates — doesn't mutate the input array.
+function shuffle<T>(items: T[]): T[] {
+  const result = [...items];
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+  return result;
+}
 
-const RECOMMENDED_TITLES = [
-  "감옥탈출 리마스터",
-  "여우와 두루미",
-  "고향만두 삼촌",
-  "타향만두",
-  "동전 쌓기",
-  "탈출! 100층",
-  "젤리 매치",
-  "낚시왕",
-  "핑퐁 챔피언",
-  "우주 방어대",
-  "퍼즐 아일랜드",
-  "좀비 서바이벌",
-  "타이핑 마스터",
-  "미로 탈출",
-  "카드 매칭",
-];
+// Real Flash catalog (src/data/games.ts) has no "recently played" or
+// "recommended" signal (no user history/curation yet) — these are just
+// deterministic slices of the real "Game"-type entries (excludes "Ani"),
+// not a real personalization/ranking.
+const PLAYABLE_GAMES = GAMES.filter((entry) => entry.type === "Game");
 
-function toGames(titles: string[]): Game[] {
-  return titles.map((title, i) => ({
-    id: `${title}-${i}`,
-    title,
-    category: "플래시 게임",
-    imageUrl: placeholderImage(title, 281, 164),
-  }));
+function toGame(entry: GameCatalogEntry): Game {
+  return {
+    id: entry.id,
+    title: entry.title,
+    category: entry.genre,
+    imageUrl: entry.imageFile,
+    imageAlt: entry.title,
+  };
 }
 
 export interface HomeData {
@@ -46,11 +37,17 @@ export interface HomeData {
 }
 
 /**
- * Home screen's sample data. No API yet — this is where a real fetch
- * (or a React Router loader) will replace the hardcoded arrays below.
+ * Home screen's data. Hero banner slides stay mock (placeholderImage) —
+ * the catalog has no tagline/promo-image fields to source them from.
+ * recentlyPlayed/recommended now come from the real catalog.
  */
 export function useHomeData(): HomeData {
+  // Memoized so the order doesn't reshuffle on every re-render — only
+  // once per Home mount.
+  const recommended = useMemo(() => shuffle(GAMES).map(toGame), []);
+
   return {
+    recommended,
     heroSlides: [
       {
         id: "hero-1",
@@ -77,7 +74,6 @@ export function useHomeData(): HomeData {
         ctaLabel: "게임 하러 가기",
       },
     ],
-    recentlyPlayed: toGames(RECENTLY_PLAYED_TITLES),
-    recommended: toGames(RECOMMENDED_TITLES),
+    recentlyPlayed: PLAYABLE_GAMES.slice(0, 7).map(toGame),
   };
 }

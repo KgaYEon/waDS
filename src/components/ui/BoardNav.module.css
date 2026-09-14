@@ -1,0 +1,31 @@
+.subNav {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xl);
+}
+
+.subNavItem {
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: var(--font-family-base);
+  font-size: var(--font-navigation-l-size);
+  font-weight: var(--font-navigation-l-weight);
+  line-height: var(--font-navigation-l-line-height);
+  letter-spacing: var(--font-navigation-l-letter-spacing);
+  color: var(--color-neutral-100);
+}
+
+@media (max-width: 1440px) {
+  .subNavItem {
+    font-size: var(--font-navigation-s-size);
+    font-weight: var(--font-navigation-s-weight);
+    line-height: var(--font-navigation-s-line-height);
+    letter-spacing: var(--font-navigation-s-letter-spacing);
+  }
+}
+
+.subNavItem[data-active="true"] {
+  color: var(--color-primary-400);
+}

@@ -1,0 +1,163 @@
+.screen {
+  position: relative;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Same header-to-sub-nav padding as Announcements/Notice detail —
+     identical sub-nav position in all three frames. */
+  padding-top: var(--space-191);
+  padding-bottom: var(--spacing-xl);
+}
+
+@media (max-width: 1440px) {
+  .column {
+    padding-top: var(--space-194);
+  }
+}
+
+.subNav {
+  align-self: flex-start;
+}
+
+.heading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--spacing-md);
+  margin-top: var(--space-66);
+}
+
+@media (max-width: 1440px) {
+  .heading {
+    gap: var(--space-16);
+    margin-top: var(--space-22);
+  }
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-family-base);
+  font-size: var(--font-heading-1-size);
+  font-weight: var(--font-heading-1-weight);
+  line-height: var(--font-heading-1-line-height);
+  letter-spacing: var(--font-heading-1-letter-spacing);
+  color: var(--color-neutral-100);
+}
+
+@media (max-width: 1440px) {
+  .title {
+    /* Figma drops three tiers here (Heading-1 -> Heading-4), further
+       than the "one step" pattern seen elsewhere — kept as measured. */
+    font-size: var(--font-heading-4-size);
+    font-weight: var(--font-heading-4-weight);
+    line-height: var(--font-heading-4-line-height);
+    letter-spacing: var(--font-heading-4-letter-spacing);
+  }
+}
+
+.subtitle {
+  margin: 0;
+  font-family: var(--font-family-base);
+  font-size: var(--font-body-m-size);
+  font-weight: var(--font-body-m-weight);
+  line-height: var(--font-body-m-line-height);
+  letter-spacing: var(--font-body-m-letter-spacing);
+  color: var(--color-neutral-100);
+}
+
+@media (max-width: 1440px) {
+  .subtitle {
+    font-size: var(--font-body-s-size);
+    font-weight: var(--font-body-s-weight);
+    line-height: var(--font-body-s-line-height);
+    letter-spacing: var(--font-body-s-letter-spacing);
+  }
+}
+
+/* 1198px/922px are this screen's own measured intrinsic widths (same
+   treatment as the other board screens' reading columns), not a
+   12-column span. */
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+  max-width: 1198px;
+  margin-top: var(--space-57);
+}
+
+@media (max-width: 1440px) {
+  .content {
+    max-width: 922px;
+    margin-top: var(--space-36);
+  }
+}
+
+.topDivider {
+  width: 100%;
+  height: 1px;
+  border: none;
+  margin: 0;
+  background-color: var(--color-neutral-700);
+}
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--spacing-md);
+  width: 100%;
+  margin-top: var(--spacing-md);
+}
+
+.row {
+  width: 100%;
+}
+
+/* Rows-to-CTA gap is 24px at 1920 but 40px at 1440 (larger, not
+   smaller) — kept as measured, same pattern seen on the Notice detail
+   screen's own header-to-back-link gap. */
+.cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-16);
+  margin-top: var(--spacing-md);
+}
+
+@media (max-width: 1440px) {
+  .cta {
+    margin-top: var(--space-40);
+  }
+}
+
+.ctaText {
+  margin: 0;
+  font-family: var(--font-family-base);
+  font-size: var(--font-body-m-size);
+  font-weight: var(--font-body-m-weight);
+  line-height: var(--font-body-m-line-height);
+  letter-spacing: var(--font-body-m-letter-spacing);
+  color: var(--color-neutral-100);
+}
+
+@media (max-width: 1440px) {
+  .ctaText {
+    font-size: var(--font-body-s-size);
+    font-weight: var(--font-body-s-weight);
+    line-height: var(--font-body-s-line-height);
+    letter-spacing: var(--font-body-s-letter-spacing);
+  }
+}
+
+/* Button's size="M"/"S" now share the same Label-L text (see
+   Button.module.css), so only the padding needs to switch at 1440. */
+@media (max-width: 1440px) {
+  .ctaButton {
+    padding: var(--space-12) var(--spacing-md);
+  }
+}

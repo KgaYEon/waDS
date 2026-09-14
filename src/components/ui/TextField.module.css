@@ -21,6 +21,19 @@
   color: var(--color-neutral-100);
 }
 
+/* Re-measured against the "건의함" frame (node 202:1702/287:6300), this
+   component's first real consumer. The required asterisk (Body-M) does
+   NOT change at 1440, but the label, input text and counter all step
+   down to Label-M — kept as measured. */
+@media (max-width: 1440px) {
+  .label {
+    font-size: var(--font-label-m-size);
+    font-weight: var(--font-label-m-weight);
+    line-height: var(--font-label-m-line-height);
+    letter-spacing: var(--font-label-m-letter-spacing);
+  }
+}
+
 .required {
   font-size: var(--font-body-m-size);
   font-weight: var(--font-body-m-weight);
@@ -54,6 +67,21 @@
   resize: none;
 }
 
+@media (max-width: 1440px) {
+  .input {
+    font-size: var(--font-label-m-size);
+    font-weight: var(--font-label-m-weight);
+    line-height: var(--font-label-m-line-height);
+    letter-spacing: var(--font-label-m-letter-spacing);
+  }
+}
+
+/* Textarea only (inputs don't carry a `rows` attribute) — fixed 200px
+   at both breakpoints, per the frame's own explicit height. */
+.input[rows] {
+  height: 200px;
+}
+
 .input::placeholder {
   color: var(--color-neutral-400);
 }
@@ -72,6 +100,15 @@
   font-weight: var(--font-body-s-weight);
   line-height: var(--font-body-s-line-height);
   letter-spacing: var(--font-body-s-letter-spacing);
+}
+
+@media (max-width: 1440px) {
+  .counterRow {
+    font-size: var(--font-label-m-size);
+    font-weight: var(--font-label-m-weight);
+    line-height: var(--font-label-m-line-height);
+    letter-spacing: var(--font-label-m-letter-spacing);
+  }
 }
 
 .counterHint {

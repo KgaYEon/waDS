@@ -1,0 +1,65 @@
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: var(--space-22);
+  padding: var(--space-12) var(--space-4);
+}
+
+/* 36x36 button box, 18px icon — component-intrinsic sizes (same
+   treatment as SquareNavButton), not spacing tokens. */
+.arrowButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-6);
+  background: none;
+  cursor: pointer;
+  color: var(--color-neutral-100);
+}
+
+.arrowButton:disabled {
+  cursor: not-allowed;
+  color: var(--color-neutral-600);
+}
+
+.arrowIcon {
+  width: 18px;
+  height: 18px;
+}
+
+/* Figma reuses the same chevron asset for "next", mirrored via
+   rotate+scaleY — equivalent to a plain rotate(180deg) since the glyph
+   is vertically symmetric. */
+.arrowIconNext {
+  transform: rotate(180deg);
+}
+
+.pageButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 36px;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-6);
+  background: none;
+  cursor: pointer;
+  font-family: var(--font-family-base);
+  /* Figma's 1920 page numbers use Pretendard at 17.955px — excluded per
+     the project's standing Pretendard rule, so Body-S (Noto Sans KR,
+     the 1440 frame's own spec) is used at both breakpoints instead. */
+  font-size: var(--font-body-s-size);
+  font-weight: var(--font-body-s-weight);
+  line-height: var(--font-body-s-line-height);
+  color: var(--color-neutral-600);
+}
+
+.pageButton[data-active="true"] {
+  background-color: var(--color-primary-400);
+  color: var(--color-neutral-100);
+}

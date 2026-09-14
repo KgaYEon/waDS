@@ -32,3 +32,37 @@
   color: var(--color-neutral-100);
   text-align: left;
 }
+
+/* Re-measured against the "game filter" frame, this component's first
+   real consumer — steps down to Label-M at 1440. */
+@media (max-width: 1440px) {
+  .option {
+    font-size: var(--font-label-m-size);
+    font-weight: var(--font-label-m-weight);
+    line-height: var(--font-label-m-line-height);
+    letter-spacing: var(--font-label-m-letter-spacing);
+  }
+}
+
+.more {
+  padding: var(--space-4) 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--font-family-base);
+  font-size: var(--font-body-s-size);
+  font-weight: var(--font-body-s-weight);
+  line-height: var(--font-body-s-line-height);
+  letter-spacing: var(--font-body-s-letter-spacing);
+  color: var(--color-neutral-400);
+}
+
+@media (max-width: 1440px) {
+  .more {
+    font-size: var(--font-label-m-size);
+    font-weight: var(--font-label-m-weight);
+    line-height: var(--font-label-m-line-height);
+    letter-spacing: var(--font-label-m-letter-spacing);
+  }
+}

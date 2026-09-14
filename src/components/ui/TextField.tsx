@@ -1,4 +1,4 @@
-import { useId, useState } from "react";
+import { useId } from "react";
 import type { ChangeEvent } from "react";
 import styles from "./TextField.module.css";
 
@@ -9,10 +9,16 @@ export interface TextFieldProps {
   placeholder?: string;
   multiline?: boolean;
   maxLength?: number;
-  defaultValue?: string;
+  value: string;
+  onChange: (value: string) => void;
   className?: string;
 }
 
+/**
+ * Controlled (value/onChange are required, not internal state) so a
+ * parent screen can read the current value — e.g. to enable/disable a
+ * submit button once every required field has something in it.
+ */
 export default function TextField({
   label,
   required = false,
@@ -20,14 +26,14 @@ export default function TextField({
   placeholder = "",
   multiline = false,
   maxLength,
-  defaultValue = "",
+  value,
+  onChange,
   className,
 }: TextFieldProps) {
   const id = useId();
-  const [value, setValue] = useState(defaultValue);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setValue(e.target.value);
+    onChange(e.target.value);
   };
 
   return (

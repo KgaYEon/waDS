@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, type KeyboardEvent } from "react";
 import styles from "./QuestionHead.module.css";
 import SmallChip from "./SmallChip";
-import { IconArrowDown as IconChevronDown, IconArrowUp as IconChevronUp } from "../icons";
+import { IconArrowDown as IconChevron } from "../icons";
 
 export interface QuestionHeadProps {
   question: string;
@@ -14,6 +14,9 @@ export interface QuestionHeadProps {
   index?: number;
   defaultOpen?: boolean;
   className?: string;
+  /** Pinned/compact rows only — makes the row a clickable link (e.g. to
+   * a notice's detail page) instead of the plain expandable Q&A row. */
+  onClick?: () => void;
 }
 
 export default function QuestionHead({
@@ -25,13 +28,29 @@ export default function QuestionHead({
   index,
   defaultOpen = false,
   className,
+  onClick,
 }: QuestionHeadProps) {
   const [open, setOpen] = useState(defaultOpen);
+
+  const handleRowKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (!onClick) return;
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      onClick();
+    }
+  };
 
   if (compact) {
     return (
       <div className={[styles.item, className].filter(Boolean).join(" ")}>
-        <div className={styles.compactRow}>
+        <div
+          className={styles.compactRow}
+          role={onClick ? "button" : undefined}
+          tabIndex={onClick ? 0 : undefined}
+          onClick={onClick}
+          onKeyDown={handleRowKeyDown}
+          data-clickable={Boolean(onClick)}
+        >
           <span className={styles.compactIndex}>{index}</span>
           <div className={styles.compactBody}>
             <span className={styles.compactQuestion}>{question}</span>
@@ -46,8 +65,15 @@ export default function QuestionHead({
   if (pinned) {
     return (
       <div className={[styles.item, className].filter(Boolean).join(" ")}>
-        <div className={styles.pinnedRow}>
-          <SmallChip color="whiteBorder" label="고정" />
+        <div
+          className={styles.pinnedRow}
+          role={onClick ? "button" : undefined}
+          tabIndex={onClick ? 0 : undefined}
+          onClick={onClick}
+          onKeyDown={handleRowKeyDown}
+          data-clickable={Boolean(onClick)}
+        >
+          <SmallChip color="whiteBorder" label="고정" className={styles.pinnedChip} />
           <span className={styles.pinnedQuestion}>{question}</span>
           {date && <span className={styles.pinnedDate}>{date}</span>}
         </div>
@@ -71,13 +97,15 @@ export default function QuestionHead({
           <span className={styles.qMark}>Q.</span>
           <span className={styles.question}>{question}</span>
         </span>
-        {open ? (
-          <IconChevronUp size={24} className={styles.chevron} />
-        ) : (
-          <IconChevronDown size={24} className={styles.chevron} />
-        )}
+        <IconChevron size={24} className={styles.chevron} />
       </button>
-      {open && answer && <p className={styles.answer}>{answer}</p>}
+      {answer && (
+        <div className={styles.answerWrap} aria-hidden={!open}>
+          <div className={styles.answerInner}>
+            <p className={styles.answer}>{answer}</p>
+          </div>
+        </div>
+      )}
       <hr className={styles.divider} />
     </div>
   );

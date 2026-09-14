@@ -27,11 +27,13 @@
   gap: var(--space-16);
 }
 
-/* 5 cards per row — a fixed count, not the page's 12-column grid, so this
-   is its own grid; it still reuses the shared gutter token for spacing. */
+/* 5 cards per row at every breakpoint — a fixed count, not the page's
+   12-column grid, so this is its own grid; it still reuses the shared
+   gutter token for spacing. (A 4-up variant at 1440 was tried and
+   reverted — the redesigned GameCard itself shrinks instead.) */
 .cards {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: var(--grid-gutter);
   width: 100%;
 }

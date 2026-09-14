@@ -27,6 +27,17 @@
   letter-spacing: var(--font-label-m-letter-spacing);
 }
 
+/* Re-measured against the "game filter" frame (node 91:3211/307:2346),
+   this component's first real consumer — steps down to Label-S at 1440. */
+@media (max-width: 1440px) {
+  .label {
+    font-size: var(--font-label-s-size);
+    font-weight: var(--font-label-s-weight);
+    line-height: var(--font-label-s-line-height);
+    letter-spacing: var(--font-label-s-letter-spacing);
+  }
+}
+
 .icon {
   width: 16px;
   height: 16px;

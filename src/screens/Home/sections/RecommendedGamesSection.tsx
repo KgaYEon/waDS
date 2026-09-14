@@ -8,7 +8,7 @@ export interface RecommendedGamesSectionProps {
 }
 
 export default function RecommendedGamesSection({
-  title = "추천 게임",
+  title = "추천 플래시",
   games,
 }: RecommendedGamesSectionProps) {
   return (

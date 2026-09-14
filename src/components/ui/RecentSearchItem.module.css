@@ -27,6 +27,17 @@
   color: var(--color-neutral-100);
 }
 
+/* Dropdown-only breakpoint: step back down one level (Body-M -> Body-S)
+   at 1440 — padding/gap/icon size are unchanged, font-size only. */
+@media (max-width: 1440px) {
+  .label {
+    font-size: var(--font-body-s-size);
+    font-weight: var(--font-body-s-weight);
+    line-height: var(--font-body-s-line-height);
+    letter-spacing: var(--font-body-s-letter-spacing);
+  }
+}
+
 .iconButton {
   display: inline-flex;
   flex-shrink: 0;

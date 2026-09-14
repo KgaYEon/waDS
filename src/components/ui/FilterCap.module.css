@@ -18,6 +18,18 @@
   transition: background-color 0.15s ease;
 }
 
+/* Re-measured against the "game filter" frame (node 91:3211/307:2346),
+   this component's first real consumer — steps from Body-M to Label-M
+   at 1440, both open and closed states. */
+@media (max-width: 1440px) {
+  .cap {
+    font-size: var(--font-label-m-size);
+    font-weight: var(--font-label-m-weight);
+    line-height: var(--font-label-m-line-height);
+    letter-spacing: var(--font-label-m-letter-spacing);
+  }
+}
+
 .cap:hover:not(:disabled) {
   background-color: var(--color-neutral-600);
 }

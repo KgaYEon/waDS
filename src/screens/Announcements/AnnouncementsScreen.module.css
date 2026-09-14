@@ -1,0 +1,98 @@
+.screen {
+  position: relative;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Header-bottom to sub-nav gap, measured from the "q&a" frames. */
+  padding-top: var(--space-191);
+  padding-bottom: var(--spacing-xl);
+}
+
+@media (max-width: 1440px) {
+  .column {
+    padding-top: var(--space-194);
+  }
+}
+
+/* BoardNav itself has no positioning opinion — this screen's column is
+   centered (for the title/list below), so the sub-nav needs to opt back
+   out to the left edge. */
+.subNav {
+  align-self: flex-start;
+}
+
+.title {
+  margin: 0;
+  margin-top: var(--space-51);
+  text-align: center;
+  font-family: var(--font-family-base);
+  font-size: var(--font-heading-2-size);
+  font-weight: var(--font-heading-2-weight);
+  line-height: var(--font-heading-2-line-height);
+  letter-spacing: var(--font-heading-2-letter-spacing);
+  color: var(--color-neutral-100);
+}
+
+@media (max-width: 1440px) {
+  .title {
+    margin-top: var(--space-38);
+    /* Figma steps this two tiers down (Heading-2 -> Heading-4, skipping
+       Heading-3) at 1440 — see chat notes, not the usual one-step drop. */
+    font-size: var(--font-heading-4-size);
+    font-weight: var(--font-heading-4-weight);
+    line-height: var(--font-heading-4-line-height);
+    letter-spacing: var(--font-heading-4-letter-spacing);
+  }
+}
+
+/* Announcement list is a centered, narrower reading column rather than
+   the full grid width — 1195px/925px are this screen's own measured
+   intrinsic widths (same treatment as SearchBox's min-width), not a
+   12-column span (1195px doesn't land on a clean column boundary). */
+.listWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--spacing-md);
+  width: 100%;
+  max-width: 1195px;
+  margin-top: var(--space-56);
+}
+
+@media (max-width: 1440px) {
+  .listWrap {
+    max-width: 925px;
+    margin-top: var(--space-52);
+  }
+}
+
+.topDivider {
+  width: 100%;
+  height: 1px;
+  border: none;
+  margin: 0;
+  background-color: var(--color-neutral-700);
+}
+
+.listBody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-lg);
+  width: 100%;
+}
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--spacing-md);
+  width: 100%;
+}
+
+.row {
+  width: 100%;
+}

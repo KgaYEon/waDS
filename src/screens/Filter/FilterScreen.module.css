@@ -1,0 +1,166 @@
+/* This screen doesn't use Container/Grid/GridColumn — see the comment
+   in FilterScreen.tsx. Left/right edges below are this screen's own
+   measured literal (56px), same treatment as Header's documented
+   --grid-margin exception. */
+.screen {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.header {
+  padding-inline: var(--space-56);
+  padding-top: var(--spacing-xl);
+  padding-bottom: var(--space-54);
+}
+
+.headerRow {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  width: 100%;
+  /* Figma's title row has its own extra 24px left inset on top of the
+     screen's 56px margin — matches the sidebar's own 24px inline
+     padding, which is what actually lines "필터 검색" up with "필터"
+     below it. Was missing here before, misaligning them by 24px. */
+  padding-left: var(--spacing-md);
+}
+
+.titleBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-11);
+}
+
+@media (max-width: 1440px) {
+  .titleBlock {
+    gap: var(--space-21);
+  }
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-family-base);
+  font-size: var(--font-heading-2-size);
+  font-weight: var(--font-heading-2-weight);
+  line-height: var(--font-heading-2-line-height);
+  letter-spacing: var(--font-heading-2-letter-spacing);
+  color: var(--color-neutral-100);
+}
+
+@media (max-width: 1440px) {
+  .title {
+    font-size: var(--font-heading-3-size);
+    font-weight: var(--font-heading-3-weight);
+    line-height: var(--font-heading-3-line-height);
+    letter-spacing: var(--font-heading-3-letter-spacing);
+  }
+}
+
+.subtitle {
+  margin: 0;
+  font-family: var(--font-family-base);
+  font-size: var(--font-body-s-size);
+  font-weight: var(--font-body-s-weight);
+  line-height: var(--font-body-s-line-height);
+  letter-spacing: var(--font-body-s-letter-spacing);
+  color: var(--color-neutral-300);
+}
+
+@media (max-width: 1440px) {
+  .subtitle {
+    font-size: var(--font-label-m-size);
+    font-weight: var(--font-label-m-weight);
+    line-height: var(--font-label-m-line-height);
+    letter-spacing: var(--font-label-m-letter-spacing);
+  }
+}
+
+.filterSet {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-16);
+}
+
+/* Same at both breakpoints (Body-S, re-measured) — no media query needed. */
+.resetButton {
+  padding: 0 var(--space-4);
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: var(--font-family-base);
+  font-size: var(--font-body-s-size);
+  font-weight: var(--font-body-s-weight);
+  line-height: var(--font-body-s-line-height);
+  letter-spacing: var(--font-body-s-letter-spacing);
+  color: var(--color-neutral-300);
+}
+
+.chips {
+  display: flex;
+  align-items: center;
+  gap: var(--space-16);
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.body {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-120);
+  padding-inline: var(--space-56);
+  padding-bottom: var(--spacing-xl);
+}
+
+@media (max-width: 1440px) {
+  .body {
+    gap: var(--space-86);
+  }
+}
+
+/* 338px/252px are this screen's own measured intrinsic widths for the
+   sidebar box (border-box; padding-inline:24px yields the real 290px/
+   204px content width measured in Figma). */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-16);
+  width: 338px;
+  flex-shrink: 0;
+  padding-block: var(--space-10);
+  padding-inline: var(--spacing-md);
+}
+
+@media (max-width: 1440px) {
+  .sidebar {
+    width: 252px;
+  }
+}
+
+.content {
+  flex: 1;
+  min-width: 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--grid-gutter);
+}
+
+.empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-block: var(--space-94);
+  font-family: var(--font-family-base);
+  font-size: var(--font-heading-4-size);
+  font-weight: var(--font-heading-4-weight);
+  line-height: var(--font-heading-4-line-height);
+  color: var(--color-neutral-300);
+  text-align: center;
+  margin: 0;
+}

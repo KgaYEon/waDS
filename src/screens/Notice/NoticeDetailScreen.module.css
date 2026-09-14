@@ -1,0 +1,304 @@
+.screen {
+  position: relative;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Same header-to-sub-nav padding as AnnouncementsScreen — identical
+     sub-nav position in both frames. */
+  padding-top: var(--space-191);
+  padding-bottom: var(--spacing-xl);
+}
+
+@media (max-width: 1440px) {
+  .column {
+    padding-top: var(--space-194);
+  }
+}
+
+.subNav {
+  align-self: flex-start;
+}
+
+.notFound {
+  margin-top: var(--space-56);
+  font-family: var(--font-family-base);
+  font-size: var(--font-body-l-size);
+  color: var(--color-neutral-300);
+}
+
+/* Reading column: 1396px/996px are this screen's own measured intrinsic
+   widths (same treatment as Announcements' listWrap / SearchBox's
+   min-width), not a 12-column span. */
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+  max-width: 1396px;
+  margin-top: var(--space-68);
+}
+
+@media (max-width: 1440px) {
+  .content {
+    max-width: 996px;
+    margin-top: var(--space-78);
+  }
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-12);
+  align-self: flex-start;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: var(--font-family-base);
+  /* No named Wa-text style matches at 1920 (14px/Medium); 1440 matches
+     Label-M exactly. */
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-neutral-100);
+}
+
+@media (max-width: 1440px) {
+  .backLink {
+    font-size: var(--font-label-m-size);
+    font-weight: var(--font-label-m-weight);
+    line-height: var(--font-label-m-line-height);
+    letter-spacing: var(--font-label-m-letter-spacing);
+  }
+}
+
+/* Same glyph as IconArrowLeft (confirmed by comparing path data), just
+   rendered at this component's own 14px box. */
+.backIcon {
+  width: 14px;
+  height: 14px;
+  color: var(--color-neutral-300);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--spacing-md);
+  margin-top: var(--space-46);
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+}
+
+/* "고정" chip here is bordered/outlined (SmallChip's primaryBorder
+   color), unlike the list screen's filled "whiteBorder" chip — bigger
+   too (Label-L, not the component's default Label-S), so padding/font
+   are overridden here via passthrough className rather than changing
+   SmallChip's own defaults. */
+.chip {
+  padding: var(--spacing-xs) var(--space-20);
+  font-size: var(--font-label-l-size);
+  font-weight: var(--font-label-l-weight);
+  line-height: var(--font-label-l-line-height);
+  letter-spacing: var(--font-label-l-letter-spacing);
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-family-base);
+  /* Reuses Heading-1's size/line-height/letter-spacing (32px matches
+     exactly) but is Medium, not Bold — see --font-notice-title-weight
+     in tokens.css. */
+  font-size: var(--font-heading-1-size);
+  font-weight: var(--font-notice-title-weight);
+  line-height: var(--font-heading-1-line-height);
+  letter-spacing: var(--font-heading-1-letter-spacing);
+  color: var(--color-neutral-100);
+}
+
+@media (max-width: 1440px) {
+  .title {
+    /* Exact match at 1440 — Heading-3, not a custom bundle. */
+    font-size: var(--font-heading-3-size);
+    font-weight: var(--font-heading-3-weight);
+    line-height: var(--font-heading-3-line-height);
+    letter-spacing: var(--font-heading-3-letter-spacing);
+  }
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-14);
+  font-family: var(--font-family-base);
+  font-size: var(--font-body-s-size);
+  font-weight: var(--font-body-s-weight);
+  color: var(--color-neutral-300);
+}
+
+.metaDivider {
+  width: 2px;
+  height: 14px;
+  border-radius: var(--radius-sm);
+  /* Figma's literal #d9d9d9 doesn't match any neutral token; normalized
+     to neutral-300 (same color as the surrounding author/date text). */
+  background-color: var(--color-neutral-300);
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  border: none;
+  margin: 0;
+  background-color: var(--color-neutral-700);
+}
+
+/* Gap between the meta row ("관리자 | 날짜") and this divider was
+   missing — corrected to the measured header-to-divider gap (was
+   mistakenly applied to .body below instead, which needed the
+   divider-to-body gap). */
+.topDivider {
+  width: 100%;
+  height: 1px;
+  border: none;
+  margin: 0;
+  margin-top: var(--space-40);
+  background-color: var(--color-neutral-700);
+}
+
+@media (max-width: 1440px) {
+  .topDivider {
+    margin-top: var(--space-25);
+  }
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--spacing-md);
+  padding: var(--space-10) var(--spacing-md);
+  margin-top: var(--space-28);
+}
+
+@media (max-width: 1440px) {
+  .body {
+    margin-top: var(--space-31);
+  }
+}
+
+.text,
+.list {
+  margin: 0;
+  font-family: var(--font-family-base);
+  /* 1920 reuses Body-M's size/weight but has its own line-height (see
+     --font-notice-body-line-height in tokens.css); 1440 is an exact
+     Body-S match. Figma's rgba(242,240,236,0.85) is neutral-100 at 85%
+     opacity — expressed via color-mix() to stay token-derived instead
+     of a hardcoded literal. */
+  font-size: var(--font-body-m-size);
+  font-weight: var(--font-body-m-weight);
+  line-height: var(--font-notice-body-line-height);
+  color: color-mix(in srgb, var(--color-neutral-100) 85%, transparent);
+}
+
+@media (max-width: 1440px) {
+  .text,
+  .list {
+    font-size: var(--font-body-s-size);
+    font-weight: var(--font-body-s-weight);
+    line-height: var(--font-body-s-line-height);
+  }
+}
+
+.list {
+  padding-left: var(--space-28);
+}
+
+@media (max-width: 1440px) {
+  .list {
+    padding-left: var(--spacing-md);
+  }
+}
+
+/* Figma's own vertical rhythm around this block varied unpredictably
+   between the 1920/1440 mocks (an artifact of that mock's specific text
+   length, not a real design rule) — a flat --spacing-xl top margin is
+   used instead of chasing those numbers. */
+.adjacent {
+  margin-top: var(--spacing-xl);
+}
+
+.adjacentRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: var(--space-22) var(--spacing-md);
+  border: none;
+  background: none;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--font-family-base);
+  font-size: var(--font-body-m-size);
+  font-weight: var(--font-body-m-weight);
+  color: var(--color-neutral-300);
+}
+
+@media (max-width: 1440px) {
+  .adjacentRow {
+    font-size: var(--font-body-s-size);
+    font-weight: var(--font-body-s-weight);
+  }
+}
+
+.adjacentLeft {
+  display: flex;
+  align-items: center;
+  gap: var(--space-28);
+}
+
+.adjacentLabel {
+  color: var(--color-neutral-100);
+}
+
+/* Date steps down a further level at 1440 (Body-S -> Label-M), one tier
+   below the rest of the row's 1440 text — Body has no smaller tier than
+   Body-S, so this crosses into the Label ladder, same as elsewhere in
+   this codebase when a "one step down" needed a size Body doesn't have. */
+@media (max-width: 1440px) {
+  .adjacentDate {
+    font-size: var(--font-label-m-size);
+    font-weight: var(--font-label-m-weight);
+    line-height: var(--font-label-m-line-height);
+    letter-spacing: var(--font-label-m-letter-spacing);
+  }
+}
+
+/* Same --spacing-xl approximation as .adjacent above. */
+.backButtonRow {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--spacing-xl);
+}
+
+/* Button already matches exactly (color="border", padding scale L=22/24
+   at 1920, S=12/24 at 1440) — only the breakpoint-driven size switch
+   needs a scoped override since Button's `size` prop is a discrete JS
+   value, not something a media query alone can flip. */
+@media (max-width: 1440px) {
+  .backButton {
+    padding: var(--space-12) var(--spacing-md);
+    /* Match size="S"'s text now that it steps down (see Button.module.css). */
+    font-size: var(--font-label-l-size);
+    font-weight: var(--font-label-l-weight);
+    line-height: var(--font-label-l-line-height);
+    letter-spacing: var(--font-label-l-letter-spacing);
+  }
+}

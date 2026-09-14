@@ -1,0 +1,193 @@
+.screen {
+  position: relative;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Same header-to-sub-nav padding as the other board screens. This
+     frame's own head-nav sits 12px higher (measured gap ~188px, not
+     191px) because its embedded Header instance is an older, shorter
+     (94px) version than the one the shared Header component now uses
+     (103px) — trusted the shared token over this frame's stale header,
+     per CLAUDE.md ("don't source Header from a screen frame"). */
+  padding-top: var(--space-191);
+  padding-bottom: var(--spacing-xl);
+}
+
+@media (max-width: 1440px) {
+  .column {
+    padding-top: var(--space-194);
+  }
+}
+
+.subNav {
+  align-self: flex-start;
+}
+
+.heading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--spacing-md);
+  width: 389px;
+  /* Sub-nav-to-heading gap, measured from this frame directly. */
+  margin-top: var(--space-45);
+}
+
+@media (max-width: 1440px) {
+  .heading {
+    gap: var(--space-16);
+    margin-top: var(--space-78);
+  }
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-family-base);
+  font-size: var(--font-heading-1-size);
+  font-weight: var(--font-heading-1-weight);
+  line-height: var(--font-heading-1-line-height);
+  letter-spacing: var(--font-heading-1-letter-spacing);
+  color: var(--color-neutral-100);
+}
+
+@media (max-width: 1440px) {
+  .title {
+    /* Same three-tier drop (Heading-1 -> Heading-4) as the FAQ title —
+       kept as measured, not a guess. */
+    font-size: var(--font-heading-4-size);
+    font-weight: var(--font-heading-4-weight);
+    line-height: var(--font-heading-4-line-height);
+    letter-spacing: var(--font-heading-4-letter-spacing);
+  }
+}
+
+.subtitle {
+  margin: 0;
+  font-family: var(--font-family-base);
+  font-size: var(--font-body-m-size);
+  font-weight: var(--font-body-m-weight);
+  line-height: var(--font-body-m-line-height);
+  letter-spacing: var(--font-body-m-letter-spacing);
+  color: var(--color-neutral-100);
+}
+
+@media (max-width: 1440px) {
+  .subtitle {
+    font-size: var(--font-body-s-size);
+    font-weight: var(--font-body-s-weight);
+    line-height: var(--font-body-s-line-height);
+    letter-spacing: var(--font-body-s-letter-spacing);
+  }
+}
+
+/* 892px (1920) / 700px (1440) are this screen's own measured intrinsic
+   widths (same treatment as the other board screens' reading columns),
+   not a 12-column span. The 1440 frame was updated to 700px (was
+   878px) — re-measured directly, not scaled from 1920. */
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+  max-width: 892px;
+  gap: var(--space-28);
+  margin-top: var(--spacing-lg);
+}
+
+@media (max-width: 1440px) {
+  .form {
+    max-width: 700px;
+    gap: var(--spacing-md);
+  }
+}
+
+.typeGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-12);
+  width: 100%;
+}
+
+.typeLabel {
+  font-family: var(--font-family-base);
+  font-size: var(--font-label-l-size);
+  font-weight: var(--font-label-l-weight);
+  line-height: var(--font-label-l-line-height);
+  letter-spacing: var(--font-label-l-letter-spacing);
+  color: var(--color-neutral-100);
+}
+
+@media (max-width: 1440px) {
+  .typeLabel {
+    font-size: var(--font-label-m-size);
+    font-weight: var(--font-label-m-weight);
+    line-height: var(--font-label-m-line-height);
+    letter-spacing: var(--font-label-m-letter-spacing);
+  }
+}
+
+.typeChips {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-11);
+}
+
+/* BigChip's size prop is a discrete JS value like Button's — kept at
+   "L" and scoped-overridden to size="M"'s own padding/font at 1440,
+   same pattern as Button's L/S overrides elsewhere. */
+@media (max-width: 1440px) {
+  .typeChip {
+    padding-block: var(--chip-padding-block-m);
+    /* Matches size="M"'s text now that it's stepped down too (see BigChip.module.css). */
+    font-size: var(--font-label-s-size);
+    font-weight: var(--font-label-s-weight);
+    line-height: var(--font-label-s-line-height);
+    letter-spacing: var(--font-label-s-letter-spacing);
+  }
+}
+
+.replyRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+  padding-block: var(--space-2);
+  width: fit-content;
+  cursor: pointer;
+  font-family: var(--font-family-base);
+  font-size: var(--font-body-s-size);
+  font-weight: var(--font-body-s-weight);
+  line-height: var(--font-body-s-line-height);
+  letter-spacing: var(--font-body-s-letter-spacing);
+  color: var(--color-neutral-300);
+}
+
+@media (max-width: 1440px) {
+  .replyRow {
+    font-size: var(--font-label-m-size);
+    font-weight: var(--font-label-m-weight);
+    line-height: var(--font-label-m-line-height);
+    letter-spacing: var(--font-label-m-letter-spacing);
+  }
+}
+
+/* Exception just for this screen's submit button, 1440 only — text
+   steps down one level from Button's default size="L" text
+   (--font-button-*, 18px) to Label-L (16px), the same tier size="M"/"S"
+   already use elsewhere. 1920 keeps Button's default text untouched.
+   Scoped here rather than in Button.module.css so it doesn't affect
+   size="L"'s other consumer (Notice detail's "목록으로" button). */
+@media (max-width: 1440px) {
+  .submitButton {
+    padding: var(--space-16) var(--spacing-md);
+    font-size: var(--font-label-l-size);
+    font-weight: var(--font-label-l-weight);
+    line-height: var(--font-label-l-line-height);
+    letter-spacing: var(--font-label-l-letter-spacing);
+  }
+}

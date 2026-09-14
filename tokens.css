@@ -104,11 +104,17 @@
   --font-body-s-line-height: 24px;
   --font-body-s-letter-spacing: 0;
 
-  /* Navigation */
-  --font-navigation-size: 22px;
-  --font-navigation-weight: 700;
-  --font-navigation-line-height: 28px;
-  --font-navigation-letter-spacing: 0;
+  /* Navigation - L */
+  --font-navigation-l-size: 22px;
+  --font-navigation-l-weight: 700;
+  --font-navigation-l-line-height: 28px;
+  --font-navigation-l-letter-spacing: 0;
+
+  /* Navigation - S */
+  --font-navigation-s-size: 16px;
+  --font-navigation-s-weight: 700;
+  --font-navigation-s-line-height: 24px;
+  --font-navigation-s-letter-spacing: 0;
 
   /* Button */
   --font-button-size: 18px;
@@ -132,6 +138,18 @@
   --font-label-s-weight: 700;
   --font-label-s-line-height: 16px;
   --font-label-s-letter-spacing: 0;
+
+  /* Notice detail screen — the post title (32px) reuses Heading-1's
+     size/line-height/letter-spacing but is Medium, not Bold, so only the
+     weight needed a dedicated token. At 1440 the title switches to
+     Heading-3 outright (an exact match), so no size/line-height token
+     was needed there. */
+  --font-notice-title-weight: 500;
+
+  /* Notice detail body copy at 1920 reuses Body-M's size/weight but has
+     its own line-height (28.5px, not Body-M's 26px). At 1440 it matches
+     Body-S exactly, so no dedicated size/weight token was needed there. */
+  --font-notice-body-line-height: 28.5px;
 
   /* Footer text — ad hoc sizes with no matching Wa-text style in Figma
      (the footer node carried no "styles contained in design" annotation),
@@ -193,31 +211,57 @@
   --space-4: 4px;
   --space-6: 6px;
   --space-10: 10px;
+  --space-11: 11px; /* Suggestion screen: gap between "건의 유형" chips */
   --space-12: 12px;
   --space-14: 14px;
   --space-16: 16px;
   --space-18: 18px;
   --space-19: 19px;
+  --space-20: 20px; /* Notice detail: "고정" chip inline padding */
   --space-22: 22px;
+  --space-25: 25px; /* Notice detail: title-block-to-divider gap at 1440 */
   --space-28: 28px;
+  --space-31: 31px; /* Notice detail: divider-to-body gap at 1440 */
   --space-36: 36px;
+  --space-38: 38px; /* Announcements screen: sub-nav-to-title gap at 1440 */
   --space-39: 39px;
+  --space-40: 40px; /* Notice detail: title-block-to-divider gap at 1920 */
   --space-45: 45px;
+  --space-46: 46px; /* Notice detail: back-link-to-title-block gap */
   --space-48: 48px;
   --space-51: 51px;
+  --space-52: 52px; /* Announcements screen: title-to-list gap at 1440 */
+  --space-54: 54px; /* Filter screen: title-block bottom padding, both breakpoints */
   --space-56: 56px;
+  --space-57: 57px; /* FAQ screen: subtitle-to-content gap at 1920 */
+  --space-66: 66px; /* FAQ screen: sub-nav-to-title gap at 1920 */
   --space-67: 67.2px; /* --space-56 x1.2 (search dropdown empty-state padding) */
+  --space-86: 86px; /* Filter screen: sidebar-to-content gap at 1440 */
   --space-94: 94px;
   --space-100: 100px;
   --space-113: 112.8px; /* --space-94 x1.2 (search dropdown empty-state padding) */
   --space-120: 120px;
+  --space-21: 21px; /* Filter screen: title-to-subtitle gap at 1440 */
+  --space-68: 68px; /* Notice detail: sub-nav-to-back-link gap at 1920 */
+  --space-78: 78px; /* Notice detail: same gap at 1440 */
+  --space-191: 191px; /* Board screens (Announcements/Notice): header-to-sub-nav top padding at 1920 */
+  --space-194: 194px; /* Same padding at 1440 */
   --space-220: 220px;
+
+  /* BigChip (node 214:2143, "chip-Large/Small") — its two sizes (L/M)
+     share the same inline padding but differ in block padding, so
+     that's the only thing that needed dedicated tokens (the L/M text
+     already has Label-L/Label-M). */
+  --chip-padding-inline: 16px;
+  --chip-padding-block-l: 12px;
+  --chip-padding-block-m: 8px;
 
   /* ------------------------------------------------------------------ */
   /* Radius                                                              */
   /* ------------------------------------------------------------------ */
   --radius-none: 0px;
   --radius-sm: 4px;
+  --radius-6: 6px; /* Pagination arrow/page buttons */
   --radius-8: 8px;
   --radius-md: 12px;
   --radius-full: 99px;
@@ -228,6 +272,33 @@
   --grid-columns: 12;
   --grid-gutter: 24px;
   --grid-margin: 120px;
+}
+
+/* 1440px breakpoint (Figma "1440/..." frames, node 244:5139). Margin is
+   measured directly from that frame (~170px) — it's larger than the
+   120px used above 1440px because 120 was already our own deliberate
+   choice at the 1920 breakpoint (Figma's real 1920 margin is 210px), not
+   Figma's true value; 170px *is* Figma's true value at this breakpoint.
+   --grid-columns/--grid-gutter are unchanged — card grids that don't
+   divide evenly into 12 (5-up, 4-up) manage their own column count in
+   their own CSS rather than through GridColumn spans. */
+@media (max-width: 1440px) {
+  :root {
+    --grid-margin: 170px;
+  }
+}
+
+/* Hero tagline ("추억의 고향만두, 지금 바로 빚으러 GO") stepped down one
+   size at 1440, same -4px step as the Heading scale (H3 24 -> H4 20).
+   There's no "hero-tagline-s" sibling token to switch to (this style is
+   ad hoc to begin with — see its definition above), so the token itself
+   is redefined here, same approach as --grid-margin. line-height (1.2)
+   and letter-spacing (-0.04em) are both relative units, so they scale
+   automatically with the smaller size — only size needs overriding. */
+@media (max-width: 1440px) {
+  :root {
+    --font-hero-tagline-size: 20px;
+  }
 }
 
 /* ------------------------------------------------------------------ */
@@ -291,10 +362,10 @@
 
 .text-navigation {
   font-family: var(--font-family-base);
-  font-size: var(--font-navigation-size);
-  font-weight: var(--font-navigation-weight);
-  line-height: var(--font-navigation-line-height);
-  letter-spacing: var(--font-navigation-letter-spacing);
+  font-size: var(--font-navigation-l-size);
+  font-weight: var(--font-navigation-l-weight);
+  line-height: var(--font-navigation-l-line-height);
+  letter-spacing: var(--font-navigation-l-letter-spacing);
 }
 
 .text-button {

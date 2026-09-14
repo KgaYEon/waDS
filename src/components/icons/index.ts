@@ -3,6 +3,7 @@ export { default as IconArrowLeft } from "./ArrowLeft";
 export { default as IconArrowRight } from "./ArrowRight";
 export { default as IconArrowDown } from "./ArrowDown";
 export { default as IconArrowUp } from "./ArrowUp";
+export { default as IconChevronLeftThin } from "./ChevronLeftThin";
 export { default as IconReset } from "./Reset";
 export { default as IconIcon } from "./Icon";
 export { default as IconCheckFill } from "./CheckFill";

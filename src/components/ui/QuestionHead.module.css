@@ -7,6 +7,13 @@
   font-family: var(--font-family-base);
 }
 
+/* Re-measured against the "FAQ" frame (node 26:924/241:3577), this
+   variant's first real consumer: an open item's internal gap is 28px,
+   not the closed item's 24px — same at both breakpoints. */
+.item[data-expanded="true"] {
+  gap: var(--space-28);
+}
+
 .trigger {
   display: flex;
   align-items: center;
@@ -22,14 +29,29 @@
 .qa {
   display: flex;
   align-items: center;
+  /* 20px closed, 22px open — a small (likely unintentional) 2px
+     difference in the source file, kept as measured. */
   gap: var(--spacing-sm);
   color: var(--color-neutral-100);
   transition: color 0.15s ease;
 }
 
+.item[data-expanded="true"] .qa {
+  gap: var(--space-22);
+}
+
 .qMark {
   font-size: var(--font-body-l-size);
   font-weight: var(--font-body-l-weight);
+}
+
+@media (max-width: 1440px) {
+  .qMark {
+    font-size: var(--font-body-s-size);
+    font-weight: var(--font-body-s-weight);
+    line-height: var(--font-body-s-line-height);
+    letter-spacing: var(--font-body-s-letter-spacing);
+  }
 }
 
 .question {
@@ -38,12 +60,31 @@
   line-height: var(--font-heading-4-line-height);
 }
 
+/* At 1440 the question drops out of Heading-4 (bold) entirely and
+   matches Body-S (medium) instead — a real weight change, not just a
+   smaller size, confirmed in both open and closed states. */
+@media (max-width: 1440px) {
+  .question {
+    font-size: var(--font-body-s-size);
+    font-weight: var(--font-body-s-weight);
+    line-height: var(--font-body-s-line-height);
+    letter-spacing: var(--font-body-s-letter-spacing);
+  }
+}
+
 .chevron {
   width: 24px;
   height: 24px;
   flex-shrink: 0;
   color: var(--color-neutral-300);
-  transition: color 0.15s ease;
+  transition: color 0.15s ease, transform 0.2s ease;
+}
+
+/* Single icon (arrow-down) rotated 180deg for the open state instead of
+   swapping to a separate arrow-up icon — lets the direction change
+   animate instead of instantly flipping. */
+.item[data-expanded="true"] .chevron {
+  transform: rotate(180deg);
 }
 
 .trigger:hover .qa,
@@ -64,6 +105,35 @@
   background-color: var(--color-neutral-700);
 }
 
+/* Answer is now always rendered (not conditionally on `open`) so its
+   height can transition instead of appearing/disappearing instantly —
+   the grid-template-rows 0fr/1fr trick animates smoothly with no need
+   to know the content's real height up front.
+
+   The negative margin-top cancels the flex `gap` this wrapper would
+   otherwise add on the closed side (it always occupies a slot between
+   .trigger and .divider now), keeping the closed-state gap at the
+   measured 24px instead of doubling it; the open state uses the gap
+   from .item[data-expanded="true"] on both sides instead, so the
+   margin resets to 0 there. */
+.answerWrap {
+  display: grid;
+  grid-template-rows: 0fr;
+  overflow: hidden;
+  margin-top: calc(-1 * var(--spacing-md));
+  transition: grid-template-rows 0.25s ease, margin-top 0.25s ease;
+}
+
+.item[data-expanded="true"] .answerWrap {
+  grid-template-rows: 1fr;
+  margin-top: 0;
+}
+
+.answerInner {
+  min-height: 0;
+  overflow: hidden;
+}
+
 .answer {
   padding-inline: var(--space-12);
   font-size: var(--font-body-m-size);
@@ -74,6 +144,17 @@
   margin: 0;
 }
 
+/* Genuine identity change at 1440, not just a smaller Body size — Figma
+   switches the answer text to Label-M (SemiBold, 14px) outright. */
+@media (max-width: 1440px) {
+  .answer {
+    font-size: var(--font-label-m-size);
+    font-weight: var(--font-label-m-weight);
+    line-height: var(--font-label-m-line-height);
+    letter-spacing: var(--font-label-m-letter-spacing);
+  }
+}
+
 .pinnedRow {
   display: flex;
   align-items: center;
@@ -82,18 +163,46 @@
   padding-inline: var(--spacing-md);
 }
 
+.pinnedRow[data-clickable="true"],
+.compactRow[data-clickable="true"] {
+  cursor: pointer;
+}
+
+/* Re-measured against the "공지사항" frame (node 26:993/241:3598), this
+   component's first real consumer: pinned/compact titles are Body-L
+   (500 weight), not Heading-4 (700) as originally guessed. */
 .pinnedQuestion {
   flex: 1;
-  font-size: var(--font-heading-4-size);
-  font-weight: var(--font-heading-4-weight);
-  line-height: var(--font-heading-4-line-height);
+  font-size: var(--font-body-l-size);
+  font-weight: var(--font-body-l-weight);
+  line-height: var(--font-body-l-line-height);
+  letter-spacing: var(--font-body-l-letter-spacing);
   color: var(--color-neutral-100);
+}
+
+@media (max-width: 1440px) {
+  .pinnedQuestion {
+    font-size: var(--font-body-s-size);
+    font-weight: var(--font-body-s-weight);
+    line-height: var(--font-body-s-line-height);
+    letter-spacing: var(--font-body-s-letter-spacing);
+  }
 }
 
 .pinnedDate {
   font-size: var(--font-body-s-size);
   color: var(--color-neutral-100);
   white-space: nowrap;
+}
+
+/* "고정" chip's own vertical padding shrinks (6px -> 4px) at 1440 in the
+   Announcements frame; scoped here via a passthrough className rather
+   than changed on SmallChip itself, since SmallChip is shared by
+   ChipLabelToggle elsewhere and that usage hasn't been re-measured. */
+@media (max-width: 1440px) {
+  .pinnedChip {
+    padding-block: var(--space-4);
+  }
 }
 
 .compactRow {
@@ -107,6 +216,7 @@
 
 .compactIndex {
   font-size: var(--font-body-s-size);
+  font-weight: var(--font-body-s-weight);
   color: var(--color-neutral-100);
 }
 
@@ -123,6 +233,14 @@
   font-size: var(--font-body-l-size);
   font-weight: var(--font-body-l-weight);
   line-height: var(--font-body-l-line-height);
+}
+
+@media (max-width: 1440px) {
+  .compactQuestion {
+    font-size: var(--font-body-s-size);
+    font-weight: var(--font-body-s-weight);
+    line-height: var(--font-body-s-line-height);
+  }
 }
 
 .compactDate {

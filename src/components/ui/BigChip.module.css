@@ -2,18 +2,32 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: var(--space-12) var(--space-16);
+  padding-inline: var(--chip-padding-inline);
   border-radius: var(--radius-full);
   border: 1px solid transparent;
   font-family: var(--font-family-base);
-  font-size: var(--font-label-l-size);
-  font-weight: var(--font-label-l-weight);
-  line-height: var(--font-label-l-line-height);
-  letter-spacing: var(--font-label-l-letter-spacing);
   text-align: center;
   white-space: nowrap;
   cursor: pointer;
   transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+/* Text steps down one level from each size's default (Label-L -> Label-M,
+   Label-M -> Label-S) on request — padding stays tied to the original size. */
+.sizeL {
+  padding-block: var(--chip-padding-block-l);
+  font-size: var(--font-label-m-size);
+  font-weight: var(--font-label-m-weight);
+  line-height: var(--font-label-m-line-height);
+  letter-spacing: var(--font-label-m-letter-spacing);
+}
+
+.sizeM {
+  padding-block: var(--chip-padding-block-m);
+  font-size: var(--font-label-s-size);
+  font-weight: var(--font-label-s-weight);
+  line-height: var(--font-label-s-line-height);
+  letter-spacing: var(--font-label-s-letter-spacing);
 }
 
 .solid {

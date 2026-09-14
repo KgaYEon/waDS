@@ -16,6 +16,15 @@
   border-bottom: 1px solid var(--color-neutral-900);
 }
 
+/* Re-measured from the finished Header frame (node 214:2310, "break=1440"
+   symbol) — vertical padding shrinks from 24px to 12px. Horizontal stays
+   --space-48, unchanged. */
+@media (max-width: 1440px) {
+  .header {
+    padding-block: var(--space-12);
+  }
+}
+
 .left {
   display: flex;
   align-items: center;
@@ -36,6 +45,13 @@
   display: flex;
   align-items: center;
   gap: var(--spacing-md);
+}
+
+/* Re-measured: gap between nav items shrinks from 24px to 8px at 1440. */
+@media (max-width: 1440px) {
+  .nav {
+    gap: var(--spacing-xs);
+  }
 }
 
 .right {
@@ -60,4 +76,14 @@
 .profileIcon {
   width: 32px;
   height: 32px;
+}
+
+/* Re-measured: the profile circle shrinks from 48px to 40px at 1440 —
+   padding (--spacing-xs) stays the same, only the icon shrinks
+   (32px -> 24px), which is what actually drives that size down. */
+@media (max-width: 1440px) {
+  .profileIcon {
+    width: 24px;
+    height: 24px;
+  }
 }

@@ -6,6 +6,13 @@
   background-color: var(--color-neutral-1000);
 }
 
+/* Measured from Figma's "1440/home" frame. */
+@media (max-width: 1440px) {
+  .section {
+    height: 349px;
+  }
+}
+
 .image {
   position: absolute;
   inset: 0;
@@ -20,6 +27,16 @@
   display: flex;
   align-items: flex-end;
   padding-bottom: var(--space-94);
+}
+
+/* Scaled down along with the shorter banner height above — like the
+   arrow/dot positions below, this was already an approximation rather
+   than a pixel-exact reproduction of the (very promo-banner-specific)
+   Figma layout, so this is a reasonable value, not a re-measured one. */
+@media (max-width: 1440px) {
+  .overlay {
+    padding-bottom: var(--space-56);
+  }
 }
 
 .content {
@@ -64,4 +81,10 @@
   left: 50%;
   bottom: var(--space-56);
   transform: translateX(-50%);
+}
+
+@media (max-width: 1440px) {
+  .dots {
+    bottom: var(--spacing-lg);
+  }
 }

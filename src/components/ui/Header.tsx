@@ -8,6 +8,9 @@ import { IconLogo, IconProfile } from "./icons";
 export interface NavItem {
   label: string;
   href?: string;
+  /** Extra path prefixes that also count as this tab being active, e.g.
+   * "기타" covers /notices, /notice/:id and /faq, not just its own href. */
+  activePrefixes?: string[];
 }
 
 export interface HeaderProps extends HTMLAttributes<HTMLElement> {
@@ -18,11 +21,18 @@ export interface HeaderProps extends HTMLAttributes<HTMLElement> {
 
 const DEFAULT_NAV: NavItem[] = [
   { label: "홈", href: "/" },
-  // No screen behind these yet — clicking them is a no-op until one exists.
-  { label: "필터 검색" },
+  { label: "필터 검색", href: "/filters" },
+  // No screen behind this yet — clicking it is a no-op until one exists.
   { label: "이달의 신작" },
-  { label: "기타" },
+  { label: "기타", href: "/notices", activePrefixes: ["/notice", "/faq", "/suggestions"] },
 ];
+
+function isNavItemActive(item: NavItem, pathname: string): boolean {
+  if (item.href === pathname) return true;
+  return (item.activePrefixes ?? []).some(
+    (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`)
+  );
+}
 
 // See the comment on .header in Header.module.css — this component
 // intentionally does NOT use Container/Grid/GridColumn like the rest of
@@ -48,7 +58,7 @@ export default function Header({
           {navItems.map((item) => (
             <NavTab
               key={item.label}
-              selected={item.href !== undefined && item.href === location.pathname}
+              selected={isNavItemActive(item, location.pathname)}
               onClick={() => item.href && navigate(item.href)}
             >
               {item.label}

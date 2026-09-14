@@ -33,12 +33,17 @@
   padding-bottom: var(--spacing-xl);
 }
 
-/* Same "5 cards, own grid" pattern as Home's game-card rows — 5 doesn't
-   divide the page's 12-column grid evenly, so this is its own grid
-   rather than GridColumn spans, reusing the shared gutter token. */
+/* Same "5 cards, own grid" pattern as Home's game-card rows (at every
+   breakpoint) — 5 doesn't divide the page's 12-column grid evenly, so
+   this is its own grid rather than GridColumn spans, reusing the shared
+   gutter token. (A 4-up variant at 1440 — sourced from the
+   "1440/Search-yesresult" frame's own 4+2 wrap — was reverted per the
+   GameCard redesign, which keeps 5 columns everywhere and shrinks the
+   card instead; flagging since that 4-up came from this screen's own
+   frame, not the same assumption as Home's.) */
 .cards {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: var(--grid-gutter);
   width: 100%;
 }
