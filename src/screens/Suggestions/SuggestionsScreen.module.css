@@ -22,16 +22,20 @@
   }
 }
 
+/* Centered at 1920 on request, matching 1440 (was pulled left of the
+   grid margin, then cancelled, then re-centered) — opts into .column's
+   own align-items:center instead of flex-start. Now the same at both
+   breakpoints, so the old 1440-only override is gone. */
 .subNav {
-  align-self: flex-start;
+  align-self: center;
 }
 
-/* Centered at 1440 on request (was pulled left of the grid margin, then
-   cancelled) — opts back into .column's own align-items:center instead
-   of staying at flex-start. */
-@media (max-width: 1440px) {
-  .subNav {
-    align-self: center;
+/* Lowered one weight step on request, this page only, 1920 only (was
+   Navigation-L's Bold/700): SemiBold/600 — same treatment as
+   Announcements' .subNav override, see that file's comment. */
+@media (min-width: 1441px) {
+  .subNav button {
+    font-weight: 600;
   }
 }
 
@@ -43,7 +47,7 @@
   gap: var(--spacing-md);
   width: 389px;
   /* Sub-nav-to-heading gap, measured from this frame directly. */
-  margin-top: var(--space-45);
+  margin-top: var(--spacing-xl);
 }
 
 @media (max-width: 1440px) {
@@ -53,13 +57,14 @@
   }
 }
 
+/* Lowered on request, 1920 only (was Heading-1): Heading-3. */
 .title {
   margin: 0;
   font-family: var(--font-family-base);
-  font-size: var(--font-heading-1-size);
-  font-weight: var(--font-heading-1-weight);
-  line-height: var(--font-heading-1-line-height);
-  letter-spacing: var(--font-heading-1-letter-spacing);
+  font-size: var(--font-heading-3-size);
+  font-weight: var(--font-heading-3-weight);
+  line-height: var(--font-heading-3-line-height);
+  letter-spacing: var(--font-heading-3-letter-spacing);
   color: var(--color-neutral-100);
 }
 
@@ -74,13 +79,14 @@
   }
 }
 
+/* Lowered one step on request, 1920 only (was Body-M): Body-S. */
 .subtitle {
   margin: 0;
   font-family: var(--font-family-base);
-  font-size: var(--font-body-m-size);
-  font-weight: var(--font-body-m-weight);
-  line-height: var(--font-body-m-line-height);
-  letter-spacing: var(--font-body-m-letter-spacing);
+  font-size: var(--font-body-s-size);
+  font-weight: var(--font-body-s-weight);
+  line-height: var(--font-body-s-line-height);
+  letter-spacing: var(--font-body-s-letter-spacing);
   color: var(--color-neutral-300);
 }
 
@@ -122,12 +128,13 @@
   width: 100%;
 }
 
+/* Lowered one step on request, 1920 only (was Label-L): Label-M. */
 .typeLabel {
   font-family: var(--font-family-base);
-  font-size: var(--font-label-l-size);
-  font-weight: var(--font-label-l-weight);
-  line-height: var(--font-label-l-line-height);
-  letter-spacing: var(--font-label-l-letter-spacing);
+  font-size: var(--font-label-m-size);
+  font-weight: var(--font-label-m-weight);
+  line-height: var(--font-label-m-line-height);
+  letter-spacing: var(--font-label-m-letter-spacing);
   color: var(--color-neutral-100);
 }
 
@@ -161,6 +168,23 @@
   }
 }
 
+/* Lowered one step on request, this page only, 1920 only (was Label-M,
+   size="L"'s shared default — see BigChip.module.css): Label-S, same
+   tier the 1440 override above already lands on. Scoped here rather
+   than on BigChip itself so it doesn't affect size="L"'s other
+   consumers (e.g. Filter screen). */
+@media (min-width: 1441px) {
+  .typeChip {
+    font-size: var(--font-label-s-size);
+    font-weight: var(--font-label-s-weight);
+    line-height: var(--font-label-s-line-height);
+    letter-spacing: var(--font-label-s-letter-spacing);
+  }
+}
+
+/* Lowered one step on request, 1920 only (was Body-S, the ladder's
+   floor): Label-M — same tier the 1440 override below already lands
+   on. */
 .replyRow {
   display: flex;
   align-items: center;
@@ -169,10 +193,10 @@
   width: fit-content;
   cursor: pointer;
   font-family: var(--font-family-base);
-  font-size: var(--font-body-s-size);
-  font-weight: var(--font-body-s-weight);
-  line-height: var(--font-body-s-line-height);
-  letter-spacing: var(--font-body-s-letter-spacing);
+  font-size: var(--font-label-m-size);
+  font-weight: var(--font-label-m-weight);
+  line-height: var(--font-label-m-line-height);
+  letter-spacing: var(--font-label-m-letter-spacing);
   color: var(--color-neutral-300);
 }
 
@@ -194,6 +218,19 @@
 @media (max-width: 1440px) {
   .submitButton {
     padding: var(--space-16) var(--spacing-md);
+    font-size: var(--font-label-l-size);
+    font-weight: var(--font-label-l-weight);
+    line-height: var(--font-label-l-line-height);
+    letter-spacing: var(--font-label-l-letter-spacing);
+  }
+}
+
+/* Lowered one step on request, this page only, 1920 only (was
+   --font-button, size="L"'s shared default): Label-L, same tier the
+   1440 override above already lands on. Scoped here rather than on
+   Button itself so it doesn't affect size="L"'s other consumers. */
+@media (min-width: 1441px) {
+  .submitButton {
     font-size: var(--font-label-l-size);
     font-weight: var(--font-label-l-weight);
     line-height: var(--font-label-l-line-height);

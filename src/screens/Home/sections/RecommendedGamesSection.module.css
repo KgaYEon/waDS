@@ -5,12 +5,14 @@
   width: 100%;
 }
 
+/* Lowered one step on request (was Heading-3, same at every breakpoint
+   before this): Heading-4, now also same at every breakpoint. */
 .heading {
   font-family: var(--font-family-base);
-  font-size: var(--font-heading-3-size);
-  font-weight: var(--font-heading-3-weight);
-  line-height: var(--font-heading-3-line-height);
-  letter-spacing: var(--font-heading-3-letter-spacing);
+  font-size: var(--font-heading-4-size);
+  font-weight: var(--font-heading-4-weight);
+  line-height: var(--font-heading-4-line-height);
+  letter-spacing: var(--font-heading-4-letter-spacing);
   color: var(--color-neutral-100);
 }
 

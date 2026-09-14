@@ -17,48 +17,77 @@
   }
 }
 
-/* BoardNav itself has no positioning opinion — this screen's column is
-   centered (for the title/list below), so the sub-nav needs to opt back
-   out to the left edge. */
+/* Centered at 1920 on request, matching 1440 (was pulled left of the
+   grid margin, then cancelled, then re-centered) — opts into .column's
+   own align-items:center instead of flex-start. Now the same at both
+   breakpoints, so the old 1440-only override is gone. */
 .subNav {
-  align-self: flex-start;
+  align-self: center;
 }
 
-/* Centered at 1440 on request (was pulled left of the grid margin, then
-   cancelled) — opts back into .column's own align-items:center instead
-   of staying at flex-start. */
-@media (max-width: 1440px) {
-  .subNav {
-    align-self: center;
+/* Lowered one weight step on request, this page only, 1920 only (was
+   Navigation-L's Bold/700): SemiBold/600 — no separate token for this
+   (Navigation only has one weight per size), so it's a plain override;
+   600 matches the SemiBold used elsewhere (e.g. Label-M). */
+@media (min-width: 1441px) {
+  .subNav button {
+    font-weight: 600;
   }
 }
 
 /* Title position unified with Suggestions/FAQ on request: same
-   subnav-to-title margin-top (space-45/space-78) and the same 1920 tier
-   (Heading-1, was Heading-2 here) — this screen's own Figma measurement
-   (space-51/space-38, Heading-2) is intentionally overridden. No .heading
-   wrapper needed here (Announcements has no subtitle under the title),
-   so the margin lives directly on .title instead. */
+   subnav-to-title margin-top (spacing-xl/space-78, this screen's own
+   Figma measurement space-51/space-38 is intentionally overridden).
+   Now has a .heading wrapper (added on request, to hold the new
+   subtitle below the title) matching Suggestions/FAQ's own structure. */
+.heading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-xl);
+}
+
+@media (max-width: 1440px) {
+  .heading {
+    gap: var(--space-16);
+    margin-top: var(--space-78);
+  }
+}
+
+/* Font was unified to Heading-1 for the title-position request, then
+   lowered one step on request (1920 only) to Heading-2, then lowered
+   one more step on request to Heading-3. */
 .title {
   margin: 0;
-  margin-top: var(--space-45);
-  text-align: center;
   font-family: var(--font-family-base);
-  font-size: var(--font-heading-1-size);
-  font-weight: var(--font-heading-1-weight);
-  line-height: var(--font-heading-1-line-height);
-  letter-spacing: var(--font-heading-1-letter-spacing);
+  font-size: var(--font-heading-3-size);
+  font-weight: var(--font-heading-3-weight);
+  line-height: var(--font-heading-3-line-height);
+  letter-spacing: var(--font-heading-3-letter-spacing);
   color: var(--color-neutral-100);
 }
 
 @media (max-width: 1440px) {
   .title {
-    margin-top: var(--space-78);
     font-size: var(--font-heading-4-size);
     font-weight: var(--font-heading-4-weight);
     line-height: var(--font-heading-4-line-height);
     letter-spacing: var(--font-heading-4-letter-spacing);
   }
+}
+
+/* Subtitle added on request, matching Suggestions/FAQ's own subtitle
+   styling (Body-S, same at both breakpoints there). */
+.subtitle {
+  margin: 0;
+  font-family: var(--font-family-base);
+  font-size: var(--font-body-s-size);
+  font-weight: var(--font-body-s-weight);
+  line-height: var(--font-body-s-line-height);
+  letter-spacing: var(--font-body-s-letter-spacing);
+  color: var(--color-neutral-300);
 }
 
 /* Announcement list is a centered, narrower reading column rather than
@@ -108,4 +137,20 @@
 
 .row {
   width: 100%;
+}
+
+/* Lowered one step on request, this page only, 1920 only (was Body-S,
+   the ladder's floor, used identically at every width — see
+   Pagination.module.css's .pageButton comment): Label-M. Pagination is
+   shared with NewReleaseSection, so this is scoped here instead of
+   edited on the component directly; `:not([aria-label])` targets only
+   the number buttons, not the prev/next arrow buttons which carry an
+   aria-label. Gated to ≥1441px so ≤1440 keeps Pagination's own
+   (untouched) Body-S. */
+@media (min-width: 1441px) {
+  .pagination button:not([aria-label]) {
+    font-size: var(--font-label-m-size);
+    font-weight: var(--font-label-m-weight);
+    line-height: var(--font-label-m-line-height);
+  }
 }

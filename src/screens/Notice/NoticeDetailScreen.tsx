@@ -17,7 +17,7 @@ import type { Notice } from "../../types/notice";
  * reproduced — this screen renders inside Layout, same as every other
  * screen. Header/Footer/BoardNav/PageGlow are all shared pieces; the
  * only new component here is none — everything reuses an existing atom
- * (see chat notes for the "고정" chip and "목록으로" button reuse).
+ * (see chat notes for the "알림" chip and "목록으로" button reuse).
  */
 export default function NoticeDetailScreen() {
   const { id } = useParams<{ id: string }>();
@@ -80,7 +80,7 @@ export default function NoticeDetailScreen() {
               <div className={styles.header}>
                 <div className={styles.titleRow}>
                   {notice.pinned && (
-                    <SmallChip color="primaryBorder" label="고정" className={styles.chip} />
+                    <SmallChip color="primaryBorder" label="알림" className={styles.chip} />
                   )}
                   <h1 className={styles.title}>{notice.title}</h1>
                 </div>

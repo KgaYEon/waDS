@@ -20,16 +20,20 @@
   }
 }
 
+/* Centered at 1920 on request, matching 1440 (was pulled left of the
+   grid margin, then cancelled, then re-centered) — opts into .column's
+   own align-items:center instead of flex-start. Now the same at both
+   breakpoints, so the old 1440-only override is gone. */
 .subNav {
-  align-self: flex-start;
+  align-self: center;
 }
 
-/* Centered at 1440 on request (was pulled left of the grid margin, then
-   cancelled) — opts back into .column's own align-items:center instead
-   of staying at flex-start. */
-@media (max-width: 1440px) {
-  .subNav {
-    align-self: center;
+/* Lowered one weight step on request, this page only, 1920 only (was
+   Navigation-L's Bold/700): SemiBold/600 — same treatment as
+   Announcements' .subNav override, see that file's comment. */
+@media (min-width: 1441px) {
+  .subNav button {
+    font-weight: 600;
   }
 }
 
@@ -45,11 +49,12 @@
   max-width: 739px;
   /* Was space-82 (this frame's own measured sub-nav-to-hero gap) — now
      matched to Suggestions/FAQ/Announcements' unified title margin-top
-     (space-45/space-78) instead, so the logo's top edge (the first child
-     here, playing the title's role) lines up with their title's top edge
-     exactly — .column's own padding-top is already identical across all
-     four screens, so equal margin-top here gives equal absolute position. */
-  margin-top: var(--space-45);
+     (1920: spacing-xl/64px, was space-45; 1440: space-78) instead, so
+     the logo's top edge (the first child here, playing the title's
+     role) lines up with their title's top edge exactly — .column's own
+     padding-top is already identical across all four screens, so equal
+     margin-top here gives equal absolute position. */
+  margin-top: var(--spacing-xl);
 }
 
 @media (max-width: 1440px) {

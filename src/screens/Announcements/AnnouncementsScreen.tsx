@@ -43,7 +43,10 @@ export default function AnnouncementsScreen() {
               ]}
             />
 
-            <h1 className={styles.title}>공지사항</h1>
+            <div className={styles.heading}>
+              <h1 className={styles.title}>공지사항</h1>
+              <p className={styles.subtitle}>사이트 공지사항을 확인해보세요</p>
+            </div>
 
             <div className={styles.listWrap}>
               <hr className={styles.topDivider} />
@@ -71,7 +74,12 @@ export default function AnnouncementsScreen() {
                     />
                   ))}
                 </div>
-                <Pagination page={page} pageCount={pageCount} onPageChange={setPage} />
+                <Pagination
+                  page={page}
+                  pageCount={pageCount}
+                  onPageChange={setPage}
+                  className={styles.pagination}
+                />
               </div>
             </div>
           </GridColumn>

@@ -40,9 +40,11 @@
   gap: var(--space-22);
 }
 
+/* Lowered one step on request, 1920 only (was Body-L, FAQ's own
+   accordion — not the pinned/compact variants): Body-M. */
 .qMark {
-  font-size: var(--font-body-l-size);
-  font-weight: var(--font-body-l-weight);
+  font-size: var(--font-body-m-size);
+  font-weight: var(--font-body-m-weight);
 }
 
 @media (max-width: 1440px) {
@@ -54,10 +56,13 @@
   }
 }
 
+/* Lowered one step on request, 1920 only (was Heading-4, 20px): Body-M
+   (18px) — Body-L is also 20px, so Body-M is the first actually-smaller
+   step, same reasoning as elsewhere in this file. */
 .question {
-  font-size: var(--font-heading-4-size);
-  font-weight: var(--font-heading-4-weight);
-  line-height: var(--font-heading-4-line-height);
+  font-size: var(--font-body-m-size);
+  font-weight: var(--font-body-m-weight);
+  line-height: var(--font-body-m-line-height);
 }
 
 /* At 1440 the question drops out of Heading-4 (bold) entirely and
@@ -134,12 +139,13 @@
   overflow: hidden;
 }
 
+/* Lowered one step on request, 1920 only (was Body-M): Body-S. */
 .answer {
   padding-inline: var(--space-12);
-  font-size: var(--font-body-m-size);
-  font-weight: var(--font-body-m-weight);
-  line-height: var(--font-body-m-line-height);
-  letter-spacing: var(--font-body-m-letter-spacing);
+  font-size: var(--font-body-s-size);
+  font-weight: var(--font-body-s-weight);
+  line-height: var(--font-body-s-line-height);
+  letter-spacing: var(--font-body-s-letter-spacing);
   color: var(--color-neutral-100);
   margin: 0;
 }
@@ -171,12 +177,13 @@
 /* Re-measured against the "공지사항" frame (node 26:993/241:3598), this
    component's first real consumer: pinned/compact titles are Body-L
    (500 weight), not Heading-4 (700) as originally guessed. */
+/* Lowered one step on request, 1920 only (was Body-L): Body-M. */
 .pinnedQuestion {
   flex: 1;
-  font-size: var(--font-body-l-size);
-  font-weight: var(--font-body-l-weight);
-  line-height: var(--font-body-l-line-height);
-  letter-spacing: var(--font-body-l-letter-spacing);
+  font-size: var(--font-body-m-size);
+  font-weight: var(--font-body-m-weight);
+  line-height: var(--font-body-m-line-height);
+  letter-spacing: var(--font-body-m-letter-spacing);
   color: var(--color-neutral-100);
 }
 
@@ -189,13 +196,23 @@
   }
 }
 
+/* Lowered one step on request, 1920 only (was Body-S, the ladder's
+   floor): Label-M — same reasoning as SearchBox's .input, Label-L is
+   also 16px so Label-M is the first actually-smaller step. ≤1440 keeps
+   the original Body-S. */
 .pinnedDate {
-  font-size: var(--font-body-s-size);
+  font-size: var(--font-label-m-size);
   color: var(--color-neutral-100);
   white-space: nowrap;
 }
 
-/* "고정" chip's own vertical padding shrinks (6px -> 4px) at 1440 in the
+@media (max-width: 1440px) {
+  .pinnedDate {
+    font-size: var(--font-body-s-size);
+  }
+}
+
+/* "알림" chip's own vertical padding shrinks (6px -> 4px) at 1440 in the
    Announcements frame; scoped here via a passthrough className rather
    than changed on SmallChip itself, since SmallChip is shared by
    ChipLabelToggle elsewhere and that usage hasn't been re-measured. */
@@ -214,10 +231,19 @@
   padding-right: var(--spacing-md);
 }
 
+/* Lowered one step on request, 1920 only (was Body-S floor): Label-M.
+   ≤1440 keeps the original Body-S. */
 .compactIndex {
-  font-size: var(--font-body-s-size);
-  font-weight: var(--font-body-s-weight);
+  font-size: var(--font-label-m-size);
+  font-weight: var(--font-label-m-weight);
   color: var(--color-neutral-100);
+}
+
+@media (max-width: 1440px) {
+  .compactIndex {
+    font-size: var(--font-body-s-size);
+    font-weight: var(--font-body-s-weight);
+  }
 }
 
 .compactBody {
@@ -229,10 +255,11 @@
   color: var(--color-neutral-100);
 }
 
+/* Lowered one step on request, 1920 only (was Body-L): Body-M. */
 .compactQuestion {
-  font-size: var(--font-body-l-size);
-  font-weight: var(--font-body-l-weight);
-  line-height: var(--font-body-l-line-height);
+  font-size: var(--font-body-m-size);
+  font-weight: var(--font-body-m-weight);
+  line-height: var(--font-body-m-line-height);
 }
 
 @media (max-width: 1440px) {
@@ -243,7 +270,15 @@
   }
 }
 
+/* Lowered one step on request, 1920 only (was Body-S floor): Label-M.
+   ≤1440 keeps the original Body-S. */
 .compactDate {
-  font-size: var(--font-body-s-size);
+  font-size: var(--font-label-m-size);
   white-space: nowrap;
+}
+
+@media (max-width: 1440px) {
+  .compactDate {
+    font-size: var(--font-body-s-size);
+  }
 }

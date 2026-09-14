@@ -18,17 +18,12 @@
   }
 }
 
+/* Centered at 1920 on request, matching 1440 (was pulled left of the
+   grid margin, then cancelled, then re-centered) — opts into .column's
+   own align-items:center instead of flex-start. Now the same at both
+   breakpoints, so the old 1440-only override is gone. */
 .subNav {
-  align-self: flex-start;
-}
-
-/* Centered at 1440 on request (was pulled left of the grid margin, then
-   cancelled) — opts back into .column's own align-items:center instead
-   of staying at flex-start. */
-@media (max-width: 1440px) {
-  .subNav {
-    align-self: center;
-  }
+  align-self: center;
 }
 
 .notFound {
@@ -105,7 +100,7 @@
   gap: var(--space-12);
 }
 
-/* "고정" chip here is bordered/outlined (SmallChip's primaryBorder
+/* "알림" chip here is bordered/outlined (SmallChip's primaryBorder
    color), unlike the list screen's filled "whiteBorder" chip — bigger
    too (Label-L, not the component's default Label-S), so padding/font
    are overridden here via passthrough className rather than changing

@@ -9,6 +9,8 @@
   background: transparent;
   cursor: pointer;
   font-family: var(--font-family-base);
+  /* Navigation-L token itself was lowered to 18px on request (was 22px);
+     1920 uses Navigation-L again, ≤1440 drops to Navigation-S (16px). */
   font-size: var(--font-navigation-l-size);
   font-weight: var(--font-navigation-l-weight);
   line-height: var(--font-navigation-l-line-height);
@@ -18,8 +20,6 @@
   transition: color 0.15s ease;
 }
 
-/* Re-measured from the finished Header frame (node 214:2310): Navigation
-   L (20/700/28) above 1440px, Navigation S (16/700/24) at/below it. */
 @media (max-width: 1440px) {
   .tab {
     font-size: var(--font-navigation-s-size);

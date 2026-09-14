@@ -6,7 +6,7 @@ import { IconArrowDown as IconChevron } from "../icons";
 export interface QuestionHeadProps {
   question: string;
   answer?: string;
-  /** Pinned FAQ row: shows a "고정" tag and a date, not expandable. */
+  /** Pinned FAQ row: shows an "알림" tag and a date, not expandable. */
   pinned?: boolean;
   date?: string;
   /** Compact numbered row used in a shorter FAQ list. */
@@ -73,7 +73,7 @@ export default function QuestionHead({
           onKeyDown={handleRowKeyDown}
           data-clickable={Boolean(onClick)}
         >
-          <SmallChip color="whiteBorder" label="고정" className={styles.pinnedChip} />
+          <SmallChip color="whiteBorder" label="알림" className={styles.pinnedChip} />
           <span className={styles.pinnedQuestion}>{question}</span>
           {date && <span className={styles.pinnedDate}>{date}</span>}
         </div>

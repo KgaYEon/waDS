@@ -112,10 +112,12 @@
   border: none;
   outline: none;
   font-family: var(--font-family-base);
-  font-size: var(--font-search-input-size);
-  font-weight: var(--font-search-input-weight);
-  line-height: var(--font-search-input-line-height);
-  letter-spacing: var(--font-search-input-letter-spacing);
+  /* Lowered one step on request: was --font-search-input (19.2px =
+     Body-S x1.2 enlarge), now plain Body-S (16px). */
+  font-size: var(--font-body-s-size);
+  font-weight: var(--font-body-s-weight);
+  line-height: var(--font-body-s-line-height);
+  letter-spacing: var(--font-body-s-letter-spacing);
   color: var(--color-neutral-100);
 }
 
