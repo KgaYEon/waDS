@@ -31,7 +31,7 @@ export default function SearchBox({
     const trimmed = term.trim();
     if (!trimmed) return;
     recentSearches.add(trimmed);
-    setValue(trimmed);
+    setValue("");
     onSearch?.(trimmed);
   };
 

@@ -5,6 +5,14 @@
   background-color: var(--color-neutral-1000);
 }
 
+/* Re-measured against the redesigned Footer frame (node 307:2821):
+   horizontal padding stays 120px at 1440 too, unlike every other screen
+   (which switches to the shared --grid-margin, 170px, at 1440) — an
+   intentional Footer-specific exception to Container's default. */
+.container {
+  padding-inline: var(--space-120);
+}
+
 .inner {
   display: flex;
   flex-direction: column;
@@ -50,6 +58,18 @@
   color: var(--color-neutral-300);
 }
 
+/* Re-measured against the redesigned Footer frame — 1440 switches to an
+   exact Body-M match (18/500/26), bigger than the 1920 style, not a
+   scaled-down version of it. */
+@media (max-width: 1440px) {
+  .wordmark {
+    font-size: var(--font-body-m-size);
+    font-weight: var(--font-body-m-weight);
+    line-height: var(--font-body-m-line-height);
+    letter-spacing: var(--font-body-m-letter-spacing);
+  }
+}
+
 .navList {
   display: flex;
   align-items: center;
@@ -78,6 +98,18 @@
   color: var(--color-neutral-100);
 }
 
+/* Re-measured — 1440 switches to the new named "footer-s" style
+   (10/400/14, node 307:2998), dropping the 1920 style's 1.68px tracking
+   entirely (footer-s's own letter-spacing is 0). */
+@media (max-width: 1440px) {
+  .navLink {
+    font-size: var(--font-footer-s-size);
+    font-weight: var(--font-footer-s-weight);
+    line-height: var(--font-footer-s-line-height);
+    letter-spacing: var(--font-footer-s-letter-spacing);
+  }
+}
+
 .tagline {
   font-family: var(--font-family-base);
   font-size: var(--font-footer-tagline-size);
@@ -86,6 +118,28 @@
   letter-spacing: var(--font-footer-tagline-letter-spacing);
   color: var(--color-neutral-600);
   margin: 0;
+}
+
+/* Re-measured — 1440 switches to an exact Label-S match (12/700/16),
+   bold, not a scaled-down version of the 1920 style. */
+@media (max-width: 1440px) {
+  .tagline {
+    font-size: var(--font-label-s-size);
+    font-weight: var(--font-label-s-weight);
+    line-height: var(--font-label-s-line-height);
+    letter-spacing: var(--font-label-s-letter-spacing);
+  }
+}
+
+/* New at 1440/1920 alike (node 307:2894/307:2857) — Figma now groups the
+   divider+copyright with their own 12px gap, separate from .inner's
+   45px gap above them (previously both gaps were the same 45px). */
+.bottomGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-12);
+  width: 100%;
 }
 
 .divider {
@@ -105,4 +159,15 @@
   color: var(--color-neutral-300);
   margin: 0;
   width: 100%;
+}
+
+/* Re-measured — 1440 switches to "footer-s" (10/400/14, same style the
+   nav links use at 1440), down from the 1920 style's 12px light. */
+@media (max-width: 1440px) {
+  .copyright {
+    font-size: var(--font-footer-s-size);
+    font-weight: var(--font-footer-s-weight);
+    line-height: var(--font-footer-s-line-height);
+    letter-spacing: var(--font-footer-s-letter-spacing);
+  }
 }

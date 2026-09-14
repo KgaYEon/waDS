@@ -8,10 +8,41 @@
   width: 100%;
 }
 
+/* Sticky, not fixed — fixed would remove it from flow, and since it
+   shows/hides the filter-chip row depending on state, its height isn't
+   constant; a fixed position would need a hardcoded height to keep
+   .body from jumping under/over it whenever chips appear or disappear.
+   Sticky keeps its layout space automatically and pins at the same
+   "doesn't scroll away" result, without that fragility.
+
+   `top` uses --nav-header-height (set by Layout.tsx via ResizeObserver,
+   measuring the real shared Header) instead of a hand-guessed pixel
+   value — two hand-measured guesses in a row (103px, then a "corrected"
+   97px) both drifted from the real value by a few px, causing a visible
+   gap/jitter. The literal fallback is only for the first paint before
+   the effect runs. */
 .header {
+  position: sticky;
+  top: var(--nav-header-height, 103px);
+  z-index: 10;
+  background-color: var(--color-neutral-1000);
+  /* This element's own box only spans the content column — sticky, it
+     stays put while the page (and anything wider than that column)
+     scrolls past underneath, so its background needs to bleed out to
+     the full viewport width or the sides show whatever's scrolling by.
+     box-shadow isn't clipped by the box's own width, so a huge
+     same-color spread fills the rest. */
+  box-shadow: 0 0 0 100vmax var(--color-neutral-1000);
+  clip-path: inset(0 -100vmax);
   padding-inline: var(--space-56);
   padding-top: var(--spacing-xl);
   padding-bottom: var(--space-54);
+}
+
+@media (max-width: 1440px) {
+  .header {
+    top: var(--nav-header-height, 79px);
+  }
 }
 
 .headerRow {
@@ -123,7 +154,16 @@
 /* 338px/252px are this screen's own measured intrinsic widths for the
    sidebar box (border-box; padding-inline:24px yields the real 290px/
    204px content width measured in Figma). */
+/* Sticky, right below the shared Header + this screen's own sticky
+   .header, so it stays in view while only .content scrolls. `top` adds
+   this screen's own .header height (still a hand-measured estimate —
+   its real height shifts a few px depending on whether the filter-chip
+   row is showing, so this is the taller/chips-visible case) on top of
+   --nav-header-height (the shared Header's real measured height, see
+   Layout.tsx), instead of two hand-guessed numbers added together. */
 .sidebar {
+  position: sticky;
+  top: calc(var(--nav-header-height, 103px) + 193px);
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -132,11 +172,21 @@
   flex-shrink: 0;
   padding-block: var(--space-10);
   padding-inline: var(--spacing-md);
+  max-height: calc(100vh - (var(--nav-header-height, 103px) + 193px));
+  overflow-y: auto;
+  /* Without this, the scrollbar (when it appears) eats into the
+     sidebar's own content width instead of the fixed 338px box growing
+     to fit it — reserves that space up front so filter labels/checkboxes
+     don't get visually squeezed narrower whenever a filter expands
+     enough to trigger the scrollbar. */
+  scrollbar-gutter: stable;
 }
 
 @media (max-width: 1440px) {
   .sidebar {
+    top: calc(var(--nav-header-height, 79px) + 190px);
     width: 252px;
+    max-height: calc(100vh - (var(--nav-header-height, 79px) + 190px));
   }
 }
 

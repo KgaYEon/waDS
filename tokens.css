@@ -175,6 +175,16 @@
   --font-footer-copyright-line-height: 1.8;
   --font-footer-copyright-letter-spacing: 0;
 
+  /* Wa-text/footer-s (node 307:2998) — an actual named Figma style,
+     unlike the four ad-hoc bundles above. Not mapped anywhere yet on
+     request; the "500(Medium)/10px/14px" spec-sheet labels next to the
+     sample text in that frame are Pretendard and excluded, as always —
+     only the sample text itself ("Footer - s", Noto Sans KR) is real. */
+  --font-footer-s-size: 10px;
+  --font-footer-s-weight: 400;
+  --font-footer-s-line-height: 14px;
+  --font-footer-s-letter-spacing: 0;
+
   /* Hero banner tagline — ad hoc, no matching Wa-text style (Medium 24px
      with a tight 1.2 line-height and negative tracking; distinct from
      Heading 3, which is Bold/24px/32 line-height). */
@@ -209,7 +219,9 @@
      component files. */
   --space-2: 2px;
   --space-4: 4px;
+  --space-26: 26px; /* Game detail screen: loading-area-to-info-panel gap, both breakpoints */
   --space-6: 6px;
+  --space-9: 9px; /* New releases screen: title-to-subtitle gap in the page header at 1920 */
   --space-10: 10px;
   --space-11: 11px; /* Suggestion screen: gap between "건의 유형" chips */
   --space-12: 12px;
@@ -241,12 +253,17 @@
   --space-100: 100px;
   --space-113: 112.8px; /* --space-94 x1.2 (search dropdown empty-state padding) */
   --space-120: 120px;
+  --space-132: 132px; /* SearchResults empty-state: bottom padding (keeps total block height, and Footer's position, unchanged after padding-top was reduced) */
+  --space-164: 164px; /* SearchResults empty-state: same at 1440 (188 total, padding-top pushed higher than 1920's) */
   --space-21: 21px; /* Filter screen: title-to-subtitle gap at 1440 */
   --space-68: 68px; /* Notice detail: sub-nav-to-back-link gap at 1920 */
   --space-78: 78px; /* Notice detail: same gap at 1440 */
   --space-191: 191px; /* Board screens (Announcements/Notice): header-to-sub-nav top padding at 1920 */
   --space-194: 194px; /* Same padding at 1440 */
   --space-220: 220px;
+  --space-30: 30px; /* Donation screen: month-nav-to-progress-bar gap at 1440 */
+  --space-82: 82px; /* Donation screen: sub-nav-to-hero and hero-to-month-nav gaps at 1920 */
+  --space-73: 73px; /* Donation screen: board-box-to-Footer bottom padding at 1920 */
 
   /* BigChip (node 214:2143, "chip-Large/Small") — its two sizes (L/M)
      share the same inline padding but differ in block padding, so

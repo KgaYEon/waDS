@@ -33,7 +33,7 @@ export default function Footer({
 }: FooterProps) {
   return (
     <footer className={[styles.footer, className].filter(Boolean).join(" ")} {...rest}>
-      <Container>
+      <Container className={styles.container}>
         <Grid>
           <GridColumn span={12} className={styles.inner}>
             <div className={styles.contWrap}>
@@ -58,8 +58,10 @@ export default function Footer({
               </div>
               <p className={styles.tagline}>{tagline}</p>
             </div>
-            <hr className={styles.divider} />
-            <p className={styles.copyright}>{copyright}</p>
+            <div className={styles.bottomGroup}>
+              <hr className={styles.divider} />
+              <p className={styles.copyright}>{copyright}</p>
+            </div>
           </GridColumn>
         </Grid>
       </Container>

@@ -1,0 +1,329 @@
+.screen {
+  position: relative;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Same header-to-sub-nav padding as the other board screens
+     (Announcements/FAQ/Suggestions) — identical sub-nav position. */
+  padding-top: var(--space-191);
+  /* Board-box-bottom to Footer-top gap, measured from this frame directly. */
+  padding-bottom: var(--space-73);
+}
+
+@media (max-width: 1440px) {
+  .column {
+    padding-top: var(--space-194);
+    padding-bottom: var(--space-56);
+  }
+}
+
+.subNav {
+  align-self: flex-start;
+}
+
+/* Centered at 1440 on request (was pulled left of the grid margin, then
+   cancelled) — opts back into .column's own align-items:center instead
+   of staying at flex-start. */
+@media (max-width: 1440px) {
+  .subNav {
+    align-self: center;
+  }
+}
+
+/* 739px is this screen's own measured intrinsic width — identical at
+   both breakpoints (unlike the other board screens' reading columns,
+   which narrow at 1440; re-measured directly, not assumed). */
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-lg);
+  width: 100%;
+  max-width: 739px;
+  /* Was space-82 (this frame's own measured sub-nav-to-hero gap) — now
+     matched to Suggestions/FAQ/Announcements' unified title margin-top
+     (space-45/space-78) instead, so the logo's top edge (the first child
+     here, playing the title's role) lines up with their title's top edge
+     exactly — .column's own padding-top is already identical across all
+     four screens, so equal margin-top here gives equal absolute position. */
+  margin-top: var(--space-45);
+}
+
+@media (max-width: 1440px) {
+  .hero {
+    margin-top: var(--space-78);
+  }
+}
+
+.logo {
+  width: 132.872px;
+  height: 63.565px;
+}
+
+@media (max-width: 1440px) {
+  .logo {
+    width: 95.019px;
+    height: 45.457px;
+  }
+}
+
+.heroBody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--spacing-lg);
+  width: 100%;
+}
+
+@media (max-width: 1440px) {
+  .heroBody {
+    gap: var(--spacing-md);
+  }
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-family-base);
+  font-size: var(--font-heading-3-size);
+  font-weight: var(--font-heading-3-weight);
+  line-height: var(--font-heading-3-line-height);
+  letter-spacing: var(--font-heading-3-letter-spacing);
+  color: var(--color-neutral-100);
+}
+
+@media (max-width: 1440px) {
+  .title {
+    font-size: var(--font-heading-4-size);
+    font-weight: var(--font-heading-4-weight);
+    line-height: var(--font-heading-4-line-height);
+    letter-spacing: var(--font-heading-4-letter-spacing);
+  }
+}
+
+/* Body-S's size/weight match exactly, but Figma's own line-height here
+   (28px) doesn't match Body-S's own (24px) — kept as measured, same
+   treatment as other screens' small intentional line-height mismatches. */
+.description {
+  margin: 0;
+  font-family: var(--font-family-base);
+  font-size: var(--font-body-s-size);
+  font-weight: var(--font-body-s-weight);
+  line-height: 28px;
+  letter-spacing: var(--font-body-s-letter-spacing);
+  color: var(--color-neutral-300);
+}
+
+/* Same mismatch at 1440 — Label-M's size/weight match, line-height
+   (24px measured vs Label-M's own 18px) doesn't. */
+@media (max-width: 1440px) {
+  .description {
+    font-size: var(--font-label-m-size);
+    font-weight: var(--font-label-m-weight);
+    line-height: 24px;
+    letter-spacing: var(--font-label-m-letter-spacing);
+  }
+}
+
+.ctaGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-16);
+}
+
+@media (max-width: 1440px) {
+  .ctaGroup {
+    gap: var(--space-12);
+  }
+}
+
+/* Button's size="M" (padding-16/spacing-md, Label-L text) matches this
+   frame's own 1920 button exactly. At 1440 the frame steps down further
+   than size="M"'s own padding/text (to size="S"'s padding + Label-M
+   text, not Label-L) — scoped here rather than in Button.module.css,
+   same pattern as Suggestions' .submitButton / FAQ's .ctaButton. */
+@media (max-width: 1440px) {
+  .donateButton {
+    padding: var(--space-12) var(--spacing-md);
+    font-size: var(--font-label-m-size);
+    font-weight: var(--font-label-m-weight);
+    line-height: var(--font-label-m-line-height);
+    letter-spacing: var(--font-label-m-letter-spacing);
+  }
+}
+
+.supporterLink {
+  font-family: var(--font-family-base);
+  font-size: var(--font-label-m-size);
+  font-weight: var(--font-label-m-weight);
+  line-height: var(--font-label-m-line-height);
+  letter-spacing: var(--font-label-m-letter-spacing);
+  color: var(--color-neutral-400);
+  text-decoration: underline;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.supporterLink:hover {
+  color: var(--color-neutral-300);
+}
+
+@media (max-width: 1440px) {
+  .supporterLink {
+    font-size: var(--font-label-s-size);
+    font-weight: var(--font-label-s-weight);
+    line-height: var(--font-label-s-line-height);
+    letter-spacing: var(--font-label-s-letter-spacing);
+  }
+}
+
+.monthNav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-lg);
+  width: 100%;
+  margin-top: var(--space-82);
+}
+
+@media (max-width: 1440px) {
+  .monthNav {
+    margin-top: var(--space-56);
+  }
+}
+
+.monthArrow {
+  color: var(--color-neutral-100);
+  flex-shrink: 0;
+}
+
+@media (max-width: 1440px) {
+  .monthArrow {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.monthLabel {
+  font-family: var(--font-family-base);
+  font-size: var(--font-heading-3-size);
+  font-weight: var(--font-heading-3-weight);
+  line-height: var(--font-heading-3-line-height);
+  letter-spacing: var(--font-heading-3-letter-spacing);
+  color: var(--color-neutral-100);
+  white-space: nowrap;
+}
+
+@media (max-width: 1440px) {
+  .monthLabel {
+    font-size: var(--font-body-l-size);
+    font-weight: var(--font-body-l-weight);
+    line-height: var(--font-body-l-line-height);
+    letter-spacing: var(--font-body-l-letter-spacing);
+  }
+}
+
+/* Inset by exactly one grid column (column width + one gutter) on each
+   side, both breakpoints, using the shared grid tokens so it tracks
+   --grid-margin/--grid-gutter if those ever change. Includes the "44%"
+   label row too, so it stays aligned with the bar's right edge.
+   .column is a flex container (align-items:center), where a plain
+   width:auto shrinks to content instead of "100% minus margins" — so
+   the narrowed width has to be computed explicitly rather than left to
+   auto-margin shrinkage. */
+.progressSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  width: calc(100% - 2 * ((100% - var(--grid-gutter) * 11) / 12 + var(--grid-gutter)));
+  margin-inline: calc((100% - var(--grid-gutter) * 11) / 12 + var(--grid-gutter));
+  margin-top: var(--spacing-lg);
+}
+
+@media (max-width: 1440px) {
+  .progressSection {
+    margin-top: var(--space-30);
+  }
+}
+
+/* New — no Figma source for this label, see DonationScreen.tsx. */
+.progressLabelRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.progressLabel {
+  font-family: var(--font-family-base);
+  font-size: var(--font-label-m-size);
+  font-weight: var(--font-label-m-weight);
+  line-height: var(--font-label-m-line-height);
+  letter-spacing: var(--font-label-m-letter-spacing);
+  color: var(--color-neutral-400);
+}
+
+@media (max-width: 1440px) {
+  .progressLabel {
+    font-size: var(--font-label-s-size);
+    font-weight: var(--font-label-s-weight);
+    line-height: var(--font-label-s-line-height);
+    letter-spacing: var(--font-label-s-letter-spacing);
+  }
+}
+
+.progressPercent {
+  font-family: var(--font-family-base);
+  font-size: var(--font-label-m-size);
+  font-weight: var(--font-label-m-weight);
+  line-height: var(--font-label-m-line-height);
+  letter-spacing: var(--font-label-m-letter-spacing);
+  color: var(--color-neutral-300);
+}
+
+@media (max-width: 1440px) {
+  .progressPercent {
+    font-size: var(--font-label-s-size);
+    font-weight: var(--font-label-s-weight);
+    line-height: var(--font-label-s-line-height);
+    letter-spacing: var(--font-label-s-letter-spacing);
+  }
+}
+
+.progressTrack {
+  position: relative;
+  width: 100%;
+  /* Was 15px (measured), thinned down on request. */
+  height: 10px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-neutral-600);
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background-color: var(--color-primary-400);
+  border-radius: var(--radius-full);
+}
+
+/* Empty comment-board placeholder — background/border only, per request. */
+/* Same one-grid-column inset as .progressSection above, both breakpoints. */
+.board {
+  width: calc(100% - 2 * ((100% - var(--grid-gutter) * 11) / 12 + var(--grid-gutter)));
+  margin-inline: calc((100% - var(--grid-gutter) * 11) / 12 + var(--grid-gutter));
+  height: 641px;
+  margin-top: var(--space-48);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-neutral-800);
+}
+
+@media (max-width: 1440px) {
+  .board {
+    height: 495px;
+    margin-top: var(--spacing-lg);
+  }
+}

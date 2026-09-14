@@ -39,7 +39,7 @@ export default function AnnouncementsScreen() {
                 { label: "공지사항", active: true },
                 { label: "FAQ", onClick: () => navigate("/faq") },
                 { label: "건의함", onClick: () => navigate("/suggestions") },
-                { label: "후원하기" },
+                { label: "후원하기", onClick: () => navigate("/donation") },
               ]}
             />
 

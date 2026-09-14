@@ -27,14 +27,17 @@
   color: var(--color-neutral-100);
 }
 
-/* Dropdown-only breakpoint: step back down one level (Body-M -> Body-S)
-   at 1440 — padding/gap/icon size are unchanged, font-size only. */
+/* Dropdown-only breakpoint at 1440 — padding/gap/icon size are unchanged,
+   font-size only. Was Body-S (16px); Body-S is the ladder's smallest
+   tier, so a further one-step-down request continues into the Label
+   ladder (Label-L is also 16px, so Label-M is the first actually-smaller
+   step) rather than Body-S -> Body-S. */
 @media (max-width: 1440px) {
   .label {
-    font-size: var(--font-body-s-size);
-    font-weight: var(--font-body-s-weight);
-    line-height: var(--font-body-s-line-height);
-    letter-spacing: var(--font-body-s-letter-spacing);
+    font-size: var(--font-label-m-size);
+    font-weight: var(--font-label-m-weight);
+    line-height: var(--font-label-m-line-height);
+    letter-spacing: var(--font-label-m-letter-spacing);
   }
 }
 
@@ -54,4 +57,11 @@
      class disagreed; CSS was winning at 20px). */
   width: 24px;
   height: 24px;
+}
+
+@media (max-width: 1440px) {
+  .icon {
+    width: 20px;
+    height: 20px;
+  }
 }

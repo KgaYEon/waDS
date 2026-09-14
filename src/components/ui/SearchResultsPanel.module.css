@@ -24,14 +24,30 @@
   color: var(--color-neutral-300);
 }
 
-/* Dropdown-only breakpoint: step back down one level (Body-M -> Body-S)
-   at 1440 — padding is unchanged, font-size only. line-height stays the
-   custom 1.8 ratio above (not a Body-S/M token) either way. */
+/* Dropdown-only breakpoint at 1440. Was wrapping to 3 lines because the
+   1.2x-scaled padding (space-113/space-67, ~113px/80px) never got
+   reverted here the way .box/.icon in SearchBox.module.css already do —
+   left the text only ~160px wide inside the 384px dropdown. Reverting it
+   to the pre-scale values (space-94/space-56) frees real width for the
+   text, same convention as those siblings. */
 @media (max-width: 1440px) {
   .empty {
-    font-size: var(--font-body-s-size);
-    font-weight: var(--font-body-s-weight);
-    letter-spacing: var(--font-body-s-letter-spacing);
+    padding: var(--space-56) var(--space-94);
+    font-size: var(--font-label-m-size);
+    font-weight: var(--font-label-m-weight);
+    letter-spacing: var(--font-label-m-letter-spacing);
+  }
+}
+
+/* Belt-and-suspenders: if the freed-up width still doesn't land the text
+   in exactly 2 lines, clamp it there with an ellipsis rather than letting
+   a 3rd line slip through. No-op at 1920, where it already fits. */
+@media (max-width: 1440px) {
+  .emptyText {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 }
 

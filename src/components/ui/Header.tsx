@@ -1,3 +1,4 @@
+import { forwardRef } from "react";
 import type { HTMLAttributes } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styles from "./Header.module.css";
@@ -22,9 +23,12 @@ export interface HeaderProps extends HTMLAttributes<HTMLElement> {
 const DEFAULT_NAV: NavItem[] = [
   { label: "홈", href: "/" },
   { label: "필터 검색", href: "/filters" },
-  // No screen behind this yet — clicking it is a no-op until one exists.
-  { label: "이달의 신작" },
-  { label: "기타", href: "/notices", activePrefixes: ["/notice", "/faq", "/suggestions"] },
+  { label: "이달의 신작", href: "/new-releases" },
+  {
+    label: "기타",
+    href: "/notices",
+    activePrefixes: ["/notice", "/faq", "/suggestions", "/donation"],
+  },
 ];
 
 function isNavItemActive(item: NavItem, pathname: string): boolean {
@@ -38,22 +42,28 @@ function isNavItemActive(item: NavItem, pathname: string): boolean {
 // intentionally does NOT use Container/Grid/GridColumn like the rest of
 // the page chrome (Footer, screen content). It keeps its own measured
 // --space-48 side padding instead of the shared --grid-margin.
-export default function Header({
-  navItems = DEFAULT_NAV,
-  onSearch,
-  onProfileClick,
-  className,
-  ...rest
-}: HeaderProps) {
+//
+// Forwards its ref so Layout can measure its real rendered height (see
+// Layout.tsx) — some screens' own sticky title blocks need to sit
+// exactly flush under it, and that height isn't safe to hand-guess.
+const Header = forwardRef<HTMLElement, HeaderProps>(function Header(
+  { navItems = DEFAULT_NAV, onSearch, onProfileClick, className, ...rest },
+  ref
+) {
   const navigate = useNavigate();
   const location = useLocation();
 
   return (
-    <header className={[styles.header, className].filter(Boolean).join(" ")} {...rest}>
+    <header ref={ref} className={[styles.header, className].filter(Boolean).join(" ")} {...rest}>
       <div className={styles.left}>
-        <div className={styles.logo}>
+        <button
+          type="button"
+          className={styles.logo}
+          onClick={() => navigate("/")}
+          aria-label="홈으로 이동"
+        >
           <IconLogo className={styles.logoMark} />
-        </div>
+        </button>
         <nav className={styles.nav}>
           {navItems.map((item) => (
             <NavTab
@@ -79,4 +89,6 @@ export default function Header({
       </div>
     </header>
   );
-}
+});
+
+export default Header;

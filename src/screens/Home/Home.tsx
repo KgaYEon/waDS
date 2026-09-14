@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import styles from "./Home.module.css";
 import Container from "../../components/ui/Container";
 import Grid from "../../components/ui/Grid";
@@ -8,7 +9,8 @@ import RecommendedGamesSection from "./sections/RecommendedGamesSection";
 import { useHomeData } from "./useHomeData";
 
 export default function Home() {
-  const { heroSlides, recentlyPlayed, recommended } = useHomeData();
+  const navigate = useNavigate();
+  const { heroSlides, recentlyPlayed, recommended } = useHomeData(navigate);
 
   return (
     <div className={styles.page}>

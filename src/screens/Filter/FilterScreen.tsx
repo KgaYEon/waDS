@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "./FilterScreen.module.css";
 import Filter from "../../components/ui/Filter";
 import IconChip from "../../components/ui/IconChip";
@@ -23,6 +24,7 @@ import type { FilterKey, FilterSelection } from "./useFilterData";
  * all for sites — see chat notes).
  */
 export default function FilterScreen() {
+  const navigate = useNavigate();
   const options = useFilterOptions();
   const [openFilter, setOpenFilter] = useState<FilterKey | null>(null);
   const [selection, setSelection] = useState<FilterSelection>({
@@ -128,6 +130,7 @@ export default function FilterScreen() {
                   imageAlt={game.title}
                   title={game.title}
                   category={game.genre}
+                  onClick={() => navigate(`/game/${game.id}`)}
                 />
               ))}
             </div>

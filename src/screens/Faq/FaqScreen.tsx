@@ -36,7 +36,7 @@ export default function FaqScreen() {
                 { label: "공지사항", onClick: () => navigate("/notices") },
                 { label: "FAQ", active: true },
                 { label: "건의함", onClick: () => navigate("/suggestions") },
-                { label: "후원하기" },
+                { label: "후원하기", onClick: () => navigate("/donation") },
               ]}
             />
 

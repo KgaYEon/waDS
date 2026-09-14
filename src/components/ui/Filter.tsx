@@ -44,9 +44,16 @@ export default function Filter({
   const visibleOptions = hasMore && !showAll ? options.slice(0, maxVisible) : options;
 
   return (
-    <div className={[styles.filter, className].filter(Boolean).join(" ")} {...rest}>
+    <div
+      className={[styles.filter, className].filter(Boolean).join(" ")}
+      data-open={open}
+      {...rest}
+    >
       <FilterCap label={label} expanded={open} onClick={onToggleOpen} />
-      {open && (
+      {/* Always rendered (not conditional on `open`) so the height can
+          transition instead of appearing/disappearing instantly — same
+          grid-template-rows trick used for the FAQ accordion. */}
+      <div className={styles.optionsWrap} aria-hidden={!open}>
         <div className={styles.options}>
           {visibleOptions.map((option) => (
             <div
@@ -75,7 +82,7 @@ export default function Filter({
             </button>
           )}
         </div>
-      )}
+      </div>
     </div>
   );
 }

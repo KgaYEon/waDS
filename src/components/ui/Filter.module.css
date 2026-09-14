@@ -2,8 +2,24 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: var(--spacing-md);
   width: 100%;
+}
+
+/* Cap-to-options gap (--spacing-md) lives here instead of a flex `gap`
+   on .filter, since .optionsWrap is now always rendered — a flex gap
+   would otherwise add that spacing even while collapsed to 0 height. */
+.optionsWrap {
+  display: grid;
+  grid-template-rows: 0fr;
+  width: 100%;
+  overflow: hidden;
+  margin-top: 0;
+  transition: grid-template-rows 0.25s ease, margin-top 0.25s ease;
+}
+
+.filter[data-open="true"] .optionsWrap {
+  grid-template-rows: 1fr;
+  margin-top: var(--spacing-md);
 }
 
 .options {
@@ -13,6 +29,8 @@
   gap: var(--space-12);
   width: 100%;
   padding-inline: var(--space-4);
+  min-height: 0;
+  overflow: hidden;
 }
 
 .option {

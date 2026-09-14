@@ -7,6 +7,9 @@
  * again without checking first.
  */
 .header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -34,11 +37,22 @@
 .logo {
   display: flex;
   padding: var(--space-10);
+  border: none;
+  background: none;
+  cursor: pointer;
 }
 
 .logoMark {
   width: 71px;
   height: 34px;
+}
+
+/* 80% of the 1920 size, on request. */
+@media (max-width: 1440px) {
+  .logoMark {
+    width: 56.8px;
+    height: 27.2px;
+  }
 }
 
 .nav {
@@ -58,7 +72,8 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: var(--spacing-lg);
+  /* Was spacing-lg (32px) — widened ~4px on request (space-36). */
+  gap: var(--space-36);
 }
 
 .profile {

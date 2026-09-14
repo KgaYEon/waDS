@@ -1,0 +1,569 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-26);
+  /* Was var(--spacing-lg) (32px), matching the raw Figma header-to-content
+     gap — looked too big in the browser against the sticky Header, so
+     trimmed down (user feedback). */
+  padding-top: var(--space-16);
+  padding-bottom: var(--spacing-xl);
+}
+
+@media (max-width: 1440px) {
+  .content {
+    /* Was var(--space-45) (45px), same reasoning as 1920 above. */
+    padding-top: var(--space-22);
+  }
+}
+
+.notFound {
+  padding-block: var(--space-94);
+  text-align: center;
+  font-family: var(--font-family-base);
+  font-size: var(--font-heading-4-size);
+  font-weight: var(--font-heading-4-weight);
+  line-height: var(--font-heading-4-line-height);
+  color: var(--color-neutral-300);
+}
+
+/* ---------- loading area ---------- */
+
+.gameFrame {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 738px;
+  border: 2px solid var(--color-neutral-600);
+  border-radius: var(--radius-sm);
+}
+
+@media (max-width: 1440px) {
+  .gameFrame {
+    height: 505px;
+  }
+}
+
+.loadingBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Component-internal proportions, measured identical at both
+     breakpoints (only the text sizes inside shrink at 1440) — literal
+     per the box/icon-dimension convention, not a reusable layout gap. */
+  gap: 41.678px;
+}
+
+.headBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 11.908px;
+}
+
+.flashLabel {
+  font-family: var(--font-family-base);
+  font-size: var(--font-body-l-size);
+  font-weight: var(--font-body-l-weight);
+  line-height: var(--font-body-l-line-height);
+  color: var(--color-primary-400);
+  white-space: nowrap;
+}
+
+@media (max-width: 1440px) {
+  .flashLabel {
+    font-size: var(--font-body-s-size);
+    font-weight: var(--font-body-s-weight);
+    line-height: var(--font-body-s-line-height);
+  }
+}
+
+.gameName {
+  margin: 0;
+  font-family: var(--font-family-base);
+  font-size: var(--font-heading-1-size);
+  font-weight: var(--font-heading-1-weight);
+  line-height: var(--font-heading-1-line-height);
+  color: var(--color-neutral-100);
+  white-space: nowrap;
+}
+
+@media (max-width: 1440px) {
+  .gameName {
+    font-size: var(--font-heading-3-size);
+    font-weight: var(--font-heading-3-weight);
+    line-height: var(--font-heading-3-line-height);
+  }
+}
+
+.nowLoading {
+  font-family: var(--font-family-base);
+  font-size: var(--font-body-l-size);
+  font-weight: var(--font-body-l-weight);
+  line-height: var(--font-body-l-line-height);
+  color: var(--color-neutral-300);
+  white-space: nowrap;
+}
+
+@media (max-width: 1440px) {
+  .nowLoading {
+    font-size: var(--font-body-s-size);
+    font-weight: var(--font-body-s-weight);
+    line-height: var(--font-body-s-line-height);
+  }
+}
+
+.progressBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14.885px;
+  width: 535.854px;
+  max-width: 100%;
+}
+
+.progressTrack {
+  position: relative;
+  width: 100%;
+  height: 11px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-neutral-800);
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background-color: var(--color-primary-400);
+  border-radius: var(--radius-full);
+  transition: width 0.1s linear;
+}
+
+.progressRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.progressLabel {
+  font-family: var(--font-family-base);
+  font-size: var(--font-body-s-size);
+  font-weight: var(--font-body-s-weight);
+  line-height: var(--font-body-s-line-height);
+  color: var(--color-neutral-500);
+  white-space: nowrap;
+}
+
+.progressPercent {
+  font-family: var(--font-family-base);
+  font-size: var(--font-body-s-size);
+  font-weight: var(--font-body-s-weight);
+  line-height: var(--font-body-s-line-height);
+  color: var(--color-neutral-300);
+  white-space: nowrap;
+}
+
+@media (max-width: 1440px) {
+  .progressLabel,
+  .progressPercent {
+    font-size: var(--font-label-s-size);
+    font-weight: var(--font-label-s-weight);
+    line-height: var(--font-label-s-line-height);
+  }
+}
+
+/* Swaps into the same slot the progress bar/row occupied — same fixed
+   width so the loading block doesn't reflow when it appears. */
+.readyText {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 535.854px;
+  max-width: 100%;
+  margin: 0;
+  font-family: var(--font-family-base);
+  font-size: var(--font-body-l-size);
+  font-weight: var(--font-body-l-weight);
+  line-height: var(--font-body-l-line-height);
+  color: var(--color-neutral-100);
+}
+
+@media (max-width: 1440px) {
+  .readyText {
+    font-size: var(--font-body-s-size);
+    font-weight: var(--font-body-s-weight);
+    line-height: var(--font-body-s-line-height);
+  }
+}
+
+/* ---------- panel (title row + info accordion) ---------- */
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  width: 100%;
+}
+
+.panelTop {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  width: 100%;
+  gap: var(--spacing-md);
+}
+
+.titleGroup {
+  display: flex;
+  /* Heading-2's line-height (36px) leaves most of its leading above the
+     glyphs, not below — so flex-start (icon flush to box top) and even
+     center both left the 32px icon looking noticeably higher than the
+     title's actual visual weight. flex-end (icon's bottom edge lined up
+     with the text's own baseline-ish bottom) is also the Figma frame's
+     own original spec for this row (items-end) — matches best. */
+  align-items: flex-end;
+  /* .panelTop's own align-items is flex-end (so .actions, the taller
+     round buttons, stays bottom-aligned) — this overrides just this one
+     flex item's position within that row, without touching .actions. */
+  align-self: flex-start;
+  gap: var(--spacing-sm);
+  min-width: 0;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-family-base);
+  font-size: var(--font-heading-2-size);
+  font-weight: var(--font-heading-2-weight);
+  line-height: var(--font-heading-2-line-height);
+  color: var(--color-neutral-100);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 1440px) {
+  .title {
+    font-size: var(--font-heading-4-size);
+    font-weight: var(--font-heading-4-weight);
+    line-height: var(--font-heading-4-line-height);
+  }
+}
+
+.soundControl {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+  flex-shrink: 0;
+}
+
+.soundToggle {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--color-neutral-100);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* Reuses the loading bar's own track/fill look (neutral-800 track,
+   primary-400 fill) — no Figma spec for this control, chosen to match
+   the one bar-style element the design already has. A native range
+   input (not a custom drag-tracking div) so click-to-set and drag both
+   come for free; the filled portion is faked with a value-based
+   left/right color stop on its own background. */
+.volumeSlider {
+  width: 120px;
+  height: 6px;
+  flex-shrink: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  border-radius: var(--radius-full);
+  outline: none;
+  cursor: pointer;
+}
+
+.volumeSlider::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: var(--radius-full);
+}
+
+.volumeSlider::-moz-range-track {
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: var(--color-neutral-800);
+}
+
+.volumeSlider::-moz-range-progress {
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: var(--color-primary-400);
+}
+
+.volumeSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: var(--radius-full);
+  background: var(--color-neutral-100);
+  margin-top: -3px;
+  cursor: pointer;
+}
+
+.volumeSlider::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border: none;
+  border-radius: var(--radius-full);
+  background: var(--color-neutral-100);
+  cursor: pointer;
+}
+
+/* 1920 already thinned from the original 11px track — 1440 goes thinner
+   still, per request. */
+@media (max-width: 1440px) {
+  .volumeSlider,
+  .volumeSlider::-webkit-slider-runnable-track,
+  .volumeSlider::-moz-range-track,
+  .volumeSlider::-moz-range-progress {
+    height: 4px;
+  }
+
+  .volumeSlider::-webkit-slider-thumb,
+  .volumeSlider::-moz-range-thumb {
+    width: 10px;
+    height: 10px;
+  }
+
+  .volumeSlider::-webkit-slider-thumb {
+    margin-top: -3px;
+  }
+}
+
+/* Icon-size override at 1440 (per request: 1920 keeps the icon at its
+   default 32, 1440 drops it to 24) — set via CSS on the consuming class,
+   since that always wins over the size-prop attribute (project
+   convention, see icon components). */
+@media (max-width: 1440px) {
+  .soundIcon {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-16);
+  flex-shrink: 0;
+}
+
+.roundButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-neutral-600);
+  background-color: var(--color-neutral-900);
+  color: var(--color-neutral-400);
+  cursor: pointer;
+}
+
+/* Same 48px -> 40px reduction the Header's own round profile button
+   uses at 1440 (see Header.module.css), reused here for consistency. */
+@media (max-width: 1440px) {
+  .roundButton {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+.roundButtonPrimary {
+  border: none;
+  background-color: var(--color-primary-400);
+  color: var(--color-neutral-100);
+}
+
+/* ---------- info accordion ---------- */
+
+.infoAccordion {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.infoWrap {
+  display: grid;
+  grid-template-rows: 0fr;
+  overflow: hidden;
+  transition: grid-template-rows 0.25s ease;
+}
+
+.infoAccordion[data-open="true"] .infoWrap {
+  grid-template-rows: 1fr;
+}
+
+.infoInner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.infoBox {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-48);
+  width: 100%;
+  padding: var(--space-48);
+  border: 1px solid var(--color-neutral-600);
+  border-radius: var(--radius-8);
+  background-color: var(--color-neutral-900);
+}
+
+@media (max-width: 1440px) {
+  .infoBox {
+    padding: var(--spacing-lg);
+  }
+}
+
+.infoSection {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-16);
+  width: 100%;
+}
+
+.infoHeading {
+  margin: 0;
+  font-family: var(--font-family-base);
+  font-size: var(--font-body-m-size);
+  font-weight: var(--font-body-m-weight);
+  line-height: var(--font-body-m-line-height);
+  color: var(--color-neutral-100);
+}
+
+@media (max-width: 1440px) {
+  .infoHeading {
+    font-size: var(--font-label-m-size);
+    font-weight: var(--font-label-m-weight);
+    line-height: var(--font-label-m-line-height);
+  }
+}
+
+.infoText {
+  margin: 0;
+  font-family: var(--font-family-base);
+  font-size: var(--font-body-s-size);
+  font-weight: var(--font-body-s-weight);
+  line-height: var(--font-body-s-line-height);
+  color: var(--color-neutral-300);
+  white-space: pre-line;
+}
+
+@media (max-width: 1440px) {
+  .infoText {
+    font-size: var(--font-label-s-size);
+    font-weight: var(--font-label-s-weight);
+    line-height: var(--font-label-s-line-height);
+  }
+}
+
+.infoDivider {
+  width: 100%;
+  height: 1px;
+  border: none;
+  margin: 0;
+  background-color: var(--color-neutral-700);
+}
+
+.bottomRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
+}
+
+/* Literal 271px, measured identical at both breakpoints (unlike the
+   게임 방법 list's own 957px, which didn't scale down and was dropped as
+   an auto-layout artifact — see chat notes). */
+.productionInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-16);
+  width: 271px;
+  flex-shrink: 0;
+}
+
+.productionRows {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-12);
+  width: 100%;
+}
+
+@media (max-width: 1440px) {
+  .productionRows {
+    gap: var(--spacing-xs);
+  }
+}
+
+.productionRow {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.productionLabel {
+  width: 94px;
+  flex-shrink: 0;
+  font-family: var(--font-family-base);
+  font-size: var(--font-label-l-size);
+  font-weight: var(--font-label-l-weight);
+  line-height: var(--font-label-l-line-height);
+  color: var(--color-neutral-500);
+}
+
+@media (max-width: 1440px) {
+  .productionLabel {
+    font-size: var(--font-label-s-size);
+    font-weight: var(--font-label-s-weight);
+    line-height: var(--font-label-s-line-height);
+  }
+}
+
+.productionValue {
+  font-family: var(--font-family-base);
+  font-size: var(--font-body-s-size);
+  font-weight: var(--font-body-s-weight);
+  line-height: var(--font-body-s-line-height);
+  color: var(--color-neutral-300);
+  white-space: nowrap;
+}
+
+@media (max-width: 1440px) {
+  .productionValue {
+    font-size: var(--font-label-m-size);
+    font-weight: var(--font-label-m-weight);
+    line-height: var(--font-label-m-line-height);
+  }
+}
+
+.gameExplain {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: stretch;
+  flex: 1 0 0;
+  min-width: 0;
+  gap: var(--space-16);
+  padding-inline: var(--space-12);
+}

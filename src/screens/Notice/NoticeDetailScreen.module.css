@@ -22,6 +22,15 @@
   align-self: flex-start;
 }
 
+/* Centered at 1440 on request (was pulled left of the grid margin, then
+   cancelled) — opts back into .column's own align-items:center instead
+   of staying at flex-start. */
+@media (max-width: 1440px) {
+  .subNav {
+    align-self: center;
+  }
+}
+
 .notFound {
   margin-top: var(--space-56);
   font-family: var(--font-family-base);

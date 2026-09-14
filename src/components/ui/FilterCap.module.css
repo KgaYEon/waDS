@@ -2,6 +2,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  /* Minimum breathing room between label and icon — with space-between
+     alone, longer 1440 labels ("사이트 별 필터링" etc.) at the bumped
+     Label-L size left almost no visible gap before the icon. */
+  gap: var(--spacing-md);
   width: 100%;
   padding: var(--space-16);
   border: none;
@@ -18,15 +22,14 @@
   transition: background-color 0.15s ease;
 }
 
-/* Re-measured against the "game filter" frame (node 91:3211/307:2346),
-   this component's first real consumer — steps from Body-M to Label-M
-   at 1440, both open and closed states. */
+/* Measured as Label-M (14px) against the "game filter" frame, but
+   bumped one step up to Label-L (16px) on request. */
 @media (max-width: 1440px) {
   .cap {
-    font-size: var(--font-label-m-size);
-    font-weight: var(--font-label-m-weight);
-    line-height: var(--font-label-m-line-height);
-    letter-spacing: var(--font-label-m-letter-spacing);
+    font-size: var(--font-label-l-size);
+    font-weight: var(--font-label-l-weight);
+    line-height: var(--font-label-l-line-height);
+    letter-spacing: var(--font-label-l-letter-spacing);
   }
 }
 
@@ -41,8 +44,22 @@
   background-color: color-mix(in srgb, var(--color-primary-400) 89%, transparent);
 }
 
+.label {
+  /* Guarantees the gap above holds even if a label is longer than the
+     available width — truncates instead of crowding/pushing the icon. */
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .icon {
   width: 20px;
   height: 20px;
   flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.cap[data-expanded="true"] .icon {
+  transform: rotate(180deg);
 }

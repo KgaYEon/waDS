@@ -93,7 +93,7 @@ export default function SuggestionsScreen() {
                 { label: "공지사항", onClick: () => navigate("/notices") },
                 { label: "FAQ", onClick: () => navigate("/faq") },
                 { label: "건의함", active: true },
-                { label: "후원하기" },
+                { label: "후원하기", onClick: () => navigate("/donation") },
               ]}
             />
 

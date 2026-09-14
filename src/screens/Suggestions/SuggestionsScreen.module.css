@@ -26,6 +26,15 @@
   align-self: flex-start;
 }
 
+/* Centered at 1440 on request (was pulled left of the grid margin, then
+   cancelled) — opts back into .column's own align-items:center instead
+   of staying at flex-start. */
+@media (max-width: 1440px) {
+  .subNav {
+    align-self: center;
+  }
+}
+
 .heading {
   display: flex;
   flex-direction: column;
@@ -72,7 +81,7 @@
   font-weight: var(--font-body-m-weight);
   line-height: var(--font-body-m-line-height);
   letter-spacing: var(--font-body-m-letter-spacing);
-  color: var(--color-neutral-100);
+  color: var(--color-neutral-300);
 }
 
 @media (max-width: 1440px) {

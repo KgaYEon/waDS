@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import type { NavigateFunction } from "react-router-dom";
 import type { HeroSlide } from "./sections/HeroBannerSection";
 import type { Game } from "../../types/game";
 import { placeholderImage } from "../../utils/placeholderImage";
@@ -20,13 +21,14 @@ function shuffle<T>(items: T[]): T[] {
 // not a real personalization/ranking.
 const PLAYABLE_GAMES = GAMES.filter((entry) => entry.type === "Game");
 
-function toGame(entry: GameCatalogEntry): Game {
+function toGame(entry: GameCatalogEntry, navigate: NavigateFunction): Game {
   return {
     id: entry.id,
     title: entry.title,
     category: entry.genre,
     imageUrl: entry.imageFile,
     imageAlt: entry.title,
+    onClick: () => navigate(`/game/${entry.id}`),
   };
 }
 
@@ -41,10 +43,10 @@ export interface HomeData {
  * the catalog has no tagline/promo-image fields to source them from.
  * recentlyPlayed/recommended now come from the real catalog.
  */
-export function useHomeData(): HomeData {
+export function useHomeData(navigate: NavigateFunction): HomeData {
   // Memoized so the order doesn't reshuffle on every re-render — only
   // once per Home mount.
-  const recommended = useMemo(() => shuffle(GAMES).map(toGame), []);
+  const recommended = useMemo(() => shuffle(GAMES).map((g) => toGame(g, navigate)), [navigate]);
 
   return {
     recommended,
@@ -74,6 +76,6 @@ export function useHomeData(): HomeData {
         ctaLabel: "게임 하러 가기",
       },
     ],
-    recentlyPlayed: PLAYABLE_GAMES.slice(0, 7).map(toGame),
+    recentlyPlayed: PLAYABLE_GAMES.slice(0, 7).map((g) => toGame(g, navigate)),
   };
 }

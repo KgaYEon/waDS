@@ -1,10 +1,10 @@
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import styles from "./SearchResultsScreen.module.css";
 import Container from "../../components/ui/Container";
 import Grid from "../../components/ui/Grid";
 import GridColumn from "../../components/ui/GridColumn";
 import GameCard from "../../components/ui/GameCard";
-import { useSearchResults } from "./useSearchResults";
+import { useSearchResults, useSearchSuggestion } from "./useSearchResults";
 
 /**
  * Figma frame "searchResult" (node 239:3471) has two states — with and
@@ -18,10 +18,12 @@ import { useSearchResults } from "./useSearchResults";
  * fetching rather than receiving it from the router.
  */
 export default function SearchResultsScreen() {
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const query = searchParams.get("q") ?? "";
-  const games = useSearchResults(query);
+  const games = useSearchResults(query, navigate);
   const hasResults = games.length > 0;
+  const suggestion = useSearchSuggestion(query, navigate);
 
   return (
     <Container>
@@ -46,7 +48,22 @@ export default function SearchResultsScreen() {
               ))}
             </div>
           ) : (
-            <p className={styles.empty}>검색 결과가 없습니다, 다시 검색해주세요.</p>
+            <div className={styles.emptyState}>
+              <p className={styles.emptyText}>검색 결과가 없습니다, 다시 검색해주세요.</p>
+              {suggestion && (
+                <p className={styles.suggestion}>
+                  혹시{" "}
+                  <button
+                    type="button"
+                    className={styles.suggestionLink}
+                    onClick={suggestion.onClick}
+                  >
+                    '{suggestion.title}'
+                  </button>
+                  을 찾으셨나요?
+                </p>
+              )}
+            </div>
           )}
         </GridColumn>
       </Grid>

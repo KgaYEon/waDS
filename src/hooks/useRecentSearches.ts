@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 
 const DEFAULT_KEY = "waflash:recent-searches";
-const DEFAULT_MAX = 8;
+const DEFAULT_MAX = 6;
 
 function readStorage(key: string): string[] {
   try {

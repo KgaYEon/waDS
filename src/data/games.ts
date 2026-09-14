@@ -15,6 +15,18 @@ export interface GameCatalogEntry {
   series?: string;
   genre: string;
   imageFile: string;
+  /** Free-text game-detail-page copy. Left unset for every entry for now —
+   * real copy will be filled in separately. Falls back to a placeholder
+   * ("정보가 준비되지 않았습니다") wherever it's shown. */
+  description?: string;
+  howToPlay?: string;
+  /** Game-detail-page "제작 정보" fields. Also left unset for every entry —
+   * the whole block hides when none of the three are filled in, and any
+   * one of them that's still missing once at least one is falls back to
+   * the same placeholder. */
+  author?: string;
+  source?: string;
+  releaseYear?: string;
 }
 
 export const GAMES: GameCatalogEntry[] = [

@@ -3,6 +3,20 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  /* A margin-top nudge here was a guess and didn't land — this is the
+     actual fix: pin the box's own outer height to exactly match the
+     round profile button's real height (48px = 32px icon + 8px
+     padding top/bottom, see Header.module.css .profile/.profileIcon),
+     then center this box's content inside that fixed height. Two boxes
+     of the identical height, both cross-centered by .right's
+     align-items:center, land on the same vertical center by
+     construction — no more hand-measuring/guessing needed. The content
+     (input row + 10px gap + 1px divider, ~49.4px) is fractionally
+     taller than 48px, so it overflows this box by under 2px, split
+     evenly top/bottom by justify-content:center — invisible in
+     practice. */
+  height: 48px;
+  justify-content: center;
   /* 8px (--spacing-xs) x1.2 = 9.6, closest existing token is --space-10. */
   gap: var(--space-10);
   /* min-width (not width: 100%) so this still works as a flex item next
@@ -16,9 +30,12 @@
 }
 
 /* Below 1440px, back to the pre-1.2x values (1920 keeps the enlarged
-   ones above) — same numbers this component used before that pass. */
+   ones above) — same numbers this component used before that pass.
+   height matches the profile button's own 40px at this breakpoint
+   (24px icon + 8px padding top/bottom). */
 @media (max-width: 1440px) {
   .box {
+    height: 40px;
     gap: var(--spacing-xs);
     min-width: 280px;
   }
@@ -45,11 +62,10 @@
 }
 
 .icon {
-  /* 32px x1.2 = 38.4. No spacing token applies to icon/box dimensions
-     (same rule we've used everywhere else — e.g. RoundButton, GameCard),
-     so this stays a literal, exact value. */
-  width: 38.4px;
-  height: 38.4px;
+  /* Was 38.4px (32 x1.2 enlarge pass) — brought back down to 32px on
+     request. */
+  width: 32px;
+  height: 32px;
   flex-shrink: 0;
 }
 
@@ -103,12 +119,16 @@
   color: var(--color-neutral-100);
 }
 
+/* Was Body-S (16px) — lowered one more step on request. Body-S is the
+   ladder's smallest tier, and Label-L is also 16px, so Label-M is the
+   first actually-smaller step (same reasoning applied elsewhere, e.g.
+   RecentSearchItem's .label). */
 @media (max-width: 1440px) {
   .input {
-    font-size: var(--font-body-s-size);
-    font-weight: var(--font-body-s-weight);
-    line-height: var(--font-body-s-line-height);
-    letter-spacing: var(--font-body-s-letter-spacing);
+    font-size: var(--font-label-m-size);
+    font-weight: var(--font-label-m-weight);
+    line-height: var(--font-label-m-line-height);
+    letter-spacing: var(--font-label-m-letter-spacing);
   }
 }
 

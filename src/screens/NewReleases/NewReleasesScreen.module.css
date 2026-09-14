@@ -1,0 +1,80 @@
+/* Sticky, same treatment as the Filter screen's own title block — `top`
+   uses --nav-header-height (measured live by Layout.tsx via
+   ResizeObserver) instead of a hand-guessed pixel value, which drifted
+   enough to cause a visible gap/jitter on scroll. */
+.header {
+  position: sticky;
+  top: var(--nav-header-height, 103px);
+  z-index: 10;
+  background-color: var(--color-neutral-1000);
+  /* This element is a GridColumn, so its own box only spans Container's
+     inset content width — sticky, it stays put while anything wider
+     (or the page itself) scrolls past underneath, so the background
+     needs to bleed to the full viewport width or the sides show
+     whatever's scrolling by. box-shadow isn't clipped by the box's own
+     width, so a huge same-color spread fills the rest. */
+  box-shadow: 0 0 0 100vmax var(--color-neutral-1000);
+  clip-path: inset(0 -100vmax);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-9);
+  padding-top: var(--spacing-xl);
+  padding-bottom: var(--space-54);
+}
+
+@media (max-width: 1440px) {
+  .header {
+    top: var(--nav-header-height, 79px);
+    gap: var(--space-12);
+    padding-bottom: var(--spacing-lg);
+  }
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-family-base);
+  font-size: var(--font-heading-2-size);
+  font-weight: var(--font-heading-2-weight);
+  line-height: var(--font-heading-2-line-height);
+  letter-spacing: var(--font-heading-2-letter-spacing);
+  color: var(--color-neutral-100);
+}
+
+@media (max-width: 1440px) {
+  .title {
+    font-size: var(--font-heading-4-size);
+    font-weight: var(--font-heading-4-weight);
+    line-height: var(--font-heading-4-line-height);
+    letter-spacing: var(--font-heading-4-letter-spacing);
+  }
+}
+
+.subtitle {
+  margin: 0;
+  font-family: var(--font-family-base);
+  font-size: var(--font-body-m-size);
+  font-weight: var(--font-body-m-weight);
+  line-height: var(--font-body-m-line-height);
+  letter-spacing: var(--font-body-m-letter-spacing);
+  color: var(--color-neutral-300);
+}
+
+@media (max-width: 1440px) {
+  .subtitle {
+    font-size: var(--font-label-m-size);
+    font-weight: var(--font-label-m-weight);
+    line-height: var(--font-label-m-line-height);
+    letter-spacing: var(--font-label-m-letter-spacing);
+  }
+}
+
+/* Section-to-section gap (32px, measured, same both breakpoints) comes
+   from this flex column's own gap. The page-header-to-first-section
+   gap is left to Grid's own row gap (--grid-gutter, 24px) — Figma
+   measured 25px there, a 1px difference not worth a second mechanism. */
+.sections {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  padding-bottom: var(--spacing-xl);
+}

@@ -1,0 +1,108 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  width: 100%;
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.heading {
+  font-family: var(--font-family-base);
+  font-size: var(--font-heading-3-size);
+  font-weight: var(--font-heading-3-weight);
+  line-height: var(--font-heading-3-line-height);
+  letter-spacing: var(--font-heading-3-letter-spacing);
+  color: var(--color-neutral-100);
+}
+
+/* Not a "one step down" — Figma drops this all the way from Heading-3
+   (bold 24px) to Body-M (medium 18px) at 1440, kept as measured. */
+@media (max-width: 1440px) {
+  .heading {
+    font-size: var(--font-body-m-size);
+    font-weight: var(--font-body-m-weight);
+    line-height: var(--font-body-m-line-height);
+    letter-spacing: var(--font-body-m-letter-spacing);
+  }
+}
+
+.count {
+  font-family: var(--font-family-base);
+  font-size: var(--font-body-m-size);
+  font-weight: var(--font-body-m-weight);
+  line-height: var(--font-body-m-line-height);
+  letter-spacing: var(--font-body-m-letter-spacing);
+  color: var(--color-neutral-300);
+}
+
+@media (max-width: 1440px) {
+  .count {
+    font-size: var(--font-label-m-size);
+    font-weight: var(--font-label-m-weight);
+    line-height: var(--font-label-m-line-height);
+    letter-spacing: var(--font-label-m-letter-spacing);
+  }
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--grid-gutter);
+  width: 100%;
+}
+
+/* Bleeds the arrows outside this section's own column width — Figma
+   sits them 56px/48px (arrow width + gutter) further out on each side
+   than the heading/cards, which stay flush with the rest of the page.
+   Only applied when arrows actually render — the single-page sections
+   (플래시 애니 신작, 보존 예정 목록) have none and stay flush throughout. */
+.row[data-bleed="true"] {
+  width: calc(100% + 112px);
+  margin-left: -56px;
+}
+
+@media (max-width: 1440px) {
+  .row[data-bleed="true"] {
+    width: calc(100% + 96px);
+    margin-left: -48px;
+  }
+}
+
+.arrow {
+  display: inline-flex;
+  flex-shrink: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: var(--color-neutral-100);
+}
+
+.arrowIcon {
+  width: 32px;
+  height: 32px;
+}
+
+@media (max-width: 1440px) {
+  .arrowIcon {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+/* Fixed 5-column grid, not a flex row that grows cards to fill the
+   space — a row with fewer than 5 cards (e.g. 플래시 애니 신작's 2) should
+   leave the remaining slots empty at the same card size, not stretch
+   the few cards wider. */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--grid-gutter);
+  flex: 1;
+  min-width: 0;
+}

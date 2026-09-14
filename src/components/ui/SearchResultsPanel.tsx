@@ -46,7 +46,17 @@ export default function SearchResultsPanel({
         </div>
       ) : (
         <p className={styles.empty}>
-          {autoSaveEnabled ? "최근 검색이 없습니다." : "검색어 자동 저장 꺼짐"}
+          <span className={styles.emptyText}>
+            {autoSaveEnabled ? (
+              <>
+                최근 검색이
+                <br />
+                없습니다.
+              </>
+            ) : (
+              "검색어 자동 저장 꺼짐"
+            )}
+          </span>
         </p>
       )}
 

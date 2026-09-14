@@ -7,6 +7,9 @@ import NoticeDetailScreen from "./screens/Notice/NoticeDetailScreen";
 import FaqScreen from "./screens/Faq/FaqScreen";
 import SuggestionsScreen from "./screens/Suggestions/SuggestionsScreen";
 import FilterScreen from "./screens/Filter/FilterScreen";
+import NewReleasesScreen from "./screens/NewReleases/NewReleasesScreen";
+import GameDetailScreen from "./screens/GameDetail/GameDetailScreen";
+import DonationScreen from "./screens/Donation/DonationScreen";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +22,9 @@ const router = createBrowserRouter([
       { path: "/faq", element: <FaqScreen /> },
       { path: "/suggestions", element: <SuggestionsScreen /> },
       { path: "/filters", element: <FilterScreen /> },
+      { path: "/new-releases", element: <NewReleasesScreen /> },
+      { path: "/game/:id", element: <GameDetailScreen /> },
+      { path: "/donation", element: <DonationScreen /> },
     ],
   },
 ]);
