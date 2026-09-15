@@ -1,0 +1,186 @@
+/* No Figma spec for the backdrop itself (the frame is just the card) —
+   reuses the same color-mix dimming technique as GameCard's hover
+   overlay, just stronger, since this needs to actually obscure the page
+   behind it. */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-md);
+  background-color: color-mix(in srgb, var(--color-neutral-1000) 70%, transparent);
+}
+
+/* 559px, 1920 frame value reused as-is at 1440 too (no media query), per
+   request. max-width is a plain responsiveness safety net (not a
+   breakpoint override) so it doesn't overflow very narrow viewports. */
+.modal {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 559px;
+  max-width: 100%;
+  /* Was neutral-1000 (invisible, same as background), then neutral-900
+     (still too subtle) — one step further to neutral-800. Width bumped
+     1px -> 2px on request. */
+  border: 2px solid var(--color-neutral-800);
+  /* Whole box uniformly rounded on request (was 12px top / 16px bottom,
+     split across .header/.body) — rounded here instead, with overflow
+     hidden so their own backgrounds get clipped to match. */
+  border-radius: var(--radius-8);
+  overflow: hidden;
+}
+
+/* Was a fixed height:66px (matching Figma's own py-19 + 28px line-height
+   math) — switched to explicit padding-block so it can be reduced
+   directly; was effectively ~19px, now 12px. Horizontal padding
+   untouched. */
+.header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-block: var(--space-14);
+  padding-inline: var(--spacing-md);
+  background-color: var(--color-neutral-900); /* Was neutral-1000 */
+  border-bottom: 1px solid var(--color-neutral-600);
+}
+
+/* Was Heading-4 at both breakpoints (matching the Figma frame exactly),
+   then Body-L/Body-M — now Label-L (1920) / Label-M (1440) on request.
+   Color switched to secondary (neutral-300) on request.
+   line-height is intentionally NOT the token's own (20px/18px) here — a
+   -2px margin nudge (guessing at font leading) didn't fix it. The real
+   cause: the close icon is centered by exact box math
+   (top:50%/translateY(-50%)), but Label-L/M's line-height is ~1.25x the
+   font-size, and the browser doesn't necessarily split that extra
+   leading evenly above/below the glyphs — so the *line box* is centered
+   correctly while the *glyphs inside it* aren't. line-height:1 removes
+   almost all of that slack so the text's visible glyphs land where the
+   line box (and therefore .header's align-items:center) actually
+   centers it. */
+.headerTitle {
+  margin: 0;
+  font-family: var(--font-family-base);
+  font-size: var(--font-label-l-size);
+  font-weight: var(--font-label-l-weight);
+  line-height: 1;
+  letter-spacing: var(--font-label-l-letter-spacing);
+  color: var(--color-neutral-300);
+  text-align: center;
+}
+
+@media (max-width: 1440px) {
+  .headerTitle {
+    font-size: var(--font-label-m-size);
+    font-weight: var(--font-label-m-weight);
+    /* line-height stays 1 (see base rule above), not the token's own. */
+    letter-spacing: var(--font-label-m-letter-spacing);
+  }
+}
+
+/* top:50%/translateY(-50%) instead of a hand-measured px offset — that
+   offset (originally matched to the header's old fixed 66px height)
+   would otherwise need re-guessing every time the header's own padding
+   changes, same lesson learned elsewhere in this project. */
+.closeButton {
+  position: absolute;
+  right: var(--spacing-md);
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: var(--color-neutral-100);
+}
+
+/* Was 28px both breakpoints. */
+.closeIcon {
+  width: 24px;
+  height: 24px;
+}
+
+@media (max-width: 1440px) {
+  .closeIcon {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* Figma nests this as body(pt-24) > thanksHead(py-24) > text group, then
+   a 12px gap to the button row — flattened here into one padding-top/
+   bottom and one gap for the same visual result with a shallower tree.
+   Vertical padding reduced from 48px to 32px (spacing-lg) on request —
+   horizontal (41px) untouched. */
+.body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  padding: var(--spacing-md) 41px;
+  background-color: var(--color-neutral-900); /* Was neutral-1000 */
+}
+
+.textGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-12);
+  text-align: center;
+}
+
+/* Same one-step (1920) / two-step (1440) drop as .headerTitle above. */
+.heading {
+  margin: 0;
+  font-family: var(--font-family-base);
+  font-size: var(--font-body-l-size);
+  font-weight: var(--font-body-l-weight);
+  line-height: var(--font-body-l-line-height);
+  letter-spacing: var(--font-body-l-letter-spacing);
+  color: var(--color-neutral-100);
+}
+
+@media (max-width: 1440px) {
+  .heading {
+    font-size: var(--font-body-m-size);
+    font-weight: var(--font-body-m-weight);
+    line-height: var(--font-body-m-line-height);
+    letter-spacing: var(--font-body-m-letter-spacing);
+  }
+}
+
+/* Was Label-L — 1920 drops one step (-> Label-M), 1440 drops two
+   (-> Label-S). */
+.description {
+  margin: 0;
+  font-family: var(--font-family-base);
+  font-size: var(--font-label-m-size);
+  font-weight: var(--font-label-m-weight);
+  line-height: var(--font-label-m-line-height);
+  letter-spacing: var(--font-label-m-letter-spacing);
+  color: var(--color-neutral-300);
+}
+
+@media (max-width: 1440px) {
+  .description {
+    font-size: var(--font-label-s-size);
+    font-weight: var(--font-label-s-weight);
+    line-height: var(--font-label-s-line-height);
+    letter-spacing: var(--font-label-s-letter-spacing);
+  }
+}
+
+.actions {
+  display: flex;
+  align-items: stretch;
+  gap: var(--spacing-md);
+  width: 100%;
+}
+
+.actionButton {
+  flex: 1 0 0;
+}

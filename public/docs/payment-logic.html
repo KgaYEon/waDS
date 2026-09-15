@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>와플래시 후원 페이지 — 개발 단계 구현 계획</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap');
+
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    color: #222;
+    background: #f7f7f8;
+    margin: 0;
+    padding: 48px 20px;
+    line-height: 1.7;
+  }
+  .doc {
+    max-width: 760px;
+    margin: 0 auto;
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 56px 64px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  .doc-header {
+    border-bottom: 2px solid #111;
+    padding-bottom: 24px;
+    margin-bottom: 32px;
+  }
+  .doc-eyebrow {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    color: #e5548c;
+    text-transform: uppercase;
+    margin: 0 0 8px;
+  }
+  h1 {
+    font-size: 26px;
+    font-weight: 700;
+    margin: 0 0 8px;
+  }
+  .doc-meta {
+    font-size: 13px;
+    color: #888;
+    margin: 0;
+  }
+  h2 {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 40px 0 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #eee;
+  }
+  h3 {
+    font-size: 15px;
+    font-weight: 700;
+    margin: 24px 0 8px;
+    color: #111;
+  }
+  p { font-size: 14.5px; margin: 0 0 12px; color: #333; }
+  ul, ol { font-size: 14.5px; color: #333; padding-left: 22px; margin: 0 0 14px; }
+  li { margin-bottom: 6px; }
+  .status-badge {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 99px;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+  .status-pending {
+    background: #fdeef4;
+    color: #c23d70;
+  }
+  .callout {
+    background: #F6CBD1;
+    padding: 14px 18px;
+    border-radius: 6px;
+    font-size: 14px;
+    color: #6b2e3c;
+    margin: 16px 0;
+  }
+  .callout strong { color: #4d1e29; }
+  .warn {
+    background: #fff8ec;
+    border-left: 3px solid #f0ad4e;
+    padding: 14px 18px;
+    border-radius: 6px;
+    font-size: 14px;
+    color: #6b4f1d;
+    margin: 16px 0;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+    margin: 12px 0 20px;
+  }
+  th, td {
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 1px solid #eee;
+  }
+  th {
+    background: #fafafa;
+    font-weight: 700;
+    color: #444;
+  }
+  .step-list {
+    counter-reset: step;
+    list-style: none;
+    padding-left: 0;
+  }
+  .step-list li {
+    counter-increment: step;
+    position: relative;
+    padding-left: 34px;
+    margin-bottom: 16px;
+  }
+  .step-list li::before {
+    content: counter(step);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #111;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .step-list b { display: block; font-size: 14.5px; color: #111; margin-bottom: 2px; }
+  .step-list span { color: #555; font-size: 13.5px; }
+  .footer-note {
+    margin-top: 48px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+    font-size: 12.5px;
+    color: #999;
+  }
+</style>
+</head>
+<body>
+
+<div class="doc">
+
+  <div class="doc-header">
+    <p class="doc-eyebrow">WAFLASH · 후원 페이지 리뉴얼</p>
+    <h1>후원 페이지 개발 단계 구현 계획</h1>
+    <p class="doc-meta">디자인 단계에서 결정된 기능 중, 실제 개발 시 PG(결제대행) 연동이 필요한 항목을 정리한 문서입니다.</p>
+  </div>
+
+  <h2>1. 문서 목적</h2>
+  <p>
+    현재 후원 페이지 디자인에는 <strong>이번달 후원 현황 바</strong>, <strong>후원자 담벼락</strong>, <strong>자유 금액 후원</strong>, <strong>후원 완료 안내</strong> 기능이 포함되어 있습니다.
+    이 중 일부는 정적 디자인만으로는 구현이 불가능하고, 실제 결제 시스템(PG) 연동이 필요합니다.
+    이 문서는 어떤 기능이 어떤 방식으로, 어떤 절차를 거쳐 개발 단계에서 구현될 수 있는지를 정리한 참고용 계획서입니다.
+  </p>
+
+  <h2>2. 기능별 구현 가능 여부</h2>
+  <table>
+    <tr><th>기능</th><th>현재 디자인 단계</th><th>개발 단계 구현</th></tr>
+    <tr><td>후원 방법 안내 (카카오페이/토스)</td><td>완료</td><td>정적 정보라 별도 개발 불필요</td></tr>
+    <tr><td>이번달 후원 현황 바</td><td>완료</td><td>결제 내역 합산 로직 필요 (아래 5번 참고)</td></tr>
+    <tr><td>후원자 담벼락</td><td>완료</td><td>결제 완료 신호와 연동된 메시지 저장/조회 기능 필요 (PG 연동 필요)</td></tr>
+    <tr><td>자유 금액 후원 <span class="status-badge status-pending">PG 연동 필요</span></td><td>불가능</td><td>결제 API에 입력값 전달, 서버 검증 필요</td></tr>
+    <tr><td>후원 완료 시 안내 모달 <span class="status-badge status-pending">PG 연동 필요</span></td><td>완료</td><td>결제 리다이렉트 URL 처리 필요</td></tr>
+  </table>
+
+  <h2>3. 현재 운영 방식과 후원 탭의 목적</h2>
+  <p>
+    와플래시는 현재 개인이 운영하는 프로젝트로, 후원 역시 사업자 계약 없이 카카오페이·토스 개인 간 송금으로 받고 있습니다.
+    그러다 보니 후원해주신 분들께 감사한 마음을 전하기 위해, 매달·매년 후원자 성함을 사이트에 직접 하나하나 수기로 기재해온 것이 지금까지의 방식이었습니다.
+    이 과정에서 후원자들은 송금 시 입금자명을 본인 이름 대신 짧은 응원 메시지로 바꿔 보내는 방식으로 마음을 전해주고 계셨습니다.
+  </p>
+  <p>
+    이번 후원 탭 리뉴얼의 목적은 이 방식을 없애는 것이 아니라, <strong>이미 자연스럽게 이루어지고 있던 이 관행을 더 편하고 깔끔하게 정리</strong>하는 데 있습니다.
+    수기로 명단을 옮겨 적는 대신, 후원자가 직접 담벼락에 메시지를 남기고 그 메시지가 곧바로 사이트에 반영되는 형태로 만들고자 한 것이 <strong>후원자 담벼락</strong> 기능의 출발점입니다.
+  </p>
+  <div class="callout">
+    • 담벼락에 방명록을 남기는 행위를 "후원 완료"와 연결지으려면(즉, 실제로 후원한 사람만 메시지를 남길 수 있도록 하려면) 결제가 끝났다는 신호를 사이트가 직접 받아야 합니다. 지금의 개인 송금 방식으로는 이 신호를 받을 방법이 없어, 이 기능은 PG 연동 이후에 구현이 가능합니다.
+  </div>
+
+  <h2>4. 왜 PG 연동이 필요한가</h2>
+  <p>
+    현재처럼 카카오페이·토스 개인 QR/링크로 받는 방식은 "개인 간 송금"과 동일한 구조라, 결제가 끝났다는 신호를 사이트로 보내주는 기능이 없습니다.
+    그래서 결제 금액을 자유롭게 입력하게 하거나, 결제 완료 시 자동으로 모달을 띄우는 것은 물론, <strong>후원자가 실제로 결제를 완료했을 때만 담벼락에 메시지를 남기도록 하는 것</strong>까지 — 사이트와 결제 과정이 연결되는 모든 기능은 <strong>PG(결제대행사) 연동</strong>을 통해야만 가능합니다.
+  </p>
+  <div class="callout">
+    • PG 연동을 위해서는 사업자 등록이 선행되어야 합니다. 지금은 개인 프로젝트 단계라 사업자 등록까지 진행하기는 어려워, 이번 리뉴얼에서는 해당 기능들을 실제 구현 대상에서 제외하고 계획만 세워둔 상태입니다.
+  </div>
+
+  <h2>5. 자유 금액 후원 — 구현 방식</h2>
+  <ul>
+    <li>결제 요청 시 금액(amount)을 고정값이 아닌 변수로 전달하는 구조로 설계</li>
+    <li>UI는 프리셋 금액 버튼(1,000 / 3,000 / 5,000 / 10,000원) + "직접 입력" 옵션 조합 권장</li>
+    <li>최소/최대 금액 제한을 프론트엔드에서 1차 검증</li>
+    <li><strong>서버에서 결제 승인 API 응답의 실제 결제 금액을 기준으로 2차 검증</strong> (브라우저에서 보낸 값을 그대로 신뢰하지 않음)</li>
+  </ul>
+
+  <h2>6. 후원 완료 모달 &amp; 담벼락 연동 — 구현 방식</h2>
+  <ul>
+    <li>결제 성공/실패 시 이동할 리다이렉트 URL(successUrl / failUrl)을 PG사에 미리 등록</li>
+    <li>successUrl로 돌아온 시점에 전달받은 결제 정보를 읽어 감사 모달을 자바스크립트로 표시</li>
+    <li>같은 시점에 결제 승인 정보(결제 성공 여부, 주문번호 등)를 서버로 전달해, 해당 주문에 한해서만 담벼락 메시지 입력 폼을 열어주는 방식으로 연동</li>
+    <li>모달 표시·담벼락 입력 허용과 별개로, 서버에서 결제 승인 API를 한 번 더 호출해 실제 결제 확정 여부를 검증</li>
+  </ul>
+
+  <h2>7. 사업자 등록 &amp; PG 연동 절차</h2>
+  <ol class="step-list">
+    <li><b>사업자 등록</b><span>홈택스 또는 세무서에서 사업자 등록. 온라인 결제를 받는 경우 통신판매업 신고가 함께 필요할 수 있음. 개인사업자로 충분.</span></li>
+    <li><b>PG사 선택</b><span>카카오페이·토스를 개별 계약하는 대신, 포트원(구 아임포트) 또는 토스페이먼츠처럼 여러 결제수단을 한 번에 지원하는 PG사 이용 권장.</span></li>
+    <li><b>가맹점 계약 신청 및 심사</b><span>사업자등록증, 서비스 화면 등을 제출해 심사 진행. 통상 며칠~2주 소요. 심사 전 테스트 연동은 미리 가능.</span></li>
+    <li><b>API 키 발급</b><span>클라이언트 키(프론트엔드용)와 시크릿 키(서버용) 발급. 시크릿 키는 프론트엔드에 절대 노출 금지.</span></li>
+    <li><b>결제창 연동</b><span>PG사 SDK를 후원 페이지에 삽입, 후원 버튼 클릭 시 결제창(팝업/리다이렉트) 호출.</span></li>
+    <li><b>리다이렉트 URL 설정</b><span>결제 성공/실패 시 돌아올 URL을 등록. 이 지점이 "후원 완료 모달"이 뜨는 지점.</span></li>
+    <li><b>성공 페이지 처리</b><span>전달받은 결제 정보로 모달 표시 + 서버 측 결제 승인 검증 로직 구현.</span></li>
+    <li><b>테스트 후 전환</b><span>테스트 모드로 전체 흐름 검증 후, 가맹 심사 통과 시 실 서비스 키로 교체.</span></li>
+  </ol>
+
+  <h2>8. 그 외 참고 사항</h2>
+  <p>
+    <strong>주의할 사항</strong><br>
+    PG사마다 결제 가능한 최소 금액, 수수료율, 정산 주기가 다르므로 실제 계약 전 비교가 필요합니다. 또한 개인 정보(후원자 닉네임, 메시지 등)를 저장하는 담벼락 기능은 별도의 개인정보처리방침 명시가 필요할 수 있습니다.
+  </p>
+
+</div>
+</body>
+</html>

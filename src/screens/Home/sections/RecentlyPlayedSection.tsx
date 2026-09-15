@@ -38,7 +38,9 @@ export default function RecentlyPlayedSection({
               activeIndex={page}
               onDotClick={goTo}
               tone="muted"
-              size={10}
+              // Lowered from 10 on request — bigger than the hero
+              // banner's own dots (13/1.5 ≈ 8.67) but smaller than before.
+              size={9}
               gap={24}
             />
             <SquareNavButton direction="right" onClick={() => goTo(page + 1)} />

@@ -64,43 +64,71 @@
 
   /* Heading 1 */
   --font-heading-1-size: 32px;
-  --font-heading-1-weight: 700;
+  --font-heading-1-weight: 500;
   --font-heading-1-line-height: 40px;
   --font-heading-1-letter-spacing: 0;
 
   /* Heading 2 */
   --font-heading-2-size: 28px;
-  --font-heading-2-weight: 700;
+  --font-heading-2-weight: 500;
   --font-heading-2-line-height: 36px;
   --font-heading-2-letter-spacing: 0;
 
   /* Heading 3 */
   --font-heading-3-size: 24px;
-  --font-heading-3-weight: 700;
+  --font-heading-3-weight: 500;
   --font-heading-3-line-height: 32px;
   --font-heading-3-letter-spacing: 0;
 
   /* Heading 4 */
   --font-heading-4-size: 20px;
-  --font-heading-4-weight: 700;
+  --font-heading-4-weight: 500;
   --font-heading-4-line-height: 28px;
   --font-heading-4-letter-spacing: 0;
 
+  /* Loading title - L / S — game detail page's loading-screen game
+     title. L matches Heading-1's size (32px), so it reuses Heading-1's
+     line-height ratio (40px, 1.25x); S matches Heading-3's size (24px),
+     so it reuses Heading-3's ratio (32px, 1.333x). */
+  --font-loading-title-l-size: 32px;
+  --font-loading-title-l-weight: 700;
+  --font-loading-title-l-line-height: 40px;
+  --font-loading-title-l-letter-spacing: 0;
+
+  --font-loading-title-s-size: 24px;
+  --font-loading-title-s-weight: 700;
+  --font-loading-title-s-line-height: 32px;
+  --font-loading-title-s-letter-spacing: 0;
+
+  /* Page title - L / S — Filter/New Releases page headings. L (26px)
+     sits between Heading-2/3, so its line-height (34px, ~1.31x)
+     interpolates between their ratios; S matches Heading-4's size
+     (20px), so it reuses Heading-4's ratio (28px, 1.4x). */
+  --font-page-title-l-size: 26px;
+  --font-page-title-l-weight: 500;
+  --font-page-title-l-line-height: 34px;
+  --font-page-title-l-letter-spacing: 0;
+
+  --font-page-title-s-size: 20px;
+  --font-page-title-s-weight: 500;
+  --font-page-title-s-line-height: 28px;
+  --font-page-title-s-letter-spacing: 0;
+
   /* Body - L */
   --font-body-l-size: 20px;
-  --font-body-l-weight: 500;
+  --font-body-l-weight: 400;
   --font-body-l-line-height: 28px;
   --font-body-l-letter-spacing: 0;
 
   /* Body - M */
   --font-body-m-size: 18px;
-  --font-body-m-weight: 500;
+  --font-body-m-weight: 400;
   --font-body-m-line-height: 26px;
   --font-body-m-letter-spacing: 0;
 
   /* Body - S */
   --font-body-s-size: 16px;
-  --font-body-s-weight: 500;
+  --font-body-s-weight: 400;
   --font-body-s-line-height: 24px;
   --font-body-s-letter-spacing: 0;
 
@@ -116,64 +144,89 @@
   --font-navigation-s-line-height: 24px;
   --font-navigation-s-letter-spacing: 0;
 
-  /* Button */
-  --font-button-size: 18px;
-  --font-button-weight: 700;
-  --font-button-line-height: 24px;
-  --font-button-letter-spacing: 0;
+  /* Button - 1 / 2 / 3 (maps to Button's size="L"/"M"/"S") */
+  --font-button-1-size: 18px;
+  --font-button-1-weight: 700;
+  --font-button-1-line-height: 24px;
+  --font-button-1-letter-spacing: 0;
+
+  --font-button-2-size: 16px;
+  --font-button-2-weight: 600;
+  --font-button-2-line-height: 20px;
+  --font-button-2-letter-spacing: 0;
+
+  --font-button-3-size: 14px;
+  --font-button-3-weight: 600;
+  --font-button-3-line-height: 18px;
+  --font-button-3-letter-spacing: 0;
+
+  /* Card - 1 / 2 / 3 */
+  --font-card-1-size: 16px;
+  --font-card-1-weight: 600;
+  --font-card-1-line-height: 24px;
+  --font-card-1-letter-spacing: 0;
+
+  --font-card-2-size: 14px;
+  --font-card-2-weight: 600;
+  --font-card-2-line-height: 21px;
+  --font-card-2-letter-spacing: 0;
+
+  --font-card-3-size: 12px;
+  --font-card-3-weight: 600;
+  --font-card-3-line-height: 18px;
+  --font-card-3-letter-spacing: 0;
 
   /* Label - L / M / S — found on chip & tag components, not in the
      original palette frame but defined in Figma as Wa-text styles. */
   --font-label-l-size: 16px;
-  --font-label-l-weight: 700;
+  --font-label-l-weight: 400;
   --font-label-l-line-height: 20px;
   --font-label-l-letter-spacing: 0;
 
   --font-label-m-size: 14px;
-  --font-label-m-weight: 600;
+  --font-label-m-weight: 400;
   --font-label-m-line-height: 18px;
   --font-label-m-letter-spacing: 0;
 
   --font-label-s-size: 12px;
-  --font-label-s-weight: 700;
+  --font-label-s-weight: 400;
   --font-label-s-line-height: 16px;
   --font-label-s-letter-spacing: 0;
 
-  /* Notice detail screen — the post title (32px) reuses Heading-1's
-     size/line-height/letter-spacing but is Medium, not Bold, so only the
-     weight needed a dedicated token. At 1440 the title switches to
-     Heading-3 outright (an exact match), so no size/line-height token
-     was needed there. */
-  --font-notice-title-weight: 500;
+  /* Chip - 1 / 2 — SmallChip/BigChip/IconChip's own text tiers, split out
+     from Label-M/Label-S so chip typography can move independently of
+     the shared Label ladder. */
+  --font-chip-1-size: 14px;
+  --font-chip-1-weight: 500;
+  --font-chip-1-line-height: 18px;
+  --font-chip-1-letter-spacing: 0;
 
-  /* Notice detail body copy at 1920 reuses Body-M's size/weight but has
-     its own line-height (28.5px, not Body-M's 26px). At 1440 it matches
-     Body-S exactly, so no dedicated size/weight token was needed there. */
-  --font-notice-body-line-height: 28.5px;
+  --font-chip-2-size: 12px;
+  --font-chip-2-weight: 500;
+  --font-chip-2-line-height: 16px;
+  --font-chip-2-letter-spacing: 0;
 
   /* Footer text — ad hoc sizes with no matching Wa-text style in Figma
      (the footer node carried no "styles contained in design" annotation),
      so these are promoted from the footer's own measured values rather
-     than reusing an unrelated named style. */
+     than reusing an unrelated named style. footer-tagline was removed
+     (its one consumer, Footer's own .tagline, now uses footer-m) and
+     footer-copyright was renamed to footer-m (its one consumer, .copyright,
+     updated to match) since both landed on the same size/ratio. */
   --font-footer-wordmark-size: 16px;
-  --font-footer-wordmark-weight: 400;
+  --font-footer-wordmark-weight: 500;
   --font-footer-wordmark-line-height: 1.8;
   --font-footer-wordmark-letter-spacing: 0;
 
-  --font-footer-nav-size: 14px;
+  --font-footer-nav-size: 12px;
   --font-footer-nav-weight: 600;
   --font-footer-nav-line-height: 1.8;
   --font-footer-nav-letter-spacing: 1.68px;
 
-  --font-footer-tagline-size: 14px;
-  --font-footer-tagline-weight: 400;
-  --font-footer-tagline-line-height: 1.5;
-  --font-footer-tagline-letter-spacing: 0.28px;
-
-  --font-footer-copyright-size: 12px;
-  --font-footer-copyright-weight: 300;
-  --font-footer-copyright-line-height: 1.8;
-  --font-footer-copyright-letter-spacing: 0;
+  --font-footer-m-size: 12px;
+  --font-footer-m-weight: 400;
+  --font-footer-m-line-height: 1.8;
+  --font-footer-m-letter-spacing: 0;
 
   /* Wa-text/footer-s (node 307:2998) — an actual named Figma style,
      unlike the four ad-hoc bundles above. Not mapped anywhere yet on
@@ -188,7 +241,7 @@
   /* Hero banner tagline — ad hoc, no matching Wa-text style (Medium 24px
      with a tight 1.2 line-height and negative tracking; distinct from
      Heading 3, which is Bold/24px/32 line-height). */
-  --font-hero-tagline-size: 24px;
+  --font-hero-tagline-size: 20px; /* Lowered one step (was 24px) */
   --font-hero-tagline-weight: 500;
   --font-hero-tagline-line-height: 1.2;
   --font-hero-tagline-letter-spacing: -0.04em;
@@ -198,9 +251,9 @@
      gets its own bundle rather than bending Body-S (which many other
      components share) or borrowing a same-numbered-but-differently-
      weighted style like Heading 4. */
-  --font-search-input-size: 19.2px;
+  --font-search-input-size: 16px; /* Was 19.2px, then 18px */
   --font-search-input-weight: 500;
-  --font-search-input-line-height: 28.8px;
+  --font-search-input-line-height: 30px; /* Was 28.8px */
   --font-search-input-letter-spacing: 0;
 
   /* ------------------------------------------------------------------ */
@@ -220,6 +273,7 @@
   --space-2: 2px;
   --space-4: 4px;
   --space-26: 26px; /* Game detail screen: loading-area-to-info-panel gap, both breakpoints */
+  --space-24: 24px; /* Game detail screen: info box top padding at 1920 (half of --space-48) */
   --space-6: 6px;
   --space-9: 9px; /* New releases screen: title-to-subtitle gap in the page header at 1920 */
   --space-10: 10px;
@@ -237,6 +291,8 @@
   --space-36: 36px;
   --space-38: 38px; /* Announcements screen: sub-nav-to-title gap at 1440 */
   --space-39: 39px;
+  --space-15: 15px; /* Login screen: SSO circle-to-label gap, both breakpoints */
+  --space-35: 35px; /* Login screen: logo-to-title gap, both breakpoints */
   --space-40: 40px; /* Notice detail: title-block-to-divider gap at 1920 */
   --space-45: 45px;
   --space-46: 46px; /* Notice detail: back-link-to-title-block gap */
@@ -257,6 +313,7 @@
   --space-164: 164px; /* SearchResults empty-state: same at 1440 (188 total, padding-top pushed higher than 1920's) */
   --space-21: 21px; /* Filter screen: title-to-subtitle gap at 1440 */
   --space-68: 68px; /* Notice detail: sub-nav-to-back-link gap at 1920 */
+  --space-106: 106px; /* Hero banner: content overlay bottom padding at 1920 (space-94 + 12px) */
   --space-78: 78px; /* Notice detail: same gap at 1440 */
   --space-191: 191px; /* Board screens (Announcements/Notice): header-to-sub-nav top padding at 1920 */
   --space-194: 194px; /* Same padding at 1440 */
@@ -281,6 +338,7 @@
   --radius-6: 6px; /* Pagination arrow/page buttons */
   --radius-8: 8px;
   --radius-md: 12px;
+  --radius-16: 16px; /* Donation CTA modal: body's bottom corners */
   --radius-full: 99px;
 
   /* ------------------------------------------------------------------ */
@@ -306,7 +364,8 @@
 }
 
 /* Hero tagline ("추억의 고향만두, 지금 바로 빚으러 GO") stepped down one
-   size at 1440, same -4px step as the Heading scale (H3 24 -> H4 20).
+   size at 1440, same -4px step as the Heading scale. Base (1920) was
+   just lowered a step too (24 -> 20), so this now follows at 16.
    There's no "hero-tagline-s" sibling token to switch to (this style is
    ad hoc to begin with — see its definition above), so the token itself
    is redefined here, same approach as --grid-margin. line-height (1.2)
@@ -314,7 +373,7 @@
    automatically with the smaller size — only size needs overriding. */
 @media (max-width: 1440px) {
   :root {
-    --font-hero-tagline-size: 20px;
+    --font-hero-tagline-size: 16px;
   }
 }
 
@@ -385,12 +444,28 @@
   letter-spacing: var(--font-navigation-l-letter-spacing);
 }
 
-.text-button {
+.text-button-1 {
   font-family: var(--font-family-base);
-  font-size: var(--font-button-size);
-  font-weight: var(--font-button-weight);
-  line-height: var(--font-button-line-height);
-  letter-spacing: var(--font-button-letter-spacing);
+  font-size: var(--font-button-1-size);
+  font-weight: var(--font-button-1-weight);
+  line-height: var(--font-button-1-line-height);
+  letter-spacing: var(--font-button-1-letter-spacing);
+}
+
+.text-button-2 {
+  font-family: var(--font-family-base);
+  font-size: var(--font-button-2-size);
+  font-weight: var(--font-button-2-weight);
+  line-height: var(--font-button-2-line-height);
+  letter-spacing: var(--font-button-2-letter-spacing);
+}
+
+.text-button-3 {
+  font-family: var(--font-family-base);
+  font-size: var(--font-button-3-size);
+  font-weight: var(--font-button-3-weight);
+  line-height: var(--font-button-3-line-height);
+  letter-spacing: var(--font-button-3-letter-spacing);
 }
 
 .text-label-l {
@@ -433,20 +508,12 @@
   letter-spacing: var(--font-footer-nav-letter-spacing);
 }
 
-.text-footer-tagline {
+.text-footer-m {
   font-family: var(--font-family-base);
-  font-size: var(--font-footer-tagline-size);
-  font-weight: var(--font-footer-tagline-weight);
-  line-height: var(--font-footer-tagline-line-height);
-  letter-spacing: var(--font-footer-tagline-letter-spacing);
-}
-
-.text-footer-copyright {
-  font-family: var(--font-family-base);
-  font-size: var(--font-footer-copyright-size);
-  font-weight: var(--font-footer-copyright-weight);
-  line-height: var(--font-footer-copyright-line-height);
-  letter-spacing: var(--font-footer-copyright-letter-spacing);
+  font-size: var(--font-footer-m-size);
+  font-weight: var(--font-footer-m-weight);
+  line-height: var(--font-footer-m-line-height);
+  letter-spacing: var(--font-footer-m-letter-spacing);
 }
 
 /* ------------------------------------------------------------------ */

@@ -13,3 +13,8 @@ export { default as IconCheckEmpty } from "./CheckEmpty";
 export { default as IconClose } from "./Close";
 export { default as IconSound } from "./Sound";
 export { default as IconSoundIg } from "./SoundIg";
+export { default as IconNaver } from "./Naver";
+export { default as IconKakao } from "./Kakao";
+export { default as IconApple } from "./Apple";
+export { default as IconGoogle } from "./Google";
+export { default as IconCheck } from "./Check";

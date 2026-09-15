@@ -44,13 +44,13 @@
   align-items: center;
   text-align: center;
   gap: var(--spacing-md);
-  margin-top: var(--spacing-xl);
+  margin-top: var(--space-86);
 }
 
 @media (max-width: 1440px) {
   .heading {
     gap: var(--space-16);
-    margin-top: var(--space-78);
+    margin-top: var(--space-94);
   }
 }
 
@@ -173,22 +173,11 @@
   }
 }
 
-/* Button's size="M"/"S" now share the same Label-L text (see
-   Button.module.css), so only the padding needs to switch at 1440. */
+/* Was Label-M at 1920 via a scoped override — removed on request, this
+   button now uses size="M"'s own text (--font-button-2-*) untouched at
+   both breakpoints; only the padding still steps down at 1440. */
 @media (max-width: 1440px) {
   .ctaButton {
     padding: var(--space-12) var(--spacing-md);
-  }
-}
-
-/* Lowered one step on request, this page only, 1920 only (was Label-L,
-   size="M"'s shared default): Label-M. Scoped here rather than in
-   Button.module.css so it doesn't affect size="M"'s other consumers. */
-@media (min-width: 1441px) {
-  .ctaButton {
-    font-size: var(--font-label-m-size);
-    font-weight: var(--font-label-m-weight);
-    line-height: var(--font-label-m-line-height);
-    letter-spacing: var(--font-label-m-letter-spacing);
   }
 }

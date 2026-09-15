@@ -21,10 +21,10 @@ const SOUND_BAR_IDLE_MS = 3000;
  * screen renders inside Layout, same as every other screen.
  *
  * Figma draws the info box (게임 방법/제작 정보/게임 설명) always open, with no
- * toggle. Per request it's collapsible — the "?" round button (otherwise
- * decorative in Figma) is the only toggle; there's no separate trigger row
- * on the box itself. The collapse animation reuses the same grid-rows
- * pattern as QuestionHead/FilterCap. The reset round button restarts the
+ * toggle — it was made collapsible for a while (the "?" round button as
+ * the toggle) but reverted back to always-visible on request. The "?"
+ * button stays in place, decorative/inert for now (no handler) — Figma
+ * gave it no real behavior either. The reset round button restarts the
  * fake-loading bar. The 제작 정보 (제작자/출처/제작 연도) block hides itself
  * entirely when none of those three optional games.ts fields are set (see
  * hasProductionInfo below).
@@ -35,7 +35,6 @@ export default function GameDetailScreen() {
 
   const [progress, setProgress] = useState(0);
   const [loadKey, setLoadKey] = useState(0);
-  const [infoOpen, setInfoOpen] = useState(false);
   const [muted, setMuted] = useState(false);
   const [volume, setVolume] = useState(80);
   const [soundBarOpen, setSoundBarOpen] = useState(false);
@@ -192,48 +191,41 @@ export default function GameDetailScreen() {
                 <button
                   type="button"
                   className={`${styles.roundButton} ${styles.roundButtonPrimary}`}
-                  aria-label="게임 정보 보기"
-                  aria-expanded={infoOpen}
-                  onClick={() => setInfoOpen((v) => !v)}
+                  aria-label="게임 정보"
                 >
                   <IconQuestion width={16} height={16} />
                 </button>
               </div>
             </div>
 
-            <div className={styles.infoAccordion} data-open={infoOpen}>
-              <div className={styles.infoWrap}>
-                <div className={styles.infoInner}>
-                  <div className={styles.infoBox}>
-                    <div className={styles.infoSection}>
-                      <p className={styles.infoHeading}>게임 방법</p>
-                      <p className={styles.infoText}>{howToPlayText}</p>
-                    </div>
-                    <hr className={styles.infoDivider} />
-                    <div className={styles.bottomRow}>
-                      {hasProductionInfo && (
-                        <div className={styles.productionInfo}>
-                          <p className={styles.infoHeading}>제작 정보</p>
-                          <div className={styles.productionRows}>
-                            {productionRows.map((row) => (
-                              <div key={row.label} className={styles.productionRow}>
-                                <span className={styles.productionLabel}>{row.label}</span>
-                                <span className={styles.productionValue}>
-                                  {row.value ?? PLACEHOLDER_TEXT}
-                                </span>
-                              </div>
-                            ))}
-                          </div>
+            <div className={styles.infoBox}>
+              <div className={styles.infoSection}>
+                <p className={styles.infoHeading}>게임 방법</p>
+                <p className={styles.infoText}>{howToPlayText}</p>
+              </div>
+              <hr className={styles.infoDivider} />
+              <div className={`${styles.infoSection} ${styles.descriptionSection}`}>
+                <p className={styles.infoHeading}>게임 설명</p>
+                <p className={styles.infoText}>{descriptionText}</p>
+              </div>
+              {hasProductionInfo && (
+                <>
+                  <hr className={styles.infoDivider} />
+                  <div className={styles.productionInfo}>
+                    <p className={styles.infoHeading}>제작 정보</p>
+                    <div className={styles.productionRows}>
+                      {productionRows.map((row) => (
+                        <div key={row.label} className={styles.productionRow}>
+                          <span className={styles.productionLabel}>{row.label}</span>
+                          <span className={styles.productionValue}>
+                            {row.value ?? PLACEHOLDER_TEXT}
+                          </span>
                         </div>
-                      )}
-                      <div className={styles.gameExplain}>
-                        <p className={styles.infoHeading}>게임 설명</p>
-                        <p className={styles.infoText}>{descriptionText}</p>
-                      </div>
+                      ))}
                     </div>
                   </div>
-                </div>
-              </div>
+                </>
+              )}
             </div>
           </div>
         </GridColumn>

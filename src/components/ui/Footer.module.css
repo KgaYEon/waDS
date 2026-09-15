@@ -112,10 +112,11 @@
 
 .tagline {
   font-family: var(--font-family-base);
-  font-size: var(--font-footer-tagline-size);
-  font-weight: var(--font-footer-tagline-weight);
-  line-height: var(--font-footer-tagline-line-height);
-  letter-spacing: var(--font-footer-tagline-letter-spacing);
+  /* --font-footer-tagline-* was removed (merged into footer-m). */
+  font-size: var(--font-footer-m-size);
+  font-weight: var(--font-footer-m-weight);
+  line-height: var(--font-footer-m-line-height);
+  letter-spacing: var(--font-footer-m-letter-spacing);
   color: var(--color-neutral-600);
   margin: 0;
 }
@@ -152,10 +153,11 @@
 
 .copyright {
   font-family: var(--font-family-base);
-  font-size: var(--font-footer-copyright-size);
-  font-weight: var(--font-footer-copyright-weight);
-  line-height: var(--font-footer-copyright-line-height);
-  letter-spacing: var(--font-footer-copyright-letter-spacing);
+  /* --font-footer-copyright-* renamed to --font-footer-m-*. */
+  font-size: var(--font-footer-m-size);
+  font-weight: var(--font-footer-m-weight);
+  line-height: var(--font-footer-m-line-height);
+  letter-spacing: var(--font-footer-m-letter-spacing);
   color: var(--color-neutral-300);
   margin: 0;
   width: 100%;

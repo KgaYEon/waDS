@@ -1,16 +1,31 @@
+/* Was a fixed 42x42 box — with the global box-sizing:border-box reset,
+   the (then-20px) icon + 12px padding already didn't fit inside that
+   (content box worked out to 14px), so the icon quietly overlapped into
+   the padding by 3px a side. Switched to padding-driven sizing on
+   request: no more fixed width/height, so the icon + padding + border
+   (1px each side, lowered from 2px on request) add up to the real box
+   size with no overlap. */
 .button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 42px;
-  height: 42px;
-  padding: var(--space-12);
+  padding: var(--space-6);
   border-radius: var(--radius-sm);
-  border: 2px solid var(--color-neutral-600);
+  border: 1px solid var(--color-neutral-600);
   background-color: var(--color-neutral-1000);
   color: var(--color-neutral-300);
   cursor: pointer;
   transition: border-color 0.15s ease;
+}
+
+/* Box = 18px icon + 2*padding + 2*1px border = 18 + 12 + 2 = 32px at
+   1920 (was an effective ~42px before). 1440 is 12% smaller in overall
+   box size (not just padding) on request: 32 * 0.88 = 28.16px target
+   box, worked back to padding = (28.16 - 18 - 2) / 2 = 4.08px. */
+@media (max-width: 1440px) {
+  .button {
+    padding: 4.08px;
+  }
 }
 
 .button:hover:not(:disabled) {
@@ -21,7 +36,10 @@
   cursor: not-allowed;
 }
 
+/* Was 20px — lowered 2px on request (icon is a filled solid path with
+   no stroke-width to adjust, so shrinking the glyph itself was the
+   alternative). */
 .icon {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
 }

@@ -133,7 +133,7 @@ export default function NoticeDetailScreen() {
               )}
 
               <div className={styles.backButtonRow}>
-                <Button color="border" size="L" className={styles.backButton} onClick={goToList}>
+                <Button color="border" size="M" className={styles.backButton} onClick={goToList}>
                   목록으로
                 </Button>
               </div>

@@ -47,19 +47,20 @@
   gap: var(--spacing-lg);
   width: 100%;
   max-width: 739px;
-  /* Was space-82 (this frame's own measured sub-nav-to-hero gap) — now
+  /* Was space-82 (this frame's own measured sub-nav-to-hero gap) — then
      matched to Suggestions/FAQ/Announcements' unified title margin-top
-     (1920: spacing-xl/64px, was space-45; 1440: space-78) instead, so
-     the logo's top edge (the first child here, playing the title's
-     role) lines up with their title's top edge exactly — .column's own
-     padding-top is already identical across all four screens, so equal
-     margin-top here gives equal absolute position. */
-  margin-top: var(--spacing-xl);
+     (spacing-xl/space-78) so the logo's top edge (the first child here,
+     playing the title's role) lines up with their title's top edge
+     exactly — .column's own padding-top is already identical across all
+     four screens, so equal margin-top here gives equal absolute
+     position. Since then, all four were widened further together to
+     space-86/space-94 on request. */
+  margin-top: var(--space-86);
 }
 
 @media (max-width: 1440px) {
   .hero {
-    margin-top: var(--space-78);
+    margin-top: var(--space-94);
   }
 }
 
@@ -133,16 +134,17 @@
   }
 }
 
+/* Was space-16/space-12 — widened 4px on request. */
 .ctaGroup {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-16);
+  gap: var(--spacing-sm);
 }
 
 @media (max-width: 1440px) {
   .ctaGroup {
-    gap: var(--space-12);
+    gap: var(--space-16);
   }
 }
 
@@ -201,34 +203,54 @@
   }
 }
 
+/* Now a real button (month nav is functional) instead of a bare inert
+   icon — reset to plain/unstyled so it doesn't look like a button box. */
+.monthArrowButton {
+  display: flex;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.monthArrowButton:disabled {
+  cursor: not-allowed;
+}
+
+/* Was 32px (via the size={32} prop) at 1920, 24px only at 1440 — now
+   24px at both breakpoints on request. */
 .monthArrow {
+  width: 24px;
+  height: 24px;
   color: var(--color-neutral-100);
   flex-shrink: 0;
 }
 
-@media (max-width: 1440px) {
-  .monthArrow {
-    width: 24px;
-    height: 24px;
-  }
+/* October (CURRENT_MONTH) has nothing newer, so the right arrow starts
+   in this state; the left arrow reaches it once June (MIN_MONTH) is
+   hit. Same disabled color Button.module.css uses. */
+.monthArrowDisabled {
+  color: var(--color-neutral-600);
 }
 
+/* Lowered two steps on request: 1920 Heading-3 -> Body-L, 1440
+   (was Body-L) -> Body-S. */
 .monthLabel {
   font-family: var(--font-family-base);
-  font-size: var(--font-heading-3-size);
-  font-weight: var(--font-heading-3-weight);
-  line-height: var(--font-heading-3-line-height);
-  letter-spacing: var(--font-heading-3-letter-spacing);
+  font-size: var(--font-body-l-size);
+  font-weight: var(--font-body-l-weight);
+  line-height: var(--font-body-l-line-height);
+  letter-spacing: var(--font-body-l-letter-spacing);
   color: var(--color-neutral-100);
   white-space: nowrap;
 }
 
 @media (max-width: 1440px) {
   .monthLabel {
-    font-size: var(--font-body-l-size);
-    font-weight: var(--font-body-l-weight);
-    line-height: var(--font-body-l-line-height);
-    letter-spacing: var(--font-body-l-letter-spacing);
+    font-size: var(--font-body-s-size);
+    font-weight: var(--font-body-s-weight);
+    line-height: var(--font-body-s-line-height);
+    letter-spacing: var(--font-body-s-letter-spacing);
   }
 }
 
@@ -318,12 +340,47 @@
 /* Empty comment-board placeholder — background/border only, per request. */
 /* Same one-grid-column inset as .progressSection above, both breakpoints. */
 .board {
+  position: relative;
   width: calc(100% - 2 * ((100% - var(--grid-gutter) * 11) / 12 + var(--grid-gutter)));
   margin-inline: calc((100% - var(--grid-gutter) * 11) / 12 + var(--grid-gutter));
   height: 641px;
   margin-top: var(--space-48);
   border-radius: var(--radius-sm);
   background-color: var(--color-neutral-800);
+  overflow: hidden;
+}
+
+/* Positioned by comment.x/y, both stored as a percentage of .board's own
+   size — see useDonationWall.ts. */
+/* Was 18%, sized up on request — kept roughly in sync with
+   useDonationWall.ts's own FOOTPRINT estimate for the overlap-avoidance
+   check (not pixel-exact, just close enough that new placements don't
+   land right on top of existing, now-bigger items). */
+.wallItem {
+  position: absolute;
+  max-width: 22%;
+}
+
+.wallText {
+  margin: 0;
+  padding: var(--spacing-md);
+  background-color: var(--color-neutral-900);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-family-base);
+  font-size: var(--font-label-l-size);
+  font-weight: var(--font-label-l-weight);
+  line-height: var(--font-label-l-line-height);
+  letter-spacing: var(--font-label-l-letter-spacing);
+  color: var(--color-neutral-100);
+  overflow-wrap: break-word;
+}
+
+/* Was 160x38 — scaled up ~1.35x, keeping the 477:113 aspect ratio the
+   viewBox is drawn in (see DonationScreen.tsx). */
+.wallDrawing {
+  display: block;
+  width: 216px;
+  height: 51px;
 }
 
 @media (max-width: 1440px) {

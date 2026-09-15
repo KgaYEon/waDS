@@ -1,10 +1,12 @@
-import { forwardRef } from "react";
+import { forwardRef, useEffect, useRef, useState } from "react";
 import type { HTMLAttributes } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styles from "./Header.module.css";
 import NavTab from "./NavTab";
 import SearchBox from "./SearchBox";
-import { IconLogo, IconProfile } from "./icons";
+import BigChip from "./BigChip";
+import { IconLogo } from "./icons";
+import { useAuth } from "../../hooks/useAuth";
 
 export interface NavItem {
   label: string;
@@ -17,7 +19,6 @@ export interface NavItem {
 export interface HeaderProps extends HTMLAttributes<HTMLElement> {
   navItems?: NavItem[];
   onSearch?: (term: string) => void;
-  onProfileClick?: () => void;
 }
 
 const DEFAULT_NAV: NavItem[] = [
@@ -47,11 +48,35 @@ function isNavItemActive(item: NavItem, pathname: string): boolean {
 // Layout.tsx) — some screens' own sticky title blocks need to sit
 // exactly flush under it, and that height isn't safe to hand-guess.
 const Header = forwardRef<HTMLElement, HeaderProps>(function Header(
-  { navItems = DEFAULT_NAV, onSearch, onProfileClick, className, ...rest },
+  { navItems = DEFAULT_NAV, onSearch, className, ...rest },
   ref
 ) {
   const navigate = useNavigate();
   const location = useLocation();
+  const { isLoggedIn, logout } = useAuth();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  // Close the logout menu on an outside click — same pattern SearchBox
+  // uses for its own dropdown, just via a ref instead of onBlur (the
+  // menu isn't inside a focusable input-based wrapper here).
+  useEffect(() => {
+    if (!menuOpen) return;
+    const handlePointerDown = (event: PointerEvent) => {
+      if (!menuRef.current?.contains(event.target as Node)) {
+        setMenuOpen(false);
+      }
+    };
+    window.addEventListener("pointerdown", handlePointerDown);
+    return () => window.removeEventListener("pointerdown", handlePointerDown);
+  }, [menuOpen]);
+
+  const handleLogout = () => {
+    // Was also clearing the donation wall on logout — reverted on
+    // request, the wall now persists regardless of login state.
+    logout();
+    setMenuOpen(false);
+  };
 
   return (
     <header ref={ref} className={[styles.header, className].filter(Boolean).join(" ")} {...rest}>
@@ -78,14 +103,37 @@ const Header = forwardRef<HTMLElement, HeaderProps>(function Header(
       </div>
       <div className={styles.right}>
         <SearchBox onSearch={onSearch} />
-        <button
-          type="button"
-          className={styles.profile}
-          onClick={onProfileClick}
-          aria-label="내 계정"
-        >
-          <IconProfile className={styles.profileIcon} />
-        </button>
+        {isLoggedIn ? (
+          <div className={styles.avatarWrap} ref={menuRef}>
+            <button
+              type="button"
+              className={styles.avatar}
+              onClick={() => setMenuOpen((v) => !v)}
+              aria-label="내 계정"
+              aria-expanded={menuOpen}
+            />
+            {menuOpen && (
+              <div className={styles.avatarMenu} role="menu">
+                <button
+                  type="button"
+                  role="menuitem"
+                  className={styles.avatarMenuItem}
+                  onClick={handleLogout}
+                >
+                  로그아웃
+                </button>
+              </div>
+            )}
+          </div>
+        ) : (
+          <BigChip
+            size="L"
+            className={styles.loginChip}
+            onClick={() => navigate("/login", { state: { from: location.pathname } })}
+          >
+            로그인
+          </BigChip>
+        )}
       </div>
     </header>
   );

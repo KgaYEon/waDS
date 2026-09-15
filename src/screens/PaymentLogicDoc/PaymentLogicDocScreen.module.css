@@ -1,0 +1,201 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap");
+
+/* Ported as-is from public/docs/payment-logic.html (now a real in-app
+   route instead of a static file, so it works the same in any deployed
+   environment). This document intentionally keeps its own light theme —
+   it's an archived planning doc, not part of the app's own dark design
+   system — so none of tokens.css is used here on purpose. Bare tag
+   selectors from the original (body, h1, table, ...) are scoped under
+   .page/.doc so they can't leak into the rest of the app. */
+
+.page,
+.page * {
+  box-sizing: border-box;
+}
+
+.page {
+  font-family: "Noto Sans KR", sans-serif;
+  color: #222;
+  background: #f7f7f8;
+  margin: 0;
+  padding: 48px 20px;
+  line-height: 1.7;
+  min-height: 100vh;
+}
+
+.doc {
+  max-width: 760px;
+  margin: 0 auto;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 56px 64px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.docHeader {
+  border-bottom: 2px solid #111;
+  padding-bottom: 24px;
+  margin-bottom: 32px;
+}
+
+.docEyebrow {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: #e5548c;
+  text-transform: uppercase;
+  margin: 0 0 8px;
+}
+
+.page h1 {
+  font-size: 26px;
+  font-weight: 700;
+  margin: 0 0 8px;
+}
+
+.docMeta {
+  font-size: 13px;
+  color: #888;
+  margin: 0;
+}
+
+.page h2 {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 40px 0 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #eee;
+}
+
+.page h3 {
+  font-size: 15px;
+  font-weight: 700;
+  margin: 24px 0 8px;
+  color: #111;
+}
+
+.page p {
+  font-size: 14.5px;
+  margin: 0 0 12px;
+  color: #333;
+}
+
+.page ul,
+.page ol {
+  font-size: 14.5px;
+  color: #333;
+  padding-left: 22px;
+  margin: 0 0 14px;
+}
+
+.page li {
+  margin-bottom: 6px;
+}
+
+.statusBadge {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 3px 10px;
+  border-radius: 99px;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+.statusPending {
+  background: #fdeef4;
+  color: #c23d70;
+}
+
+.callout {
+  background: #f6cbd1;
+  padding: 14px 18px;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #6b2e3c;
+  margin: 16px 0;
+}
+
+.callout strong {
+  color: #4d1e29;
+}
+
+.warn {
+  background: #fff8ec;
+  border-left: 3px solid #f0ad4e;
+  padding: 14px 18px;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #6b4f1d;
+  margin: 16px 0;
+}
+
+.page table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+  margin: 12px 0 20px;
+}
+
+.page th,
+.page td {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid #eee;
+}
+
+.page th {
+  background: #fafafa;
+  font-weight: 700;
+  color: #444;
+}
+
+.stepList {
+  counter-reset: step;
+  list-style: none;
+  padding-left: 0;
+}
+
+.stepList li {
+  counter-increment: step;
+  position: relative;
+  padding-left: 34px;
+  margin-bottom: 16px;
+}
+
+.stepList li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #111;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stepList b {
+  display: block;
+  font-size: 14.5px;
+  color: #111;
+  margin-bottom: 2px;
+}
+
+.stepList span {
+  color: #555;
+  font-size: 13.5px;
+}
+
+.footerNote {
+  margin-top: 48px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+  font-size: 12.5px;
+  color: #999;
+}

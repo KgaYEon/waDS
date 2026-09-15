@@ -6,27 +6,48 @@
   background-color: var(--color-neutral-1000);
 }
 
-/* Measured from Figma's "1440/home" frame. */
+/* Was 349px (measured from Figma's "1440/home" frame) — the enlarged
+   logo + wider gap now add up to almost exactly that height on their
+   own (144 + 64 + ~73 content + 68 overlay padding ≈ 349px), leaving no
+   room and clipping the top of the content. Grown on request,
+   1440-only, to give it breathing room again; 1920 (510px) untouched. */
 @media (max-width: 1440px) {
   .section {
-    height: 349px;
+    height: 440px;
   }
 }
 
+.imageStack {
+  position: absolute;
+  inset: 0;
+}
+
+/* All slides are stacked and always rendered — swapping opacity between
+   the outgoing and incoming slide crossfades them, instead of an
+   instant swap on a single <img>. */
 .image {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: opacity 0.8s ease;
 }
 
+/* pointer-events:none here (re-enabled per-slide, inline, in
+   HeroBannerSection.tsx — only the active slide's content gets it) —
+   .overlay spans the section's full height:100%, and being a later
+   sibling in the DOM than .dots, its transparent empty area was
+   silently sitting on top of the dots and swallowing clicks meant for
+   them, even though nothing was visibly covering them. */
 .overlay {
   position: relative;
   height: 100%;
   display: flex;
   align-items: flex-end;
-  padding-bottom: var(--space-94);
+  pointer-events: none;
+  /* Was space-94 — bumped 12px on request to nudge the content up. */
+  padding-bottom: var(--space-106);
 }
 
 /* Scaled down along with the shorter banner height above — like the
@@ -35,16 +56,66 @@
    Figma layout, so this is a reasonable value, not a re-measured one. */
 @media (max-width: 1440px) {
   .overlay {
-    padding-bottom: var(--space-56);
+    /* Was space-56 — bumped 12px on request, same as 1920 above. */
+    padding-bottom: var(--space-68);
   }
 }
 
+/* Grid (not flex/absolute) so every slide's content shares the exact
+   same cell and the track auto-sizes to fit them — no hardcoded height
+   needed for the stack to overlap correctly. */
+.contentStack {
+  display: grid;
+  max-width: 100%;
+}
+
+/* Logo-to-text gap (32px) lives here; the tagline-to-button gap is its
+   own, smaller value on .textGroup below — they're different amounts,
+   so one shared gap on a single flex column can't produce both. */
 .content {
+  grid-area: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  /* Was spacing-lg (32px) — widened to 64px on request. */
+  gap: var(--spacing-xl);
+  /* max-width: 32ch removed — it existed to control wrap width, but the
+     tagline is now forced to a single line instead. */
+  max-width: 100%;
+  /* Crossfades with the same duration/easing as .image above —
+     pointer-events (auto for the active slide, none for the rest) is
+     set inline per-slide in HeroBannerSection.tsx, not here. */
+  transition: opacity 0.8s ease;
+}
+
+.textGroup {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: var(--spacing-sm);
-  max-width: 32ch;
+  /* Nudged right of .content's own edge on request (was -24px left,
+     corrected to +24px right, then +24px more, then -12px). */
+  margin-left: 36px;
+}
+
+/* No Figma spec for this (logos supplied directly as PNGs) — capped so a
+   wide wordmark can't stretch .content (and in turn the banner) wider
+   than the available space; width stays intrinsic/auto otherwise. */
+.logo {
+  display: block;
+  /* 120px x1.2 = 144px, on request. .section's own fixed height is
+     intentionally untouched — this only grows .content, anchored to the
+     bottom via .overlay's align-items:flex-end, so it extends upward
+     rather than changing the banner's own height. */
+  height: 144px;
+  width: auto;
+  max-width: 100%;
+  /* Nudged further left than the tagline/button beneath it (which stay
+     at .content's own flex-start edge) — a bare PNG logo mark often has
+     built-in whitespace around its art, so this pulls the visible mark
+     itself closer to the edge. Applies at both breakpoints (all 4
+     slides share this one class). */
+  margin-left: -16px;
 }
 
 .tagline {
@@ -54,37 +125,24 @@
   line-height: var(--font-hero-tagline-line-height);
   letter-spacing: var(--font-hero-tagline-letter-spacing);
   color: var(--color-neutral-100);
+  white-space: nowrap;
 }
 
-.arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  color: var(--color-neutral-100);
-  z-index: 1;
-}
 
-.arrowLeft {
-  left: var(--space-39);
-}
-
-.arrowRight {
-  right: var(--space-39);
-}
-
+/* Pushed further down than the raw "56px from the bottom edge" default,
+   opening up more space between the banner content (tagline/button)
+   above and the dots — this screen's own placement choice, not a
+   CarouselDots change (that component's other consumers are untouched). */
 .dots {
   position: absolute;
   left: 50%;
-  bottom: var(--space-56);
+  /* 94(content padding-bottom) - 30 = 64px gap from content, on request. */
+  bottom: var(--space-30);
   transform: translateX(-50%);
 }
 
 @media (max-width: 1440px) {
   .dots {
-    bottom: var(--spacing-lg);
+    bottom: var(--space-12);
   }
 }

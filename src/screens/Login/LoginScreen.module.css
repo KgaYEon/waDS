@@ -1,0 +1,201 @@
+/* No Container/Grid here — this is a single centered card, not a
+   12-column layout, same kind of exception as Header/Filter. */
+.screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Header-bottom to card-top gap, measured from this frame directly. */
+  padding-top: 137px;
+  padding-bottom: var(--spacing-xl);
+}
+
+@media (max-width: 1440px) {
+  .screen {
+    padding-top: 112px;
+  }
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 478px;
+  max-width: 100%;
+  gap: 71px;
+}
+
+@media (max-width: 1440px) {
+  .card {
+    gap: var(--space-48);
+  }
+}
+
+.headGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-35);
+}
+
+.logo {
+  width: 158.355px;
+  height: 75.756px;
+  color: var(--color-neutral-100);
+}
+
+@media (max-width: 1440px) {
+  .logo {
+    width: 105.999px;
+    height: 50.709px;
+  }
+}
+
+.titleGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-16);
+  text-align: center;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-family-base);
+  font-size: var(--font-loading-title-l-size);
+  font-weight: var(--font-loading-title-l-weight);
+  line-height: var(--font-loading-title-l-line-height);
+  letter-spacing: var(--font-loading-title-l-letter-spacing);
+  color: var(--color-neutral-100);
+}
+
+@media (max-width: 1440px) {
+  .title {
+    font-size: var(--font-loading-title-s-size);
+    font-weight: var(--font-loading-title-s-weight);
+    line-height: var(--font-loading-title-s-line-height);
+    letter-spacing: var(--font-loading-title-s-letter-spacing);
+  }
+}
+
+.subtitle {
+  margin: 0;
+  font-family: var(--font-family-base);
+  font-size: var(--font-body-m-size);
+  font-weight: var(--font-body-m-weight);
+  line-height: var(--font-body-m-line-height);
+  letter-spacing: var(--font-body-m-letter-spacing);
+  color: var(--color-neutral-300);
+}
+
+@media (max-width: 1440px) {
+  .subtitle {
+    font-size: var(--font-body-s-size);
+    font-weight: var(--font-body-s-weight);
+    line-height: var(--font-body-s-line-height);
+    letter-spacing: var(--font-body-s-letter-spacing);
+  }
+}
+
+.providerRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: var(--spacing-lg);
+  width: 100%;
+}
+
+.providerItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-15);
+}
+
+/* 72px/56px circles, each provider's own brand background/border —
+   these are fixed third-party brand colors (Kakao yellow, Naver green,
+   Apple black, Google near-white), not this app's own palette, so kept
+   as literal hex rather than tokenized, same treatment as IconGoogle's
+   own fill colors. */
+.providerButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  padding: 0;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+}
+
+@media (max-width: 1440px) {
+  .providerButton {
+    width: 56px;
+    height: 56px;
+  }
+
+  .providerButton svg {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.kakao {
+  background-color: #ebc14e;
+  border: 1px solid #000000;
+  color: #000000;
+}
+
+.naver {
+  background-color: #04c75b;
+  border: 1px solid #000000;
+  color: var(--color-neutral-100);
+}
+
+.apple {
+  background-color: #000000;
+  border: 1px solid #939393;
+  color: var(--color-neutral-100);
+}
+
+.google {
+  background-color: #fefefe;
+  border: 1px solid #000000;
+}
+
+.providerLabel {
+  font-family: var(--font-family-base);
+  font-size: var(--font-label-m-size);
+  font-weight: var(--font-label-m-weight);
+  line-height: var(--font-label-m-line-height);
+  letter-spacing: var(--font-label-m-letter-spacing);
+  color: var(--color-neutral-100);
+  white-space: nowrap;
+}
+
+@media (max-width: 1440px) {
+  .providerLabel {
+    font-size: var(--font-label-s-size);
+    font-weight: var(--font-label-s-weight);
+    line-height: var(--font-label-s-line-height);
+    letter-spacing: var(--font-label-s-letter-spacing);
+  }
+}
+
+.privacyLink {
+  font-family: var(--font-family-base);
+  font-size: var(--font-label-m-size);
+  font-weight: var(--font-label-m-weight);
+  line-height: var(--font-label-m-line-height);
+  letter-spacing: var(--font-label-m-letter-spacing);
+  color: var(--color-neutral-400);
+  text-decoration: underline;
+}
+
+@media (max-width: 1440px) {
+  .privacyLink {
+    font-size: var(--font-label-s-size);
+    font-weight: var(--font-label-s-weight);
+    line-height: var(--font-label-s-line-height);
+    letter-spacing: var(--font-label-s-letter-spacing);
+  }
+}

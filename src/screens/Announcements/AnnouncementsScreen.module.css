@@ -35,24 +35,26 @@
   }
 }
 
-/* Title position unified with Suggestions/FAQ on request: same
-   subnav-to-title margin-top (spacing-xl/space-78, this screen's own
-   Figma measurement space-51/space-38 is intentionally overridden).
-   Now has a .heading wrapper (added on request, to hold the new
-   subtitle below the title) matching Suggestions/FAQ's own structure. */
+/* Title position unified with Suggestions/FAQ/Donation on request: same
+   subnav-to-title margin-top, widened further on request from the
+   originally-unified spacing-xl/space-78 to space-86/space-94 (this
+   screen's own Figma measurement space-51/space-38 was already
+   intentionally overridden before that). Has a .heading wrapper (added
+   on request, to hold the new subtitle below the title) matching
+   Suggestions/FAQ's own structure. */
 .heading {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   gap: var(--spacing-md);
-  margin-top: var(--spacing-xl);
+  margin-top: var(--space-86);
 }
 
 @media (max-width: 1440px) {
   .heading {
     gap: var(--space-16);
-    margin-top: var(--space-78);
+    margin-top: var(--space-94);
   }
 }
 

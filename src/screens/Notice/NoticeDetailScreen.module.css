@@ -33,15 +33,21 @@
   color: var(--color-neutral-300);
 }
 
-/* Reading column: 1396px/996px are this screen's own measured intrinsic
-   widths (same treatment as Announcements' listWrap / SearchBox's
-   min-width), not a 12-column span. */
+/* Reading column: 1920 is now inset by exactly 2 grid columns + 2
+   gutters on each side (one column narrower than before, which landed
+   on 1 column + 1 gutter by coincidence — this makes it exact and grid
+   line-accurate instead of a hand-measured px value), same calc pattern
+   Donation's .board/.progressSection use. 996px at 1440 is still this
+   screen's own measured intrinsic width (same treatment as
+   Announcements' listWrap / SearchBox's min-width), not grid-derived. */
 .content {
   display: flex;
   flex-direction: column;
   align-items: stretch;
   width: 100%;
-  max-width: 1396px;
+  max-width: calc(
+    100% - 2 * (2 * ((100% - var(--grid-gutter) * 11) / 12) + 2 * var(--grid-gutter))
+  );
   margin-top: var(--space-68);
 }
 
@@ -62,20 +68,13 @@
   background: none;
   cursor: pointer;
   font-family: var(--font-family-base);
-  /* No named Wa-text style matches at 1920 (14px/Medium); 1440 matches
-     Label-M exactly. */
-  font-size: 14px;
-  font-weight: 500;
+  /* Mapped to Label-L on request — same at both breakpoints, no media
+     query override needed anymore. */
+  font-size: var(--font-label-l-size);
+  font-weight: var(--font-label-l-weight);
+  line-height: var(--font-label-l-line-height);
+  letter-spacing: var(--font-label-l-letter-spacing);
   color: var(--color-neutral-100);
-}
-
-@media (max-width: 1440px) {
-  .backLink {
-    font-size: var(--font-label-m-size);
-    font-weight: var(--font-label-m-weight);
-    line-height: var(--font-label-m-line-height);
-    letter-spacing: var(--font-label-m-letter-spacing);
-  }
 }
 
 /* Same glyph as IconArrowLeft (confirmed by comparing path data), just
@@ -102,33 +101,32 @@
 
 /* "알림" chip here is bordered/outlined (SmallChip's primaryBorder
    color), unlike the list screen's filled "whiteBorder" chip — bigger
-   too (Label-L, not the component's default Label-S), so padding/font
+   too (Chip-1, not the component's default Chip-2), so padding/font
    are overridden here via passthrough className rather than changing
    SmallChip's own defaults. */
 .chip {
   padding: var(--spacing-xs) var(--space-20);
-  font-size: var(--font-label-l-size);
-  font-weight: var(--font-label-l-weight);
-  line-height: var(--font-label-l-line-height);
-  letter-spacing: var(--font-label-l-letter-spacing);
+  font-size: var(--font-chip-1-size);
+  font-weight: var(--font-chip-1-weight);
+  line-height: var(--font-chip-1-line-height);
+  letter-spacing: var(--font-chip-1-letter-spacing);
 }
 
+/* Heading-4 is the base/1440 value; 1920 steps back up to Heading-3 on
+   request (this screen's own exception, opposite of the usual "1920
+   bigger" default already applying at both before this). */
 .title {
   margin: 0;
   font-family: var(--font-family-base);
-  /* Reuses Heading-1's size/line-height/letter-spacing (32px matches
-     exactly) but is Medium, not Bold — see --font-notice-title-weight
-     in tokens.css. */
-  font-size: var(--font-heading-1-size);
-  font-weight: var(--font-notice-title-weight);
-  line-height: var(--font-heading-1-line-height);
-  letter-spacing: var(--font-heading-1-letter-spacing);
+  font-size: var(--font-heading-4-size);
+  font-weight: var(--font-heading-4-weight);
+  line-height: var(--font-heading-4-line-height);
+  letter-spacing: var(--font-heading-4-letter-spacing);
   color: var(--color-neutral-100);
 }
 
-@media (max-width: 1440px) {
+@media (min-width: 1441px) {
   .title {
-    /* Exact match at 1440 — Heading-3, not a custom bundle. */
     font-size: var(--font-heading-3-size);
     font-weight: var(--font-heading-3-weight);
     line-height: var(--font-heading-3-line-height);
@@ -182,12 +180,14 @@
   }
 }
 
+/* Own left/right padding removed on request — now flush with .content's
+   own edges, same as .title/.header/everything else in this reading
+   column (already inset by the page's grid margin via Container/Grid). */
 .body {
   display: flex;
   flex-direction: column;
   align-items: stretch;
   gap: var(--spacing-md);
-  padding: var(--space-10) var(--spacing-md);
   margin-top: var(--space-28);
 }
 
@@ -201,14 +201,14 @@
 .list {
   margin: 0;
   font-family: var(--font-family-base);
-  /* 1920 reuses Body-M's size/weight but has its own line-height (see
-     --font-notice-body-line-height in tokens.css); 1440 is an exact
-     Body-S match. Figma's rgba(242,240,236,0.85) is neutral-100 at 85%
-     opacity — expressed via color-mix() to stay token-derived instead
-     of a hardcoded literal. */
+  /* 1920 is now a plain Body-M match (was a custom 28.5px line-height,
+     dropped on request); 1440 is an exact Body-S match below. Figma's
+     rgba(242,240,236,0.85) is neutral-100 at 85% opacity — expressed via
+     color-mix() to stay token-derived instead of a hardcoded literal. */
   font-size: var(--font-body-m-size);
   font-weight: var(--font-body-m-weight);
-  line-height: var(--font-notice-body-line-height);
+  line-height: var(--font-body-m-line-height);
+  letter-spacing: var(--font-body-m-letter-spacing);
   color: color-mix(in srgb, var(--color-neutral-100) 85%, transparent);
 }
 
@@ -218,6 +218,7 @@
     font-size: var(--font-body-s-size);
     font-weight: var(--font-body-s-weight);
     line-height: var(--font-body-s-line-height);
+    letter-spacing: var(--font-body-s-letter-spacing);
   }
 }
 
@@ -272,10 +273,18 @@
   color: var(--color-neutral-100);
 }
 
-/* Date steps down a further level at 1440 (Body-S -> Label-M), one tier
-   below the rest of the row's 1440 text — Body has no smaller tier than
-   Body-S, so this crosses into the Label ladder, same as elsewhere in
-   this codebase when a "one step down" needed a size Body doesn't have. */
+/* 1920 raised on request from .adjacentRow's inherited Body-M to
+   Label-L. 1440 keeps its own further step-down to Label-M — Body has
+   no smaller tier than Body-S, so that one crosses into the Label
+   ladder, same as elsewhere in this codebase when a "one step down"
+   needed a size Body doesn't have. */
+.adjacentDate {
+  font-size: var(--font-label-l-size);
+  font-weight: var(--font-label-l-weight);
+  line-height: var(--font-label-l-line-height);
+  letter-spacing: var(--font-label-l-letter-spacing);
+}
+
 @media (max-width: 1440px) {
   .adjacentDate {
     font-size: var(--font-label-m-size);
@@ -292,17 +301,7 @@
   margin-top: var(--spacing-xl);
 }
 
-/* Button already matches exactly (color="border", padding scale L=22/24
-   at 1920, S=12/24 at 1440) — only the breakpoint-driven size switch
-   needs a scoped override since Button's `size` prop is a discrete JS
-   value, not something a media query alone can flip. */
-@media (max-width: 1440px) {
-  .backButton {
-    padding: var(--space-12) var(--spacing-md);
-    /* Match size="S"'s text now that it steps down (see Button.module.css). */
-    font-size: var(--font-label-l-size);
-    font-weight: var(--font-label-l-weight);
-    line-height: var(--font-label-l-line-height);
-    letter-spacing: var(--font-label-l-letter-spacing);
-  }
-}
+/* Was size="L" with a scoped 1440 override stepping it down to match
+   size="S" — switched to size="M" directly on request, which already
+   has no internal 1440 variation (Button.module.css's .sizeM), so no
+   override is needed here anymore. */

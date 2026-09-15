@@ -16,14 +16,11 @@
   padding: 0;
   cursor: pointer;
   text-align: left;
-  /* Bumped one step (Body-S -> Body-M) along with the dropdown's 1.2x
-     size pass, on request. This is RecentSearchItem's only consumer
-     today (SearchResultsPanel), so the base style was changed directly
-     rather than adding a size prop nobody needs yet. */
-  font-size: var(--font-body-m-size);
-  font-weight: var(--font-body-m-weight);
-  line-height: var(--font-body-m-line-height);
-  letter-spacing: var(--font-body-m-letter-spacing);
+  /* 1920 switched to Label-L on request (was Body-M). */
+  font-size: var(--font-label-l-size);
+  font-weight: var(--font-label-l-weight);
+  line-height: var(--font-label-l-line-height);
+  letter-spacing: var(--font-label-l-letter-spacing);
   color: var(--color-neutral-100);
 }
 

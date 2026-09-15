@@ -76,29 +76,73 @@
   gap: var(--space-36);
 }
 
-.profile {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--spacing-xs);
+/* Logged-out: a chip button instead of the round profile placeholder —
+   no Figma spec for this exact state, reused BigChip (the closest
+   existing "pill" component) rather than inventing a new one. */
+/* +2px each side on request, scoped here so BigChip's other consumers
+   (Suggestions' type chips, DonationCommentModal's mode chips) keep
+   their own default --chip-padding-inline (16px). */
+.loginChip {
+  flex-shrink: 0;
+  padding-inline: 18px;
+}
+
+.avatarWrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+/* Logged-in: empty round avatar placeholder (no photo yet) — plain gray
+   fill, no icon. Same 48px/40px footprint the old icon-driven .profile
+   button had, now set directly since there's no icon to derive it from. */
+.avatar {
+  display: block;
+  width: 48px;
+  height: 48px;
+  padding: 0;
   border: none;
   border-radius: var(--radius-full);
-  background-color: var(--color-neutral-100);
-  color: var(--color-neutral-400);
+  background-color: var(--color-neutral-600);
   cursor: pointer;
 }
 
-.profileIcon {
-  width: 32px;
-  height: 32px;
+@media (max-width: 1440px) {
+  .avatar {
+    width: 40px;
+    height: 40px;
+  }
 }
 
-/* Re-measured: the profile circle shrinks from 48px to 40px at 1440 —
-   padding (--spacing-xs) stays the same, only the icon shrinks
-   (32px -> 24px), which is what actually drives that size down. */
-@media (max-width: 1440px) {
-  .profileIcon {
-    width: 24px;
-    height: 24px;
-  }
+/* Small logout menu — no Figma spec, styled loosely after
+   SearchResultsPanel's own dropdown (dark surface, subtle border). */
+.avatarMenu {
+  position: absolute;
+  top: calc(100% + var(--spacing-xs));
+  right: 0;
+  min-width: 120px;
+  padding: var(--space-4);
+  background-color: var(--color-neutral-900);
+  border: 1px solid var(--color-neutral-700);
+  border-radius: var(--radius-8);
+  z-index: 20;
+}
+
+.avatarMenuItem {
+  display: block;
+  width: 100%;
+  padding: var(--space-12);
+  border: none;
+  border-radius: var(--radius-sm);
+  background: none;
+  font-family: var(--font-family-base);
+  font-size: var(--font-label-l-size);
+  font-weight: var(--font-label-l-weight);
+  line-height: var(--font-label-l-line-height);
+  color: var(--color-neutral-100);
+  text-align: left;
+  cursor: pointer;
+}
+
+.avatarMenuItem:hover {
+  background-color: var(--color-neutral-800);
 }

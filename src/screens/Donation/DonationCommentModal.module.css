@@ -1,0 +1,145 @@
+/* Same backdrop treatment as DonationCtaModal's own .overlay — kept as
+   its own rule (not imported) since it has nothing else to share. */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-md);
+  background-color: color-mix(in srgb, var(--color-neutral-1000) 70%, transparent);
+}
+
+/* Groups "check + thanks text" and "chips + input" together with their
+   own 56px gap — DonationCtaModal's .body itself supplies the outer 32px
+   gap between this whole group and the button row. */
+.contentGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-56);
+  width: 100%;
+}
+
+.thanksHead {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-lg);
+}
+
+.checkBadge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border: 3px solid var(--color-primary-400);
+  border-radius: var(--radius-full);
+  color: var(--color-primary-400);
+}
+
+.thanksText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-12);
+  text-align: center;
+}
+
+.thanksTitle {
+  margin: 0;
+  font-family: var(--font-family-base);
+  font-size: var(--font-heading-4-size);
+  font-weight: var(--font-heading-4-weight);
+  line-height: var(--font-heading-4-line-height);
+  letter-spacing: var(--font-heading-4-letter-spacing);
+  color: var(--color-neutral-100);
+}
+
+.thanksSubtitle {
+  margin: 0;
+  font-family: var(--font-family-base);
+  font-size: var(--font-label-m-size);
+  font-weight: var(--font-label-m-weight);
+  line-height: var(--font-label-m-line-height);
+  letter-spacing: var(--font-label-m-letter-spacing);
+  color: var(--color-neutral-300);
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-md);
+  width: 100%;
+}
+
+.chipRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+}
+
+/* BigChip's size="M" has the right padding-block (8px) for this frame,
+   but its text is Label-S (12px) — this frame's chips use Label-M
+   (14px), so it's bumped back up here, same scoped-override pattern as
+   Suggestions' .typeChip. */
+.modeChip {
+  font-size: var(--font-chip-1-size);
+  font-weight: var(--font-chip-1-weight);
+  line-height: var(--font-chip-1-line-height);
+  letter-spacing: var(--font-chip-1-letter-spacing);
+}
+
+.textField {
+  width: 100%;
+}
+
+.drawingGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--spacing-xs);
+  width: 100%;
+}
+
+.canvasWrap {
+  position: relative;
+  width: 100%;
+  height: 113px;
+  border-radius: var(--radius-8);
+  background-color: var(--color-neutral-800);
+  overflow: hidden;
+}
+
+.canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+  touch-action: none;
+}
+
+.canvasPlaceholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  font-family: var(--font-family-base);
+  font-size: var(--font-label-m-size);
+  font-weight: var(--font-label-m-weight);
+  line-height: var(--font-label-m-line-height);
+  letter-spacing: var(--font-label-m-letter-spacing);
+  color: var(--color-neutral-400);
+  text-align: center;
+  pointer-events: none;
+}
+
+.clearButton {
+  flex-shrink: 0;
+}
