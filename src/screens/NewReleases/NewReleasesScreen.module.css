@@ -49,13 +49,14 @@
   }
 }
 
+/* Lowered from Body-M to Label-L on request, 1920 only. */
 .subtitle {
   margin: 0;
   font-family: var(--font-family-base);
-  font-size: var(--font-body-m-size);
-  font-weight: var(--font-body-m-weight);
-  line-height: var(--font-body-m-line-height);
-  letter-spacing: var(--font-body-m-letter-spacing);
+  font-size: var(--font-label-l-size);
+  font-weight: var(--font-label-l-weight);
+  line-height: var(--font-label-l-line-height);
+  letter-spacing: var(--font-label-l-letter-spacing);
   color: var(--color-neutral-300);
 }
 

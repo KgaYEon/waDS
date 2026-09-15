@@ -18,3 +18,5 @@ export { default as IconKakao } from "./Kakao";
 export { default as IconApple } from "./Apple";
 export { default as IconGoogle } from "./Google";
 export { default as IconCheck } from "./Check";
+export { default as IconMoon } from "./Moon";
+export { default as IconSun } from "./Sun";

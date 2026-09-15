@@ -12,6 +12,12 @@
   /* ------------------------------------------------------------------ */
   /* Color — Primitive / Neutral                                        */
   /* ------------------------------------------------------------------ */
+  /* Same hex as --color-surface-subtle below — added as a proper scale
+     step (brighter than neutral-100) for GameCard's title text, on
+     request. Not part of the [data-theme="light"] neutral reversal
+     further down (100-1000 only, no natural "below 100" counterpart on
+     the dark end) — see the note on GameCard.module.css's .title. */
+  --color-neutral-50: #fbfaf8;
   --color-neutral-100: #f2f0ec;
   --color-neutral-200: #e4e1da;
   --color-neutral-300: #b8b5ae;
@@ -104,7 +110,7 @@
      sits between Heading-2/3, so its line-height (34px, ~1.31x)
      interpolates between their ratios; S matches Heading-4's size
      (20px), so it reuses Heading-4's ratio (28px, 1.4x). */
-  --font-page-title-l-size: 26px;
+  --font-page-title-l-size: 22px;
   --font-page-title-l-weight: 500;
   --font-page-title-l-line-height: 34px;
   --font-page-title-l-letter-spacing: 0;
@@ -132,15 +138,16 @@
   --font-body-s-line-height: 24px;
   --font-body-s-letter-spacing: 0;
 
-  /* Navigation - L */
-  --font-navigation-l-size: 18px;
+  /* Navigation - L — size lowered 2px (18->16) and weight lowered
+     700->600 on request. */
+  --font-navigation-l-size: 16px;
   --font-navigation-l-weight: 700;
   --font-navigation-l-line-height: 28px;
   --font-navigation-l-letter-spacing: 0;
 
-  /* Navigation - S */
-  --font-navigation-s-size: 16px;
-  --font-navigation-s-weight: 700;
+  /* Navigation - S — same two changes: size 16->14, weight 700->600. */
+  --font-navigation-s-size: 14px;
+  --font-navigation-s-weight: 600;
   --font-navigation-s-line-height: 24px;
   --font-navigation-s-letter-spacing: 0;
 
@@ -347,6 +354,31 @@
   --grid-columns: 12;
   --grid-gutter: 24px;
   --grid-margin: 120px;
+}
+
+/* Light theme — reverses only the neutral scale (100<->1000, 200<->900,
+   300<->800, 400<->700, 500<->600), so whatever used to read as
+   "background" (the dark end, 900/1000) now sits at the light end and
+   vice versa for "text" (100/200). Primary, success/information/
+   warning/error and --color-surface-subtle are deliberately untouched —
+   only the neutral primitives are redefined here.
+
+   Applied purely via this explicit [data-theme="light"] attribute (see
+   useTheme.ts, which toggles it on <html> and persists the choice to
+   localStorage) — dark is the default and there is intentionally no
+   `prefers-color-scheme` media query anywhere, so the OS/browser theme
+   setting never switches this automatically. */
+:root[data-theme="light"] {
+  --color-neutral-100: #0d0d0f;
+  --color-neutral-200: #161618;
+  --color-neutral-300: #1f1f22;
+  --color-neutral-400: #2a2a2e;
+  --color-neutral-500: #4a4a4d;
+  --color-neutral-600: #6b6b6e;
+  --color-neutral-700: #8c8a85;
+  --color-neutral-800: #b8b5ae;
+  --color-neutral-900: #e4e1da;
+  --color-neutral-1000: #f2f0ec;
 }
 
 /* 1440px breakpoint (Figma "1440/..." frames, node 244:5139). Margin is

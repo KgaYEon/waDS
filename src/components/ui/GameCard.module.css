@@ -30,6 +30,14 @@
   background-color: var(--color-neutral-900);
 }
 
+/* Light theme only: neutral-50 on request — dark mode keeps its
+   original neutral-900. (neutral-50 isn't part of the neutral-scale
+   reversal in tokens.css, so it needs an explicit override here rather
+   than inheriting one.) */
+:global([data-theme="light"]) .thumb {
+  background-color: var(--color-neutral-50);
+}
+
 /* Re-measured against the dedicated "game card" states frame (node
    61:1754, "state=mini" = this card's real 1440 design). Figma's own
    instance was 200x113 (161px card design), which isn't quite
@@ -73,6 +81,11 @@
   width: 100%;
   padding: var(--space-19) var(--spacing-sm) var(--spacing-md);
   background-color: var(--color-neutral-900);
+}
+
+/* Same light-theme-only swap as .thumb above. */
+:global([data-theme="light"]) .body {
+  background-color: var(--color-neutral-50);
 }
 
 .title {

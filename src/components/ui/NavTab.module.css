@@ -17,6 +17,7 @@
   letter-spacing: var(--font-navigation-l-letter-spacing);
   color: var(--color-neutral-100);
   text-align: center;
+  white-space: nowrap;
   transition: color 0.15s ease;
 }
 
@@ -37,8 +38,23 @@
   color: var(--color-primary-400);
 }
 
+/* .tab:hover:not(:disabled) above and this rule have equal specificity
+   (0,3,0) — placed after it so a selected tab keeps its primary color
+   on hover instead of falling back to the unselected hover gray. */
+.tab[data-selected="true"]:hover:not(:disabled) {
+  color: var(--color-primary-400);
+}
+
+/* Always present (see NavTab.tsx) with transparent background by
+   default, so it reserves its space (and the gap above it) at all
+   times — only the color toggles on selection, instead of the element
+   itself appearing/disappearing and shifting the label text. */
 .underline {
   width: 100%;
   height: 2px;
+  background-color: transparent;
+}
+
+.underline[data-visible="true"] {
   background-color: var(--color-primary-400);
 }

@@ -1,3 +1,11 @@
+/* --color-surface-subtle is a fixed literal (not part of the neutral
+   scale — see tokens.css), so it never flips between themes. Its text
+   and hover-background used to be var(--color-neutral-1000)/-300,
+   which DO flip — in light mode that reversed neutral-1000 to a
+   near-white, landing almost exactly on this near-white surface and
+   making the label unreadable. Pinned to the same literal values
+   (dark-mode's own neutral-1000/-300) so this chip stays a light
+   surface with dark text regardless of theme. */
 .chip {
   display: inline-flex;
   align-items: center;
@@ -7,12 +15,12 @@
   border: none;
   cursor: pointer;
   background-color: var(--color-surface-subtle);
-  color: var(--color-neutral-1000);
+  color: #0d0d0f;
   transition: background-color 0.15s ease;
 }
 
 .chip:hover:not(:disabled) {
-  background-color: var(--color-neutral-300);
+  background-color: #b8b5ae;
 }
 
 .chip:disabled {

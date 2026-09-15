@@ -145,16 +145,22 @@
   color: #000000;
 }
 
+/* Icon color here was var(--color-neutral-100) — a fixed brand button
+   (green/black bg) needs a fixed icon color too; that token flips in
+   light mode (reversed neutral-100 goes dark), which would make the
+   icon nearly invisible against these buttons' own always-dark
+   backgrounds. Pinned to the literal current dark-mode value instead,
+   same reasoning as .kakao/.apple's border/text above. */
 .naver {
   background-color: #04c75b;
   border: 1px solid #000000;
-  color: var(--color-neutral-100);
+  color: #f2f0ec;
 }
 
 .apple {
   background-color: #000000;
   border: 1px solid #939393;
-  color: var(--color-neutral-100);
+  color: #f2f0ec;
 }
 
 .google {

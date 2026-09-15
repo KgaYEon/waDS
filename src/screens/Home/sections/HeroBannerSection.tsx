@@ -111,7 +111,13 @@ export default function HeroBannerSection({ slides }: HeroBannerSectionProps) {
                 )}
                 <div className={styles.textGroup}>
                   <p className={styles.tagline}>{s.tagline}</p>
-                  <Button color="white" size="S" onClick={s.onCtaClick} tabIndex={i === index ? undefined : -1}>
+                  <Button
+                    color="white"
+                    size="S"
+                    className={styles.ctaButton}
+                    onClick={s.onCtaClick}
+                    tabIndex={i === index ? undefined : -1}
+                  >
                     {s.ctaLabel}
                   </Button>
                 </div>

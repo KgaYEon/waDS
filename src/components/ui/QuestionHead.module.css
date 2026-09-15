@@ -1,8 +1,12 @@
+/* Row-to-divider gap, was --spacing-md (24px) — lowered 20% to 19.2px
+   on request. Shared by all three modes (pinned/compact/FAQ-expandable
+   collapsed state), so this also affects FAQ's own closed-row gap, not
+   just Announcements' pinned/compact rows. */
 .item {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: var(--spacing-md);
+  gap: 19.2px;
   width: 100%;
   font-family: var(--font-family-base);
 }
@@ -117,15 +121,16 @@
 
    The negative margin-top cancels the flex `gap` this wrapper would
    otherwise add on the closed side (it always occupies a slot between
-   .trigger and .divider now), keeping the closed-state gap at the
-   measured 24px instead of doubling it; the open state uses the gap
+   .trigger and .divider now), keeping the closed-state gap at .item's
+   own 19.2px instead of doubling it; the open state uses the gap
    from .item[data-expanded="true"] on both sides instead, so the
-   margin resets to 0 there. */
+   margin resets to 0 there. Must match .item's own gap exactly (kept
+   as a literal here for the same reason). */
 .answerWrap {
   display: grid;
   grid-template-rows: 0fr;
   overflow: hidden;
-  margin-top: calc(-1 * var(--spacing-md));
+  margin-top: -19.2px;
   transition: grid-template-rows 0.25s ease, margin-top 0.25s ease;
 }
 
@@ -177,39 +182,31 @@
 /* Re-measured against the "공지사항" frame (node 26:993/241:3598), this
    component's first real consumer: pinned/compact titles are Body-L
    (500 weight), not Heading-4 (700) as originally guessed. */
-/* Lowered one step on request, 1920 only (was Body-L): Body-M. */
+/* Was Body-M (1920) / Body-S (1440), unified to Label-M, raised to
+   Label-L, then back down to Label-M — both breakpoints, on request. */
 .pinnedQuestion {
   flex: 1;
-  font-size: var(--font-body-m-size);
-  font-weight: var(--font-body-m-weight);
-  line-height: var(--font-body-m-line-height);
-  letter-spacing: var(--font-body-m-letter-spacing);
+  font-size: var(--font-label-m-size);
+  font-weight: var(--font-label-m-weight);
+  line-height: var(--font-label-m-line-height);
+  letter-spacing: var(--font-label-m-letter-spacing);
   color: var(--color-neutral-100);
-}
-
-@media (max-width: 1440px) {
-  .pinnedQuestion {
-    font-size: var(--font-body-s-size);
-    font-weight: var(--font-body-s-weight);
-    line-height: var(--font-body-s-line-height);
-    letter-spacing: var(--font-body-s-letter-spacing);
-  }
 }
 
 /* Lowered one step on request, 1920 only (was Body-S, the ladder's
    floor): Label-M — same reasoning as SearchBox's .input, Label-L is
    also 16px so Label-M is the first actually-smaller step. ≤1440 keeps
    the original Body-S. */
+/* Was Label-M size only (1920) / Body-S size only (1440), with no
+   weight/line-height/letter-spacing ever set — filled in and unified to
+   full Label-M on request, both breakpoints. */
 .pinnedDate {
   font-size: var(--font-label-m-size);
+  font-weight: var(--font-label-m-weight);
+  line-height: var(--font-label-m-line-height);
+  letter-spacing: var(--font-label-m-letter-spacing);
   color: var(--color-neutral-100);
   white-space: nowrap;
-}
-
-@media (max-width: 1440px) {
-  .pinnedDate {
-    font-size: var(--font-body-s-size);
-  }
 }
 
 /* "알림" chip's own vertical padding shrinks (6px -> 4px) at 1440 in the
@@ -255,30 +252,25 @@
   color: var(--color-neutral-100);
 }
 
-/* Lowered one step on request, 1920 only (was Body-L): Body-M. */
+/* Size/line-height/letter-spacing stepped Body-M/Body-S -> Label-S ->
+   Label-M -> Label-L -> back to Label-M, both breakpoints, on request
+   each time. Weight stays the literal 300 from the Label-L pass
+   (kept as-is on request) — below this system's weight ladder floor of
+   400, so it was never a token to begin with. */
 .compactQuestion {
-  font-size: var(--font-body-m-size);
-  font-weight: var(--font-body-m-weight);
-  line-height: var(--font-body-m-line-height);
-}
-
-@media (max-width: 1440px) {
-  .compactQuestion {
-    font-size: var(--font-body-s-size);
-    font-weight: var(--font-body-s-weight);
-    line-height: var(--font-body-s-line-height);
-  }
+  font-size: var(--font-label-m-size);
+  font-weight: 300;
+  line-height: var(--font-label-m-line-height);
+  letter-spacing: var(--font-label-m-letter-spacing);
 }
 
 /* Lowered one step on request, 1920 only (was Body-S floor): Label-M.
    ≤1440 keeps the original Body-S. */
+/* Same fill-in + unification as .pinnedDate above. */
 .compactDate {
   font-size: var(--font-label-m-size);
+  font-weight: var(--font-label-m-weight);
+  line-height: var(--font-label-m-line-height);
+  letter-spacing: var(--font-label-m-letter-spacing);
   white-space: nowrap;
-}
-
-@media (max-width: 1440px) {
-  .compactDate {
-    font-size: var(--font-body-s-size);
-  }
 }

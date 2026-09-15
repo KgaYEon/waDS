@@ -118,14 +118,38 @@
   margin-left: -16px;
 }
 
+/* Pinned to dark mode's own literal neutral-100 value (not the token)
+   on request — the banner's text/button must look identical in both
+   themes instead of following the light-mode neutral reversal. */
 .tagline {
   font-family: var(--font-family-base);
   font-size: var(--font-hero-tagline-size);
   font-weight: var(--font-hero-tagline-weight);
   line-height: var(--font-hero-tagline-line-height);
   letter-spacing: var(--font-hero-tagline-letter-spacing);
-  color: var(--color-neutral-100);
+  color: #f2f0ec;
   white-space: nowrap;
+}
+
+/* Same reasoning as .tagline above — pinned to Button's own colorWhite
+   values (dark mode's literal neutral-100/-1000/-300) so the CTA button
+   doesn't flip with the theme either. Scoped here rather than in
+   Button.module.css so it doesn't affect color="white"'s other
+   consumers (Donation's donate button, FAQ's CTA).
+
+   Selector doubled (.ctaButton.ctaButton) to bump specificity above
+   Button.module.css's own .colorWhite — both are single-class selectors
+   otherwise, so with equal specificity, whichever module's CSS happens
+   to land later in Vite's bundle wins; .colorWhite was winning and this
+   override was silently doing nothing (caught after the fact — the
+   banner CTA visibly didn't change color in light mode). */
+.ctaButton.ctaButton {
+  background-color: #f2f0ec;
+  color: #0d0d0f;
+}
+
+.ctaButton.ctaButton:hover:not(:disabled) {
+  background-color: #b8b5ae;
 }
 
 

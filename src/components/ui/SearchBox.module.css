@@ -17,6 +17,16 @@
      practice. */
   height: 48px;
   justify-content: center;
+  /* .trigger (the collapsed state) is the position reference: it's just
+     the icon, centered on the row with no padding. Here, the icon sits
+     inside .expanded (inputRow + gap + 1px divider stacked), and
+     justify-content:center centers that whole BLOCK — which pulls the
+     icon itself above the box's true center, since the divider adds
+     height below it that the icon doesn't share above. Padding-top
+     exactly equal to (gap + divider height) cancels that pull, so the
+     icon (not the block) ends up centered on the full box height,
+     matching .trigger's icon exactly: 10px gap + 1px divider = 11px. */
+  padding-top: 11px;
   /* 8px (--spacing-xs) x1.2 = 9.6, closest existing token is --space-10. */
   gap: var(--space-10);
   /* min-width (not width: 100%) so this still works as a flex item next
@@ -36,6 +46,8 @@
 @media (max-width: 1440px) {
   .box {
     height: 40px;
+    /* Same derivation as 1920: gap (--spacing-xs, 8px) + divider (1px) = 9px. */
+    padding-top: 9px;
     gap: var(--spacing-xs);
     min-width: 280px;
   }
@@ -52,6 +64,12 @@
   z-index: 20;
 }
 
+/* This collapsed icon-only button is what's actually visible in the
+   header by default, and is the position REFERENCE — it's just the
+   icon with no extra height/padding, so .right's align-items:center
+   naturally centers the icon itself on the row. .box (the expanded
+   state) is the one that gets adjusted to match this, not the other
+   way around — see its padding-top comment below. */
 .trigger {
   display: inline-flex;
   background: none;
@@ -61,18 +79,30 @@
   color: var(--color-neutral-100);
 }
 
+/* Was neutral-300 (2 steps up from the original neutral-100), raised
+   another 2 steps to neutral-500 on request — light theme only, light
+   mode reverses the neutral scale, so "brighter" there means a HIGHER
+   numbered token (100 is light mode's darkest end), the opposite
+   direction from dark mode. */
+:global([data-theme="light"]) .trigger {
+  color: var(--color-neutral-500);
+}
+
 .icon {
-  /* Was 38.4px (32 x1.2 enlarge pass) — brought back down to 32px on
-     request. */
-  width: 32px;
-  height: 32px;
+  /* Was 38.4px (32 x1.2 enlarge pass), then 32px, then 30px (-2px), now
+     12% smaller again on request: 30 * 0.88 = 26.4px. Applies to both
+     collapsed (.trigger) and expanded (.searchButton) states, and both
+     themes (icon color is set on the parent button, not here). */
+  width: 26.4px;
+  height: 26.4px;
   flex-shrink: 0;
 }
 
 @media (max-width: 1440px) {
   .icon {
-    width: 24px;
-    height: 24px;
+    /* Same 12% cut: 22 * 0.88 = 19.36px. */
+    width: 19.36px;
+    height: 19.36px;
   }
 }
 
@@ -138,6 +168,12 @@
   color: var(--color-neutral-300);
 }
 
+/* Was neutral-200 (1 step up from neutral-300), raised another 2 steps
+   to neutral-400 on request — light theme only. */
+:global([data-theme="light"]) .input::placeholder {
+  color: var(--color-neutral-400);
+}
+
 .searchButton {
   display: inline-flex;
   flex-shrink: 0;
@@ -148,10 +184,21 @@
   color: var(--color-neutral-100);
 }
 
+/* Same light-theme-only brightening as .trigger above. */
+:global([data-theme="light"]) .searchButton {
+  color: var(--color-neutral-500);
+}
+
 .divider {
   width: 100%;
   height: 1px;
   border: none;
   margin: 0;
   background-color: var(--color-neutral-700);
+}
+
+/* Was neutral-600 (1 step up from neutral-700), raised another 2 steps
+   to neutral-800 on request — light theme only. */
+:global([data-theme="light"]) .divider {
+  background-color: var(--color-neutral-800);
 }

@@ -11,42 +11,28 @@
   gap: var(--space-4);
 }
 
+/* Lowered from Heading-3 to Body-L, then one more step to Body-M, on
+   request (1920 only) — now the exact same Body-M value 1440 already
+   used, so that old breakpoint override is gone (both are this one
+   rule now). */
 .heading {
-  font-family: var(--font-family-base);
-  font-size: var(--font-heading-3-size);
-  font-weight: var(--font-heading-3-weight);
-  line-height: var(--font-heading-3-line-height);
-  letter-spacing: var(--font-heading-3-letter-spacing);
-  color: var(--color-neutral-100);
-}
-
-/* Not a "one step down" — Figma drops this all the way from Heading-3
-   (bold 24px) to Body-M (medium 18px) at 1440, kept as measured. */
-@media (max-width: 1440px) {
-  .heading {
-    font-size: var(--font-body-m-size);
-    font-weight: var(--font-body-m-weight);
-    line-height: var(--font-body-m-line-height);
-    letter-spacing: var(--font-body-m-letter-spacing);
-  }
-}
-
-.count {
   font-family: var(--font-family-base);
   font-size: var(--font-body-m-size);
   font-weight: var(--font-body-m-weight);
   line-height: var(--font-body-m-line-height);
   letter-spacing: var(--font-body-m-letter-spacing);
-  color: var(--color-neutral-300);
+  color: var(--color-neutral-100);
 }
 
-@media (max-width: 1440px) {
-  .count {
-    font-size: var(--font-label-m-size);
-    font-weight: var(--font-label-m-weight);
-    line-height: var(--font-label-m-line-height);
-    letter-spacing: var(--font-label-m-letter-spacing);
-  }
+/* Was Body-M (1920) / Label-M (1440) — unified to Label-S on request,
+   both breakpoints, so the old 1440 override is gone. */
+.count {
+  font-family: var(--font-family-base);
+  font-size: var(--font-label-s-size);
+  font-weight: var(--font-label-s-weight);
+  line-height: var(--font-label-s-line-height);
+  letter-spacing: var(--font-label-s-letter-spacing);
+  color: var(--color-neutral-300);
 }
 
 .row {

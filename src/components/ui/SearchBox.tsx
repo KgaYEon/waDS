@@ -41,6 +41,19 @@ export default function SearchBox({
   // keeps the real, persisted list untouched either way.
   const visibleRecentSearches = recentSearches.enabled ? recentSearches.items : [];
 
+  // Clicking the search icon with nothing typed collapses the box back
+  // to the trigger state instead of doing nothing (submit() already
+  // no-ops on an empty/whitespace value) — a second, deliberate use for
+  // the same icon.
+  const handleSearchIconClick = () => {
+    if (!value.trim()) {
+      setExpanded(false);
+      setDropdownOpen(false);
+      return;
+    }
+    submit();
+  };
+
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") submit();
     if (e.key === "Escape") setDropdownOpen(false);
@@ -90,8 +103,8 @@ export default function SearchBox({
           <button
             type="button"
             className={styles.searchButton}
-            aria-label="검색"
-            onClick={() => submit()}
+            aria-label={value.trim() ? "검색" : "검색창 닫기"}
+            onClick={handleSearchIconClick}
           >
             <IconSearch size={32} className={styles.icon} />
           </button>

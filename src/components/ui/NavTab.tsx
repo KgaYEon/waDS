@@ -19,7 +19,11 @@ export default function NavTab({
       {...rest}
     >
       {children}
-      {selected && <span className={styles.underline} />}
+      {/* Always rendered (not conditional) so the tab's own height never
+          changes on selection — only the underline's color toggles,
+          keeping the label text's position fixed instead of shifting
+          when an underline used to appear/disappear. */}
+      <span className={styles.underline} data-visible={selected} />
     </button>
   );
 }

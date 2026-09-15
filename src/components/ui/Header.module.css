@@ -34,12 +34,20 @@
   gap: var(--spacing-xl);
 }
 
+/* Vertical padding lowered from 10px on request: 4px at 1920,
+   overridden to 8px at 1440 — horizontal stays --space-10 at both. */
 .logo {
   display: flex;
-  padding: var(--space-10);
+  padding: var(--space-4) var(--space-10);
   border: none;
   background: none;
   cursor: pointer;
+}
+
+@media (max-width: 1440px) {
+  .logo {
+    padding-block: var(--spacing-xs);
+  }
 }
 
 .logoMark {
@@ -55,13 +63,14 @@
   }
 }
 
+/* Was --spacing-md (24px), then 18px, now 16px on request. */
 .nav {
   display: flex;
   align-items: center;
-  gap: var(--spacing-md);
+  gap: var(--space-16);
 }
 
-/* Re-measured: gap between nav items shrinks from 24px to 8px at 1440. */
+/* Re-measured: gap between nav items shrinks to 8px at 1440. */
 @media (max-width: 1440px) {
   .nav {
     gap: var(--spacing-xs);
@@ -79,12 +88,74 @@
 /* Logged-out: a chip button instead of the round profile placeholder —
    no Figma spec for this exact state, reused BigChip (the closest
    existing "pill" component) rather than inventing a new one. */
-/* +2px each side on request, scoped here so BigChip's other consumers
-   (Suggestions' type chips, DonationCommentModal's mode chips) keep
-   their own default --chip-padding-inline (16px). */
+/* Padding overridden here (both breakpoints) so BigChip's other
+   consumers (Suggestions' type chips, DonationCommentModal's mode
+   chips) keep their own default --chip-padding-inline/-block.
+   Currently: padding-inline 24px, padding-block 8px. */
 .loginChip {
   flex-shrink: 0;
-  padding-inline: 18px;
+  padding-block: 8px;
+  padding-inline: 24px;
+}
+
+/* Light theme only: fill switched from BigChip solid's own primary-400
+   to neutral-100, stroke widened 1px (1px -> 2px) and now matches the
+   fill color exactly (same as BigChip's own "solid" variant pattern,
+   where border-color always equals the background) — all on request.
+   Text color pinned to neutral-1000 here: BigChip solid's own text
+   color is neutral-100, which would otherwise match this new
+   neutral-100 background exactly and disappear. */
+:global([data-theme="light"]) .loginChip {
+  background-color: var(--color-neutral-100);
+  border-color: var(--color-neutral-100);
+  border-width: 2px;
+  color: var(--color-neutral-1000);
+}
+
+/* Theme toggle — no Figma spec, a plain circular icon button (same
+   footprint family as .avatar) between the search box and the
+   login/avatar area. Icon is a temporary placeholder (IconReset),
+   swap for a real sun/moon icon later. */
+/* No circular button chrome — just the bare icon, padding-driven sizing
+   (icon + 2px padding, no fixed width/height). Only on hover does a box
+   appear at all (see below), matching Figma's "dark/light" frame
+   (523:4423) exactly: no default-state box is shown there either, only
+   the two hover swatches. */
+.themeToggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 2px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: none;
+  color: var(--color-neutral-300);
+  cursor: pointer;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+/* Measured from Figma's "dark/light" frame (523:4423): 2px padding
+   (already on .themeToggle above) and 4px radius (--radius-sm) around
+   the icon, with a themed background — neutral-900 behind the sun icon
+   (dark mode) and neutral-200 behind the moon icon (light mode). Using
+   the plain --color-neutral-900 token (not a per-theme override)
+   reproduces both automatically: it's #161618 in dark mode and, since
+   light mode reverses the neutral scale, #e4e1da in light mode —
+   exactly the two swatches Figma shows. */
+.themeToggle:hover {
+  color: var(--color-neutral-100);
+  background-color: var(--color-neutral-900);
+}
+
+/* 32px at 1920 (the size prop passed in Header.tsx), stepped down to
+   24px at 1440 on request — overrides the SVG's own width/height
+   attributes via CSS, same pattern as SearchBox's .icon. */
+@media (max-width: 1440px) {
+  .themeIcon {
+    width: 24px;
+    height: 24px;
+  }
 }
 
 .avatarWrap {
