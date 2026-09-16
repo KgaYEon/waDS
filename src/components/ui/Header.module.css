@@ -14,17 +14,20 @@
   align-items: center;
   justify-content: space-between;
   padding: var(--space-48);
-  padding-block: var(--space-16);
+  /* Was --space-16 (16px) — lowered to --space-12 on request: total
+     header height 80px -> 72px (-8px, 10%, even). */
+  padding-block: var(--space-12);
   background-color: var(--color-neutral-1000);
   border-bottom: 1px solid var(--color-neutral-900);
 }
 
 /* Re-measured from the finished Header frame (node 214:2310, "break=1440"
    symbol) — vertical padding shrinks from 24px to 12px. Horizontal stays
-   --space-48, unchanged. */
+   --space-48, unchanged. Then lowered again to --space-10 on request:
+   total header height 64px -> 60px (-4px, 6.25%, even). */
 @media (max-width: 1440px) {
   .header {
-    padding-block: var(--space-12);
+    padding-block: var(--space-10);
   }
 }
 
@@ -50,16 +53,17 @@
   }
 }
 
+/* Was 71x34 — reduced 5% on request. */
 .logoMark {
-  width: 71px;
-  height: 34px;
+  width: 67.45px;
+  height: 32.3px;
 }
 
 /* 80% of the 1920 size, on request. */
 @media (max-width: 1440px) {
   .logoMark {
-    width: 56.8px;
-    height: 27.2px;
+    width: 53.96px;
+    height: 25.84px;
   }
 }
 
@@ -164,24 +168,18 @@
 }
 
 /* Logged-in: empty round avatar placeholder (no photo yet) — plain gray
-   fill, no icon. Same 48px/40px footprint the old icon-driven .profile
-   button had, now set directly since there's no icon to derive it from. */
+   fill, no icon. Was 48px/40px (the old icon-driven .profile button's
+   footprint), then 43.2px/36px (-10%); now unified to 36px at every
+   breakpoint on request, so the old 1440 override is gone. */
 .avatar {
   display: block;
-  width: 48px;
-  height: 48px;
+  width: 36px;
+  height: 36px;
   padding: 0;
   border: none;
   border-radius: var(--radius-full);
   background-color: var(--color-neutral-600);
   cursor: pointer;
-}
-
-@media (max-width: 1440px) {
-  .avatar {
-    width: 40px;
-    height: 40px;
-  }
 }
 
 /* Small logout menu — no Figma spec, styled loosely after
