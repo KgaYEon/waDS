@@ -11,15 +11,31 @@ import {
 } from "./colorTokenData";
 import { typographyGroups } from "./typographyTokenData";
 import { spacingTokens, radiusTokens, type ScaleToken } from "./spacingTokenData";
+import { iconEntries } from "./iconTokenData";
+import Button, { type ButtonColor, type ButtonSize } from "../../components/ui/Button";
+import Chip, { type ChipVariant, type ChipSize } from "../../components/ui/Chip";
 
-type Tab = "primitive" | "semantic" | "typography" | "spacing";
+type Tab = "primitive" | "semantic" | "typography" | "spacing" | "components" | "icons";
 
 const TABS: { id: Tab; label: string }[] = [
   { id: "primitive", label: "원시값 팔레트" },
   { id: "semantic", label: "시맨틱 매핑" },
   { id: "typography", label: "타이포" },
   { id: "spacing", label: "스페이싱" },
+  { id: "components", label: "버튼·칩" },
+  { id: "icons", label: "아이콘" },
 ];
+
+const BUTTON_COLORS: ButtonColor[] = ["primary", "white", "border"];
+const BUTTON_SIZES: ButtonSize[] = ["S", "M", "L"];
+const CHIP_VARIANTS: ChipVariant[] = [
+  "primary",
+  "neutral-muted",
+  "primary-stroke",
+  "neutral-stroke",
+  "ghost",
+];
+const CHIP_SIZES: ChipSize[] = ["S", "M", "L"];
 
 const SAMPLE_TEXT = "Aa 가나다";
 
@@ -216,6 +232,72 @@ export default function ColorTokensScreen() {
             <RadiusList tokens={radiusTokens} />
           </section>
         </>
+      )}
+
+      {tab === "components" && (
+        <>
+          <section className={styles.section}>
+            <h2 className={styles.sectionTitle}>Button</h2>
+            <p className={styles.sectionMeta}>color × size, 마지막 줄은 disabled</p>
+            {BUTTON_COLORS.map((color) => (
+              <div className={styles.componentGroup} key={color}>
+                <span className={styles.componentGroupLabel}>color=&quot;{color}&quot;</span>
+                <div className={styles.componentRow}>
+                  {BUTTON_SIZES.map((size) => (
+                    <Button key={size} color={color} size={size}>
+                      Button {size}
+                    </Button>
+                  ))}
+                  <Button color={color} size="M" disabled>
+                    Disabled
+                  </Button>
+                </div>
+              </div>
+            ))}
+          </section>
+          <section className={styles.section}>
+            <h2 className={styles.sectionTitle}>Chip</h2>
+            <p className={styles.sectionMeta}>variant × size</p>
+            {CHIP_VARIANTS.map((variant) => (
+              <div className={styles.componentGroup} key={variant}>
+                <span className={styles.componentGroupLabel}>variant=&quot;{variant}&quot;</span>
+                <div className={styles.componentRow}>
+                  {CHIP_SIZES.map((size) => (
+                    <Chip key={size} variant={variant} size={size}>
+                      Chip {size}
+                    </Chip>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </section>
+        </>
+      )}
+
+      {tab === "icons" && (
+        <section className={styles.section}>
+          <h2 className={styles.sectionTitle}>Icons</h2>
+          <p className={styles.sectionMeta}>
+            {iconEntries.length}개 · 24px / 32px 나란히 (구성 동일한지 육안 확인용)
+          </p>
+          <div className={styles.iconGrid}>
+            {iconEntries.map(({ name, Component }) => (
+              <div className={styles.iconCell} key={name}>
+                <div className={styles.iconSizes}>
+                  <div className={styles.iconSizeLabel}>
+                    <Component size={24} />
+                    <span>24</span>
+                  </div>
+                  <div className={styles.iconSizeLabel}>
+                    <Component size={32} />
+                    <span>32</span>
+                  </div>
+                </div>
+                <span className={styles.iconName}>{name}</span>
+              </div>
+            ))}
+          </div>
+        </section>
       )}
     </div>
   );

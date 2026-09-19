@@ -1,9 +1,18 @@
+/*
+ * Re-measured against Figma's "btn+chip" component-set frame (node
+ * 641:5641, https://www.figma.com/design/SdECmcZVD0Gr8Gdlgn12iI/
+ * waflash-designsystem?node-id=641-5641). color="primary"/"white"/"border"
+ * maps to that frame's own color=primary/white/border variant, size maps
+ * 1:1 to Size=L/M/S. Interactive states (hover/disable) come from real
+ * :hover/:disabled, not a separate Figma "state" prop — that's just how
+ * a static mockup models interaction, not how a live component should.
+ */
 .button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   border-radius: var(--radius-sm);
-  border: 1px solid transparent;
+  border: 2px solid transparent;
   font-family: var(--font-family-base);
   white-space: nowrap;
   cursor: pointer;
@@ -14,10 +23,12 @@
   cursor: not-allowed;
 }
 
-/* Button-1/2/3 map 1:1 to size="L"/"M"/"S" — three dedicated tiers,
-   not size="S"/"M" borrowing Label-L. */
+/* Horizontal padding is 24px (--spacing-md) at every size in the frame;
+   vertical padding (12/16/22px) doesn't land on any step of the shared
+   --spacing-* scale, so it's a literal per this component, same as the
+   frame's own measured values. */
 .sizeS {
-  padding: var(--space-12) var(--spacing-md);
+  padding: 12px var(--spacing-md);
   font-size: var(--font-button-3-size);
   font-weight: var(--font-button-3-weight);
   line-height: var(--font-button-3-line-height);
@@ -25,7 +36,7 @@
 }
 
 .sizeM {
-  padding: var(--space-16) var(--spacing-md);
+  padding: 16px var(--spacing-md);
   font-size: var(--font-button-2-size);
   font-weight: var(--font-button-2-weight);
   line-height: var(--font-button-2-line-height);
@@ -33,7 +44,7 @@
 }
 
 .sizeL {
-  padding: var(--space-22) var(--spacing-md);
+  padding: 22px var(--spacing-md);
   font-size: var(--font-button-1-size);
   font-weight: var(--font-button-1-weight);
   line-height: var(--font-button-1-line-height);
@@ -41,40 +52,49 @@
 }
 
 .colorPrimary {
-  background-color: var(--color-primary-400);
-  color: var(--color-neutral-100);
+  background-color: var(--bg-primary-default);
+  color: var(--fg-neutral-inverted);
 }
 .colorPrimary:hover:not(:disabled) {
-  background-color: var(--color-primary-300);
+  background-color: var(--bg-primary-muted);
 }
+/* Disabled fill is Figma's "Sementic/caption" (primitive-neutral-400) —
+   no --bg-* semantic token covers that primitive step, and none is
+   being added just for this one case, so it references the primitive
+   directly instead. */
 .colorPrimary:disabled {
-  background-color: var(--color-neutral-400);
-  color: var(--color-neutral-600);
+  background-color: var(--primitive-neutral-400);
+  color: var(--fg-neutral-subtle);
 }
 
+/* Text color is Figma's "TXT_/black" (primitive-neutral-1000) — no
+   --fg-* semantic token covers that primitive step either, so this
+   references the primitive directly rather than adding one. */
 .colorWhite {
-  background-color: var(--color-neutral-100);
-  color: var(--color-neutral-1000);
+  background-color: var(--bg-neutral-default);
+  color: var(--primitive-neutral-1000);
 }
 .colorWhite:hover:not(:disabled) {
-  background-color: var(--color-neutral-300);
+  background-color: var(--bg-neutral-soft);
 }
 .colorWhite:disabled {
-  background-color: var(--color-neutral-400);
-  color: var(--color-neutral-600);
+  background-color: var(--primitive-neutral-400);
+  color: var(--fg-neutral-subtle);
 }
 
+/* Transparent background at every state — the frame never fills this
+   variant, only its border/text color change. */
 .colorBorder {
-  background-color: var(--color-neutral-1000);
-  border-color: var(--color-neutral-300);
-  color: var(--color-neutral-300);
+  background-color: transparent;
+  border-color: var(--stroke-neutral-soft);
+  color: var(--fg-neutral-soft);
 }
 .colorBorder:hover:not(:disabled) {
-  border-color: var(--color-neutral-100);
-  color: var(--color-neutral-100);
+  border-color: var(--stroke-neutral-default);
+  color: var(--fg-neutral-default);
 }
 .colorBorder:disabled {
   background-color: transparent;
-  border-color: var(--color-neutral-600);
-  color: var(--color-neutral-600);
+  border-color: var(--stroke-neutral-subtle);
+  color: var(--fg-neutral-subtle);
 }

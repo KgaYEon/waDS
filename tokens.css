@@ -48,6 +48,10 @@
   --bg-neutral-soft: var(--primitive-neutral-300);
   --bg-neutral-subtle: var(--primitive-neutral-200);
   --bg-neutral-inverted: var(--primitive-neutral-900);
+  /* Bound in Figma to "Sementic/disable" on Header's avatar (node
+     617:3509). Requested back on 2026-09-19 after tokens.css was
+     rebuilt without it. */
+  --bg-neutral-disabled: var(--primitive-neutral-600);
 
   --bg-primary-default: var(--primitive-primary-400);
   --bg-primary-muted: var(--primitive-primary-300);
@@ -66,6 +70,10 @@
   --fg-neutral-soft: var(--primitive-neutral-400);
   --fg-neutral-subtle: var(--primitive-neutral-300);
   --fg-neutral-inverted: var(--primitive-neutral-100);
+  /* Bound in Figma to "Sementic/black" on Header's login chip text (node
+     617:3509). Requested back on 2026-09-19 after tokens.css was
+     rebuilt without it. */
+  --fg-neutral-strong: var(--primitive-neutral-1000);
 
   /* ------------------------------------------------------------------ */
   /* Color — Semantic / stroke                                          */

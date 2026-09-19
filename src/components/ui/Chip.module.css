@@ -1,0 +1,95 @@
+/*
+ * Measured from Figma's "btn+chip" component-set frame (node 641:5641,
+ * https://www.figma.com/design/SdECmcZVD0Gr8Gdlgn12iI/waflash-designsystem?node-id=641-5641).
+ * variant maps to that frame's own type=primary/neutral-muted/
+ * primary-stroke/neutral-stroke/ghost (its separate "primary-hover" type
+ * is just that frame's way of showing primary's hover state on a static
+ * mockup — here it's real :hover on variant="primary" instead of its own
+ * prop value). size maps 1:1 to size=L/M/S.
+ */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  border: 2px solid transparent;
+  font-family: var(--font-family-base);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+/* Horizontal/vertical padding (14/6, 18/8, 20/12) doesn't land on the
+   shared --spacing-* scale except size L's 20px horizontal
+   (--spacing-sm) — literals otherwise, same as the frame's own measured
+   values. */
+.sizeS {
+  padding: 6px 14px;
+  font-size: var(--font-chip-2-size);
+  font-weight: var(--font-chip-2-weight);
+  line-height: var(--font-chip-2-line-height);
+  letter-spacing: var(--font-chip-2-letter-spacing);
+}
+
+.sizeM {
+  padding: 8px 18px;
+  font-size: var(--font-chip-1-size);
+  font-weight: var(--font-chip-1-weight);
+  line-height: var(--font-chip-1-line-height);
+  letter-spacing: var(--font-chip-1-letter-spacing);
+}
+
+.sizeL {
+  padding: 12px var(--spacing-sm);
+  font-size: var(--font-chip-1-size);
+  font-weight: var(--font-chip-1-weight);
+  line-height: var(--font-chip-1-line-height);
+  letter-spacing: var(--font-chip-1-letter-spacing);
+}
+
+.primary {
+  background-color: var(--bg-primary-default);
+  color: var(--fg-neutral-inverted);
+}
+.primary:hover:not(:disabled) {
+  background-color: var(--bg-primary-muted);
+}
+
+.neutralMuted {
+  background-color: var(--bg-neutral-subtle);
+  color: var(--fg-neutral-muted);
+}
+.neutralMuted:hover:not(:disabled) {
+  background-color: var(--bg-neutral-default);
+}
+
+/* Filled white (not transparent) even though it reads as an "outline"
+   variant — the frame fills it with --bg-neutral-default under the
+   colored border, same as neutral-muted's own fill. Hover only darkens
+   the text (--fg-primary-default -> --fg-primary-deep); bg/border stay
+   put. */
+.primaryStroke {
+  background-color: var(--bg-neutral-default);
+  border-color: var(--stroke-primary-default);
+  color: var(--fg-primary-default);
+}
+.primaryStroke:hover:not(:disabled) {
+  color: var(--fg-primary-deep);
+}
+
+.neutralStroke {
+  background-color: transparent;
+  border-color: var(--stroke-neutral-subtle);
+  color: var(--fg-neutral-subtle);
+}
+.neutralStroke:hover:not(:disabled) {
+  color: var(--fg-neutral-soft);
+}
+
+.ghost {
+  background-color: transparent;
+  color: var(--fg-neutral-muted);
+}
+.ghost:hover:not(:disabled) {
+  color: var(--fg-neutral-soft);
+}
