@@ -23,10 +23,16 @@ export interface HeaderProps extends HTMLAttributes<HTMLElement> {
   onSearch?: (term: string) => void;
 }
 
+// Re-measured from Header/new (Figma node 617:3509) — labels/order match
+// that frame. "필터 검색"/"이달의 신작" (and their /filters, /new-releases
+// routes) are dropped from the nav bar itself but the routes stay live,
+// just no longer linked from here. 시리즈별/장르 별/플래시애니 route to
+// placeholder screens until their real content is built.
 const DEFAULT_NAV: NavItem[] = [
   { label: "홈", href: "/" },
-  { label: "필터 검색", href: "/filters" },
-  { label: "이달의 신작", href: "/new-releases" },
+  { label: "시리즈별", href: "/series" },
+  { label: "장르 별", href: "/genre" },
+  { label: "플래시애니", href: "/flash-ani" },
   {
     label: "기타",
     href: "/notices",
@@ -43,8 +49,8 @@ function isNavItemActive(item: NavItem, pathname: string): boolean {
 
 // See the comment on .header in Header.module.css — this component
 // intentionally does NOT use Container/Grid/GridColumn like the rest of
-// the page chrome (Footer, screen content). It keeps its own measured
-// --space-48 side padding instead of the shared --grid-margin.
+// the page chrome (Footer, screen content). It keeps its own measured,
+// locally-scaled side padding instead of the shared --grid-margin.
 //
 // Forwards its ref so Layout can measure its real rendered height (see
 // Layout.tsx) — some screens' own sticky title blocks need to sit
@@ -113,6 +119,7 @@ const Header = forwardRef<HTMLElement, HeaderProps>(function Header(
           {navItems.map((item) => (
             <NavTab
               key={item.label}
+              className={styles.navItem}
               selected={isNavItemActive(item, location.pathname)}
               onClick={() => item.href && navigate(item.href)}
             >

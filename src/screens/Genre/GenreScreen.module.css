@@ -1,0 +1,13 @@
+.screen {
+  min-height: 60vh;
+}
+
+.placeholder {
+  padding-block: var(--space-120);
+  text-align: center;
+  font-family: var(--font-family-base);
+  font-size: var(--font-heading-3-size);
+  font-weight: var(--font-heading-3-weight);
+  line-height: var(--font-heading-3-line-height);
+  color: var(--fg-neutral-soft);
+}

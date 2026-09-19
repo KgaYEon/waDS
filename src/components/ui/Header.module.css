@@ -2,164 +2,142 @@
  * Header is a deliberate exception to the page layout grid: every other
  * full-width section (Footer, Gamecont, screen content) gets its side
  * margin from Container's --grid-margin (120px). Header instead keeps
- * its own measured Figma padding (--space-48) — reverted back to this
- * on request after the grid refactor, so don't "fix" it to use Container
- * again without checking first.
+ * its own measured Figma padding, reverted back to this on request
+ * after the grid refactor, so don't "fix" it to use Container again
+ * without checking first.
+ *
+ * Re-measured from Header/new (Figma node 617:3509, 1920 frame) — every
+ * size value below (padding/gap/width/height/radius/border-width) is in
+ * rem and multiplied by --header-scale, a local custom property defined
+ * on .header only (does not affect any other component). It's a clamp
+ * that reads 1 (100%) at 1920px viewport width and floors at 0.75 (75%)
+ * at 1440px and below — a pilot for proportional responsive scaling,
+ * replacing this component's previous hand-tuned per-breakpoint
+ * overrides. Hairline 1px borders/dividers are deliberately left
+ * unscaled (kept crisp at every size) — everything else participates.
  */
 .header {
+  --header-scale: clamp(0.75, calc(0.75 + (100vw - 1440px) / (1920px - 1440px) * 0.25), 1);
+
   position: sticky;
   top: 0;
   z-index: 20;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--space-48);
-  /* Was --space-16 (16px) — lowered to --space-12 on request: total
-     header height 80px -> 72px (-8px, 10%, even). */
-  padding-block: var(--space-12);
-  background-color: var(--color-neutral-1000);
-  border-bottom: 1px solid var(--color-neutral-900);
-}
-
-/* Re-measured from the finished Header frame (node 214:2310, "break=1440"
-   symbol) — vertical padding shrinks from 24px to 12px. Horizontal stays
-   --space-48, unchanged. Then lowered again to --space-10 on request:
-   total header height 64px -> 60px (-4px, 6.25%, even). */
-@media (max-width: 1440px) {
-  .header {
-    padding-block: var(--space-10);
-  }
+  padding-inline: calc(13.625rem * var(--header-scale));
+  padding-block: calc(1rem * var(--header-scale));
+  /* Header/new's bg is bound to "Sementic/White" regardless of theme —
+     unlike the old dark header, this one no longer flips with the
+     dark/light toggle, on request (see conversation notes). */
+  background-color: var(--bg-neutral-default);
+  /* border-bottom is bound to "Sementic/chip/white" in Figma — same
+     color as the background, i.e. invisible; the drop-shadow below is
+     the actual visual separator. Kept as a real (if invisible) border
+     rather than dropped, so a future per-theme override has something
+     to hook into. */
+  border-bottom: 1px solid var(--stroke-neutral-inverted);
+  box-shadow: 0px 4px 6px rgba(180, 180, 180, 0.12);
 }
 
 .left {
   display: flex;
   align-items: center;
-  gap: var(--spacing-xl);
+  gap: calc(2rem * var(--header-scale));
 }
 
-/* Vertical padding lowered from 10px on request: 4px at 1920,
-   overridden to 8px at 1440 — horizontal stays --space-10 at both. */
 .logo {
   display: flex;
-  padding: var(--space-4) var(--space-10);
+  padding: calc(0.5418rem * var(--header-scale));
   border: none;
   background: none;
   cursor: pointer;
 }
 
-@media (max-width: 1440px) {
-  .logo {
-    padding-block: var(--spacing-xs);
-  }
-}
-
-/* Was 71x34 — reduced 5% on request. */
 .logoMark {
-  width: 67.45px;
-  height: 32.3px;
+  width: calc(3.4763rem * var(--header-scale));
+  height: calc(1.6631rem * var(--header-scale));
 }
 
-/* 80% of the 1920 size, on request. */
-@media (max-width: 1440px) {
-  .logoMark {
-    width: 53.96px;
-    height: 25.84px;
-  }
-}
-
-/* Was --spacing-md (24px), then 18px, now 16px on request. */
 .nav {
   display: flex;
   align-items: center;
-  gap: var(--space-16);
+  gap: calc(0.5rem * var(--header-scale));
 }
 
-/* Re-measured: gap between nav items shrinks to 8px at 1440. */
-@media (max-width: 1440px) {
-  .nav {
-    gap: var(--spacing-xs);
-  }
+/* Header-only override of NavTab's own padding (24px/--spacing-md
+   horizontal in NavTab.module.css) — NavTab is shared with BoardNav, so
+   its own file stays untouched; this just wins on specificity within
+   .nav instead. Vertical padding (4px) matches NavTab's own default, so
+   it isn't overridden, just scaled here for consistency with the rest
+   of Header. */
+.nav .navItem {
+  padding: calc(0.25rem * var(--header-scale)) calc(1rem * var(--header-scale));
 }
 
 .right {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  /* Was spacing-lg (32px) — widened ~4px on request (space-36). */
-  gap: var(--space-36);
+  gap: calc(2rem * var(--header-scale));
 }
 
 /* Logged-out: a chip button instead of the round profile placeholder —
    no Figma spec for this exact state, reused BigChip (the closest
-   existing "pill" component) rather than inventing a new one. */
-/* Padding overridden here (both breakpoints) so BigChip's other
-   consumers (Suggestions' type chips, DonationCommentModal's mode
-   chips) keep their own default --chip-padding-inline/-block.
-   Currently: padding-inline 24px, padding-block 8px. */
-.loginChip {
+   existing "pill" component) rather than inventing a new one. Styling
+   below used to be a light-theme-only override gated behind
+   [data-theme="light"], which outranked BigChip's own .solid on
+   specificity no matter the CSS source order; now that it's applied
+   unconditionally (Header's background no longer varies by theme — see
+   .header), its specificity dropped to plain-class level, tying
+   BigChip's own .solid/.sizeL — which then wins on source order in the
+   build (BigChip.module.css lands after Header.module.css), so this
+   selector is scoped through .right to stay reliably more specific than
+   BigChip's own rules regardless of import order. */
+.right .loginChip {
   flex-shrink: 0;
-  padding-block: 8px;
-  padding-inline: 24px;
-}
-
-/* Light theme only: fill switched from BigChip solid's own primary-400
-   to neutral-100, stroke widened 1px (1px -> 2px) and now matches the
-   fill color exactly (same as BigChip's own "solid" variant pattern,
-   where border-color always equals the background) — all on request.
-   Text color pinned to neutral-1000 here: BigChip solid's own text
-   color is neutral-100, which would otherwise match this new
-   neutral-100 background exactly and disappear. */
-:global([data-theme="light"]) .loginChip {
-  background-color: var(--color-neutral-100);
-  border-color: var(--color-neutral-100);
-  border-width: 2px;
-  color: var(--color-neutral-1000);
+  padding-block: calc(0.5rem * var(--header-scale));
+  padding-inline: calc(1.5rem * var(--header-scale));
+  background-color: var(--bg-neutral-default);
+  border-color: var(--stroke-neutral-inverted);
+  border-width: calc(0.125rem * var(--header-scale));
+  color: var(--fg-neutral-strong);
 }
 
 /* Theme toggle — no Figma spec, a plain circular icon button (same
    footprint family as .avatar) between the search box and the
-   login/avatar area. Icon is a temporary placeholder (IconReset),
-   swap for a real sun/moon icon later. */
-/* No circular button chrome — just the bare icon, padding-driven sizing
-   (icon + 2px padding, no fixed width/height). Only on hover does a box
-   appear at all (see below), matching Figma's "dark/light" frame
-   (523:4423) exactly: no default-state box is shown there either, only
-   the two hover swatches. */
+   login/avatar area. No circular button chrome — just the bare icon,
+   padding-driven sizing. Only on hover does a box appear at all,
+   matching Figma's "dark/light" frame (523:4423): no default-state box
+   is shown there either, only the two hover swatches. */
 .themeToggle {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  padding: 2px;
+  padding: calc(0.125rem * var(--header-scale));
   border: none;
-  border-radius: var(--radius-sm);
+  border-radius: calc(var(--radius-sm) * var(--header-scale));
   background: none;
-  color: var(--color-neutral-300);
+  color: var(--fg-neutral-subtle);
   cursor: pointer;
   transition: color 0.15s ease, background-color 0.15s ease;
 }
 
-/* Measured from Figma's "dark/light" frame (523:4423): 2px padding
-   (already on .themeToggle above) and 4px radius (--radius-sm) around
-   the icon, with a themed background — neutral-900 behind the sun icon
-   (dark mode) and neutral-200 behind the moon icon (light mode). Using
-   the plain --color-neutral-900 token (not a per-theme override)
-   reproduces both automatically: it's #161618 in dark mode and, since
-   light mode reverses the neutral scale, #e4e1da in light mode —
-   exactly the two swatches Figma shows. */
+/* hover background was previously the theme-reactive --color-neutral-900
+   (dark swatch in dark mode, light swatch in light mode, automatically,
+   via tokens.css's [data-theme="light"] neutral reversal). --bg-neutral-
+   inverted has no such reversal yet, so this hover swatch is now fixed
+   dark regardless of theme until the semantic layer grows one — flagged
+   in the write-up, not silently changed. */
 .themeToggle:hover {
-  color: var(--color-neutral-100);
-  background-color: var(--color-neutral-900);
+  color: var(--fg-neutral-inverted);
+  background-color: var(--bg-neutral-inverted);
 }
 
-/* 32px at 1920 (the size prop passed in Header.tsx), stepped down to
-   24px at 1440 on request — overrides the SVG's own width/height
-   attributes via CSS, same pattern as SearchBox's .icon. */
-@media (max-width: 1440px) {
-  .themeIcon {
-    width: 24px;
-    height: 24px;
-  }
+.themeIcon {
+  width: calc(2rem * var(--header-scale));
+  height: calc(2rem * var(--header-scale));
 }
 
 .avatarWrap {
@@ -168,46 +146,52 @@
 }
 
 /* Logged-in: empty round avatar placeholder (no photo yet) — plain gray
-   fill, no icon. Was 48px/40px (the old icon-driven .profile button's
-   footprint), then 43.2px/36px (-10%); now unified to 36px at every
-   breakpoint on request, so the old 1440 override is gone. */
+   fill, no icon. Re-measured at 39px (was 36px, unified across
+   breakpoints on an earlier request); that "same size at every
+   breakpoint" decision is superseded here now that avatar participates
+   in --header-scale like every other Header size value, so it does
+   shrink toward 1440 again — flagged in the write-up. */
 .avatar {
   display: block;
-  width: 36px;
-  height: 36px;
+  width: calc(2.4375rem * var(--header-scale));
+  height: calc(2.4375rem * var(--header-scale));
   padding: 0;
   border: none;
-  border-radius: var(--radius-full);
-  background-color: var(--color-neutral-600);
+  border-radius: calc(var(--radius-full) * var(--header-scale));
+  background-color: var(--bg-neutral-disabled);
   cursor: pointer;
 }
 
-/* Small logout menu — no Figma spec, styled loosely after
-   SearchResultsPanel's own dropdown (dark surface, subtle border). */
+/* Small logout menu — no Figma spec (Header/new doesn't show an open
+   dropdown state either), styled loosely after SearchResultsPanel's own
+   dropdown (dark surface, subtle border). background/text below have
+   exact new-token equivalents; border-color and the hover fill don't
+   (see write-up) so they keep their old --color-neutral-* values for
+   now rather than an invented approximation. */
 .avatarMenu {
   position: absolute;
-  top: calc(100% + var(--spacing-xs));
+  top: calc(100% + calc(var(--spacing-xs) * var(--header-scale)));
   right: 0;
-  min-width: 120px;
-  padding: var(--space-4);
-  background-color: var(--color-neutral-900);
+  min-width: calc(7.5rem * var(--header-scale));
+  padding: calc(var(--space-4) * var(--header-scale));
+  background-color: var(--bg-neutral-inverted);
   border: 1px solid var(--color-neutral-700);
-  border-radius: var(--radius-8);
+  border-radius: calc(var(--radius-8) * var(--header-scale));
   z-index: 20;
 }
 
 .avatarMenuItem {
   display: block;
   width: 100%;
-  padding: var(--space-12);
+  padding: calc(var(--space-12) * var(--header-scale));
   border: none;
-  border-radius: var(--radius-sm);
+  border-radius: calc(var(--radius-sm) * var(--header-scale));
   background: none;
   font-family: var(--font-family-base);
-  font-size: var(--font-label-l-size);
+  font-size: calc(var(--font-label-l-size) * var(--header-scale));
   font-weight: var(--font-label-l-weight);
-  line-height: var(--font-label-l-line-height);
-  color: var(--color-neutral-100);
+  line-height: calc(var(--font-label-l-line-height) * var(--header-scale));
+  color: var(--fg-neutral-inverted);
   text-align: left;
   cursor: pointer;
 }

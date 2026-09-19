@@ -1,0 +1,249 @@
+/* Dev-only token inspector — deliberately does not use any service
+   component (Container/Grid/Header/Footer) or reference the app's
+   dark/light theme toggle. Its own fixed light chrome, built straight
+   off the token vars it's demonstrating. */
+.page {
+  min-height: 100vh;
+  padding: 40px 32px 80px;
+  background-color: var(--bg-neutral-strong);
+  color: var(--fg-neutral-default);
+  font-family: -apple-system, BlinkMacSystemFont, "Noto Sans KR", sans-serif;
+}
+
+.title {
+  margin: 0 0 4px;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.subtitle {
+  margin: 0 0 32px;
+  font-size: 14px;
+  color: var(--fg-neutral-muted);
+}
+
+.tabBar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 32px;
+  border-bottom: 1px solid var(--stroke-neutral-subtle);
+}
+
+.tabButton {
+  padding: 10px 18px;
+  border: none;
+  background: none;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--fg-neutral-soft);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+}
+
+.tabButton[data-active="true"] {
+  color: var(--fg-primary-default);
+  border-bottom-color: var(--stroke-primary-default);
+}
+
+.section {
+  margin-bottom: 48px;
+}
+
+.sectionTitle {
+  margin: 0 0 4px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.sectionMeta {
+  margin: 0 0 16px;
+  font-size: 12px;
+  color: var(--fg-neutral-soft);
+}
+
+.primitiveGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 16px;
+}
+
+.primitiveCard {
+  border: 1px solid var(--stroke-neutral-subtle);
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: var(--bg-neutral-default);
+}
+
+.swatch {
+  height: 64px;
+}
+
+.primitiveMeta {
+  padding: 8px 10px;
+}
+
+.primitiveStep {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--fg-neutral-muted);
+}
+
+.varName {
+  display: block;
+  margin-top: 2px;
+  font-family: "SFMono-Regular", Menlo, Consolas, monospace;
+  font-size: 11px;
+  color: var(--fg-neutral-soft);
+  word-break: break-all;
+}
+
+.hex {
+  display: block;
+  margin-top: 2px;
+  font-family: "SFMono-Regular", Menlo, Consolas, monospace;
+  font-size: 11px;
+  color: var(--fg-neutral-default);
+}
+
+.semanticList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.semanticRow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 14px;
+  border: 1px solid var(--stroke-neutral-subtle);
+  border-radius: 8px;
+  background-color: var(--bg-neutral-default);
+}
+
+.semanticSwatch {
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  border: 1px solid var(--stroke-neutral-subtle);
+  flex-shrink: 0;
+}
+
+.semanticText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.semanticName {
+  font-family: "SFMono-Regular", Menlo, Consolas, monospace;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.semanticRef {
+  font-family: "SFMono-Regular", Menlo, Consolas, monospace;
+  font-size: 12px;
+  color: var(--fg-neutral-soft);
+}
+
+.typeList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.typeRow {
+  display: flex;
+  align-items: baseline;
+  gap: 24px;
+  padding: 14px 16px;
+  border: 1px solid var(--stroke-neutral-subtle);
+  border-radius: 8px;
+  background-color: var(--bg-neutral-default);
+}
+
+.typeSample {
+  flex: 1;
+  min-width: 0;
+  color: var(--fg-neutral-default);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.typeMeta {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  text-align: right;
+}
+
+.typeName {
+  font-family: "SFMono-Regular", Menlo, Consolas, monospace;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.typeValues {
+  font-family: "SFMono-Regular", Menlo, Consolas, monospace;
+  font-size: 11px;
+  color: var(--fg-neutral-soft);
+}
+
+.scaleList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.scaleRow {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 12px 16px;
+  border: 1px solid var(--stroke-neutral-subtle);
+  border-radius: 8px;
+  background-color: var(--bg-neutral-default);
+}
+
+.scaleTrack {
+  flex-shrink: 0;
+  width: 320px;
+  display: flex;
+  align-items: center;
+}
+
+.spacingBox {
+  height: 24px;
+  background-color: var(--bg-primary-default);
+  border-radius: 2px;
+}
+
+.radiusBox {
+  width: 80px;
+  height: 64px;
+  background-color: var(--bg-primary-default);
+}
+
+.scaleMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.scaleName {
+  font-family: "SFMono-Regular", Menlo, Consolas, monospace;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.scaleValue {
+  font-family: "SFMono-Regular", Menlo, Consolas, monospace;
+  font-size: 12px;
+  color: var(--fg-neutral-soft);
+}

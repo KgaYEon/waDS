@@ -20,26 +20,41 @@
   letter-spacing: var(--font-chip-1-letter-spacing);
 }
 
+/* Was --font-chip-2-* — per Figma's "btn+chip" chip frame (node
+   641:5641), size=M still uses Chip-1, same as size=L; only size=S
+   drops to Chip-2. BigChip has no S size, so both of its sizes now use
+   Chip-1's values (padding is still what actually differs between L/M
+   here). */
 .sizeM {
   padding-block: var(--chip-padding-block-m);
-  font-size: var(--font-chip-2-size);
-  font-weight: var(--font-chip-2-weight);
-  line-height: var(--font-chip-2-line-height);
-  letter-spacing: var(--font-chip-2-letter-spacing);
+  font-size: var(--font-chip-1-size);
+  font-weight: var(--font-chip-1-weight);
+  line-height: var(--font-chip-1-line-height);
+  letter-spacing: var(--font-chip-1-letter-spacing);
 }
 
+/* Migrated to the new semantic color layer (--bg- / --fg- / --stroke-
+   tokens) -- all four values here had exact primitive matches, no
+   approximation needed. Note: --color-neutral-100/-300/-400 used to
+   flip with the dark/light theme toggle (tokens.css's
+   [data-theme="light"] neutral reversal); their --fg- / --stroke-
+   replacements don't yet have a light-theme variant, so BigChip's
+   text/border color is now fixed regardless of theme wherever else this
+   component is used (Suggestions' type chips, DonationCommentModal's
+   mode chips) -- flagging in case that shows up as a contrast issue in
+   light mode there. */
 .solid {
-  background-color: var(--color-primary-400);
-  border-color: var(--color-primary-400);
-  color: var(--color-neutral-100);
+  background-color: var(--bg-primary-default);
+  border-color: var(--stroke-primary-default);
+  color: var(--fg-neutral-inverted);
 }
 
 .outline {
   background-color: transparent;
-  border-color: var(--color-neutral-400);
-  color: var(--color-neutral-400);
+  border-color: var(--stroke-neutral-soft);
+  color: var(--fg-neutral-soft);
 }
 .outline:hover:not(:disabled) {
-  border-color: var(--color-neutral-300);
-  color: var(--color-neutral-300);
+  border-color: var(--stroke-neutral-subtle);
+  color: var(--fg-neutral-subtle);
 }
