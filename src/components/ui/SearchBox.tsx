@@ -70,47 +70,47 @@ export default function SearchBox({
     }, 0);
   };
 
-  if (!expanded) {
-    return (
-      <button
-        type="button"
-        className={[styles.trigger, className].filter(Boolean).join(" ")}
-        aria-label="검색창 열기"
-        onClick={() => setExpanded(true)}
-      >
-        <IconSearch size={32} className={styles.icon} />
-      </button>
-    );
-  }
-
   return (
     <div
       ref={boxRef}
-      className={[styles.box, className].filter(Boolean).join(" ")}
+      className={[styles.wrapper, className].filter(Boolean).join(" ")}
       onBlur={handleBlur}
     >
-      <div className={styles.expanded}>
-        <div className={styles.inputRow}>
-          <input
-            autoFocus
-            className={styles.input}
-            placeholder={placeholder}
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-            onKeyDown={handleKeyDown}
-            onFocus={() => setDropdownOpen(true)}
-          />
-          <button
-            type="button"
-            className={styles.searchButton}
-            aria-label={value.trim() ? "검색" : "검색창 닫기"}
-            onClick={handleSearchIconClick}
-          >
-            <IconSearch size={32} className={styles.icon} />
-          </button>
+      {expanded ? (
+        <div className={styles.box}>
+          <div className={styles.expanded}>
+            <div className={styles.inputRow}>
+              <input
+                autoFocus
+                className={styles.input}
+                placeholder={placeholder}
+                value={value}
+                onChange={(e) => setValue(e.target.value)}
+                onKeyDown={handleKeyDown}
+                onFocus={() => setDropdownOpen(true)}
+              />
+              <button
+                type="button"
+                className={styles.searchButton}
+                aria-label={value.trim() ? "검색" : "검색창 닫기"}
+                onClick={handleSearchIconClick}
+              >
+                <IconSearch size={32} className={styles.icon} />
+              </button>
+            </div>
+            <hr className={styles.divider} />
+          </div>
         </div>
-        <hr className={styles.divider} />
-      </div>
+      ) : (
+        <button
+          type="button"
+          className={styles.trigger}
+          aria-label="검색창 열기"
+          onClick={() => setExpanded(true)}
+        >
+          <IconSearch size={32} className={styles.icon} />
+        </button>
+      )}
 
       {dropdownOpen && (
         <SearchResultsPanel

@@ -21,7 +21,8 @@
   font-weight: var(--font-label-l-weight);
   line-height: var(--font-label-l-line-height);
   letter-spacing: var(--font-label-l-letter-spacing);
-  color: var(--color-neutral-100);
+  /* Panel is now a light card — dark primary text. */
+  color: var(--fg-neutral-default);
 }
 
 /* Dropdown-only breakpoint at 1440 — padding/gap/icon size are unchanged,
@@ -45,7 +46,7 @@
   border: none;
   padding: 0;
   cursor: pointer;
-  color: var(--color-neutral-100);
+  color: var(--fg-neutral-default);
 }
 
 .icon {

@@ -198,13 +198,20 @@
 
   /* ------------------------------------------------------------------ */
   /* Typography — Navigation                                             */
+  /* -l/-s are consumed via a max-width:1440px media query that swaps the */
+  /* whole token (see NavTab/BoardNav) — kept as-is since it's already   */
+  /* built, but this is no longer the default responsive-sizing pattern. */
+  /* New work uses a local rem+clamp scale variable instead (see         */
+  /* CLAUDE.md's "반응형 사이즈 조정 규칙" — the shared --page-scale         */
+  /* convention name, or Header's own --header-scale) — never mix the    */
+  /* two patterns on the same value.                                     */
   /* ------------------------------------------------------------------ */
-  --font-navigation-l-size: 18px;
+  --font-navigation-l-size: 16px;
   --font-navigation-l-weight: 600;
   --font-navigation-l-line-height: 28px;
   --font-navigation-l-letter-spacing: 0;
 
-  --font-navigation-s-size: 16px;
+  --font-navigation-s-size: 14px;
   --font-navigation-s-weight: 600;
   --font-navigation-s-line-height: 24px;
   --font-navigation-s-letter-spacing: 0;
@@ -291,6 +298,58 @@
   --spacing-md: 24px;
   --spacing-lg: 32px;
   --spacing-xl: 64px;
+
+  /* ------------------------------------------------------------------ */
+  /* Spacing — numeric scale (px-named, e.g. --space-24 == 24px)         */
+  /* Referenced throughout the codebase (Footer, Filter, SearchResults,  */
+  /* Login, Announcements, ...) as one-off measured values that don't    */
+  /* land on the named xs/sm/md/lg/xl scale above, but were never        */
+  /* actually defined here — every var(--space-N) silently resolved to   */
+  /* nothing (padding/gap collapsing to 0) until now. Per CLAUDE.md's    */
+  /* rule for a spacing value not already in a current Figma frame:      */
+  /* always even, 8px steps preferred, then 4px, then 2px. A handful of  */
+  /* call sites had an odd N (--space-191, --space-67, ...) — those were */
+  /* renamed at their call sites to the nearest 8px-multiple value below */
+  /* (191->192, 67->64, 45->48, ...) rather than defining an odd token.  */
+  /* Add new steps here freely as needed — same even-number rule.        */
+  /* ------------------------------------------------------------------ */
+  --space-2: 2px;
+  --space-4: 4px;
+  --space-6: 6px;
+  --space-8: 8px;
+  --space-10: 10px;
+  --space-12: 12px;
+  --space-14: 14px;
+  --space-16: 16px;
+  --space-18: 18px;
+  --space-20: 20px;
+  --space-22: 22px;
+  --space-24: 24px;
+  --space-26: 26px;
+  --space-28: 28px;
+  --space-30: 30px;
+  --space-32: 32px;
+  --space-36: 36px;
+  --space-40: 40px;
+  --space-46: 46px;
+  --space-48: 48px;
+  --space-52: 52px;
+  --space-54: 54px;
+  --space-56: 56px;
+  --space-64: 64px;
+  --space-68: 68px;
+  --space-72: 72px;
+  --space-78: 78px;
+  --space-82: 82px;
+  --space-86: 86px;
+  --space-94: 94px;
+  --space-100: 100px;
+  --space-112: 112px;
+  --space-120: 120px;
+  --space-132: 132px;
+  --space-164: 164px;
+  --space-192: 192px;
+  --space-194: 194px;
 
   /* ------------------------------------------------------------------ */
   /* Radius                                                              */

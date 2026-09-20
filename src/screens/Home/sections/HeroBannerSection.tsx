@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "./HeroBannerSection.module.css";
 import Container from "../../../components/ui/Container";
+import Grid from "../../../components/ui/Grid";
+import GridColumn from "../../../components/ui/GridColumn";
 import Button from "../../../components/ui/Button";
 import CarouselDots from "../../../components/ui/CarouselDots";
 
@@ -89,41 +91,52 @@ export default function HeroBannerSection({ slides }: HeroBannerSectionProps) {
 
       <div className={styles.overlay}>
         <Container>
-          {/* Same crossfade technique as .imageStack above — all slides'
-              logo/text/button are stacked (via CSS Grid, same grid cell)
-              and always rendered, opacity toggling between them. Only the
-              active one gets pointer-events/tab focus, so a hidden CTA
-              button can't be clicked or tabbed into. */}
-          <div className={styles.contentStack}>
-            {slides.map((s, i) => (
-              <div
-                key={s.id}
-                className={styles.content}
-                style={{ opacity: i === index ? 1 : 0, pointerEvents: i === index ? "auto" : "none" }}
-                aria-hidden={i === index ? undefined : true}
-              >
-                {s.logoUrl && (
-                  <img
-                    className={styles.logo}
-                    src={s.logoUrl}
-                    alt={i === index ? s.logoAlt ?? "" : ""}
-                  />
-                )}
-                <div className={styles.textGroup}>
-                  <p className={styles.tagline}>{s.tagline}</p>
-                  <Button
-                    color="white"
-                    size="S"
-                    className={styles.ctaButton}
-                    onClick={s.onCtaClick}
-                    tabIndex={i === index ? undefined : -1}
+          <Grid>
+            {/* Inset to the same 10-of-12 column band (start at column 2)
+                as every other body section on Home, so the logo/tagline/
+                button line up with the content below the banner instead
+                of Container's own plain full-width margin. */}
+            <GridColumn span={10} start={2}>
+              {/* Same crossfade technique as .imageStack above — all slides'
+                  logo/text/button are stacked (via CSS Grid, same grid cell)
+                  and always rendered, opacity toggling between them. Only the
+                  active one gets pointer-events/tab focus, so a hidden CTA
+                  button can't be clicked or tabbed into. */}
+              <div className={styles.contentStack}>
+                {slides.map((s, i) => (
+                  <div
+                    key={s.id}
+                    className={styles.content}
+                    style={{
+                      opacity: i === index ? 1 : 0,
+                      pointerEvents: i === index ? "auto" : "none",
+                    }}
+                    aria-hidden={i === index ? undefined : true}
                   >
-                    {s.ctaLabel}
-                  </Button>
-                </div>
+                    {s.logoUrl && (
+                      <img
+                        className={styles.logo}
+                        src={s.logoUrl}
+                        alt={i === index ? s.logoAlt ?? "" : ""}
+                      />
+                    )}
+                    <div className={styles.textGroup}>
+                      <p className={styles.tagline}>{s.tagline}</p>
+                      <Button
+                        color="white"
+                        size="S"
+                        className={styles.ctaButton}
+                        onClick={s.onCtaClick}
+                        tabIndex={i === index ? undefined : -1}
+                      >
+                        {s.ctaLabel}
+                      </Button>
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            </GridColumn>
+          </Grid>
         </Container>
       </div>
     </section>

@@ -1,3 +1,6 @@
+import type { NavigateFunction } from "react-router-dom";
+import type { Game } from "../types/game";
+
 /**
  * Generated from data/games.csv — the site's real game/animation catalog
  * (id doubles as the archived Flash file's name, so imageFile always
@@ -709,3 +712,39 @@ export const GAMES: GameCatalogEntry[] = [
     imageFile: "/images/games/pororo_heromark.webp",
   },
 ];
+
+/** Maps a catalog entry to the UI-facing Game shape shared by every
+ * screen's card grids. Promoted here (was duplicated in Home's own
+ * useHomeData.ts) once GameGroupScreen needed the same conversion. */
+export function toGame(entry: GameCatalogEntry, navigate: NavigateFunction): Game {
+  return {
+    id: entry.id,
+    title: entry.title,
+    category: entry.genre,
+    imageUrl: entry.imageFile,
+    imageAlt: entry.title,
+    onClick: () => navigate(`/game/${entry.id}`),
+  };
+}
+
+/** Groups catalog entries by a field (series/genre), skipping entries
+ * where that field is unset, in first-seen order. Used by
+ * SeriesScreen/GenreScreen/FlashAniScreen (via GameGroupScreen) to turn
+ * the flat catalog into the chip-selectable groups that screen renders. */
+export function groupGamesByField(
+  entries: GameCatalogEntry[],
+  field: "series" | "genre"
+): { label: string; entries: GameCatalogEntry[] }[] {
+  const byLabel = new Map<string, GameCatalogEntry[]>();
+  for (const entry of entries) {
+    const value = entry[field];
+    if (!value) continue;
+    const group = byLabel.get(value);
+    if (group) {
+      group.push(entry);
+    } else {
+      byLabel.set(value, [entry]);
+    }
+  }
+  return [...byLabel.entries()].map(([label, groupEntries]) => ({ label, entries: groupEntries }));
+}

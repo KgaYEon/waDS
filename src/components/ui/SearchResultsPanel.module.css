@@ -1,10 +1,16 @@
+/* Was --color-neutral-900/700 and --radius-8 — all three predate the
+   tokens.css rebuild and don't exist anymore (silently resolved to
+   nothing, i.e. no fill/border/radius at all). Mapped to a light panel
+   on request, matching the other elevated cards on the page (Home's
+   WeeklyPickSection panels, SeriesBandSection) rather than Header's own
+   dark avatarMenu dropdown. */
 .panel {
   display: flex;
   flex-direction: column;
   width: 100%;
-  background-color: var(--color-neutral-900);
-  border: 1px solid var(--color-neutral-700);
-  border-radius: var(--radius-8);
+  background-color: var(--bg-neutral-strong);
+  border: 1px solid var(--stroke-neutral-subtle);
+  border-radius: var(--radius-md);
   font-family: var(--font-family-base);
   overflow: hidden;
 }
@@ -13,15 +19,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  /* --space-56/--space-94 x1.2 */
-  padding: var(--space-67) var(--space-113);
+  /* --space-56/--space-94 x1.2, rounded from odd 67px/113px to the
+     nearest even spacing tokens. */
+  padding: var(--space-64) var(--space-112);
   text-align: center;
   /* Typography bumped one step (Body-S -> Body-M) along with the 1.2x
      size pass, on request. */
   font-size: var(--font-body-m-size);
   font-weight: var(--font-body-m-weight);
   line-height: 1.8;
-  color: var(--color-neutral-300);
+  /* Muted secondary text on the panel's now-light bg — same token
+     WeeklyPickSection's own subtitle text uses on its light panel. */
+  color: var(--fg-neutral-soft);
 }
 
 /* Dropdown-only breakpoint at 1440. Was wrapping to 3 lines because the
@@ -58,8 +67,8 @@
   gap: var(--space-14);
   align-items: stretch;
   /* --space-12 x1.2 = 14.4 -> --space-14; --space-16 x1.2 = 19.2,
-     closest existing token is --space-19. */
-  padding: var(--space-14) var(--space-19);
+     rounded from odd 19px to the nearest even spacing token. */
+  padding: var(--space-14) var(--space-16);
 }
 
 .resultsHead {
@@ -71,8 +80,9 @@
 .list {
   display: flex;
   flex-direction: column;
-  /* --space-16 x1.2 = 19.2, closest existing token is --space-19. */
-  gap: var(--space-19);
+  /* --space-16 x1.2 = 19.2, rounded from odd 19px to the nearest even
+     spacing token. */
+  gap: var(--space-16);
 }
 
 .footer {
@@ -81,7 +91,8 @@
   justify-content: space-between;
   /* --space-4 x1.2 = 4.8 — no token within ~1px, so this one stays exact
      (unlike the others above, which all landed within 0.4px of an
-     existing token). --space-16 x1.2 = 19.2 -> --space-19 as elsewhere. */
-  padding: 4.8px var(--space-19);
-  border-top: 1px solid var(--color-neutral-700);
+     existing token). --space-16 x1.2 = 19.2, rounded to --space-16 as
+     elsewhere. */
+  padding: 4.8px var(--space-16);
+  border-top: 1px solid var(--stroke-neutral-subtle);
 }

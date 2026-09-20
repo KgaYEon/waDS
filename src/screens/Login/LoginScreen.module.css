@@ -34,7 +34,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-35);
+  /* Rounded from an odd 35px to the nearest even spacing token. */
+  gap: var(--space-32);
 }
 
 .logo {
@@ -108,7 +109,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-15);
+  /* Rounded from an odd 15px to the nearest even spacing token. */
+  gap: var(--space-16);
 }
 
 /* 72px/56px circles, each provider's own brand background/border —

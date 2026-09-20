@@ -1,20 +1,14 @@
+/* Re-measured from Figma node 562:2304 ("mandu_baner 1", 370px tall @
+   1920). Sizes are rem * --page-scale (defined on Home.module.css's
+   .page, inherited here) — see the comment there. No separate ≤1440
+   height anymore (the old two-fixed-heights media query is exactly the
+   pattern --page-scale replaces): it just shrinks continuously instead. */
 .section {
   position: relative;
   width: 100%;
-  height: 510px;
+  height: calc(23.125rem * var(--page-scale));
   overflow: hidden;
-  background-color: var(--color-neutral-1000);
-}
-
-/* Was 349px (measured from Figma's "1440/home" frame) — the enlarged
-   logo + wider gap now add up to almost exactly that height on their
-   own (144 + 64 + ~73 content + 68 overlay padding ≈ 349px), leaving no
-   room and clipping the top of the content. Grown on request,
-   1440-only, to give it breathing room again; 1920 (510px) untouched. */
-@media (max-width: 1440px) {
-  .section {
-    height: 440px;
-  }
+  background-color: var(--bg-neutral-inverted);
 }
 
 .imageStack {
@@ -46,19 +40,7 @@
   display: flex;
   align-items: flex-end;
   pointer-events: none;
-  /* Was space-94 — bumped 12px on request to nudge the content up. */
-  padding-bottom: var(--space-106);
-}
-
-/* Scaled down along with the shorter banner height above — like the
-   arrow/dot positions below, this was already an approximation rather
-   than a pixel-exact reproduction of the (very promo-banner-specific)
-   Figma layout, so this is a reasonable value, not a re-measured one. */
-@media (max-width: 1440px) {
-  .overlay {
-    /* Was space-56 — bumped 12px on request, same as 1920 above. */
-    padding-bottom: var(--space-68);
-  }
+  padding-bottom: calc(3rem * var(--page-scale));
 }
 
 /* Grid (not flex/absolute) so every slide's content shares the exact
@@ -69,18 +51,20 @@
   max-width: 100%;
 }
 
-/* Logo-to-text gap (32px) lives here; the tagline-to-button gap is its
-   own, smaller value on .textGroup below — they're different amounts,
-   so one shared gap on a single flex column can't produce both. */
+/* Logo-to-text gap lives here; the tagline-to-button gap is its own,
+   smaller value on .textGroup below — they're different amounts, so one
+   shared gap on a single flex column can't produce both. */
 .content {
   grid-area: 1 / 1;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  /* Was spacing-lg (32px) — widened to 64px on request. */
-  gap: var(--spacing-xl);
-  /* max-width: 32ch removed — it existed to control wrap width, but the
-     tagline is now forced to a single line instead. */
+  /* Narrowed from --spacing-xl (64px) on request — the whole content
+     block is bottom-anchored via .overlay's align-items: flex-end, so
+     the tagline/button stay put and only the logo (the first child
+     above this gap) drops lower, without touching .section's own fixed
+     height. */
+  gap: calc(var(--spacing-lg) * var(--page-scale));
   max-width: 100%;
   /* Crossfades with the same duration/easing as .image above —
      pointer-events (auto for the active slide, none for the rest) is
@@ -92,81 +76,46 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: var(--spacing-sm);
-  /* Nudged right of .content's own edge on request (was -24px left,
-     corrected to +24px right, then +24px more, then -12px). */
-  margin-left: 36px;
+  gap: calc(var(--spacing-sm) * var(--page-scale));
 }
 
 /* No Figma spec for this (logos supplied directly as PNGs) — capped so a
    wide wordmark can't stretch .content (and in turn the banner) wider
-   than the available space; width stays intrinsic/auto otherwise. */
+   than the available space; width stays intrinsic/auto otherwise.
+   margin-left compensates for built-in whitespace baked into the PNG
+   art itself (all 4 slides' logo assets share this same margin) — without
+   it, the logo's actual visible mark sits to the right of the tagline/
+   button below it even though all three share the same flex-start edge
+   (now the shared 10-column grid start, not just .content's own edge). */
 .logo {
   display: block;
-  /* 120px x1.2 = 144px, on request. .section's own fixed height is
-     intentionally untouched — this only grows .content, anchored to the
-     bottom via .overlay's align-items:flex-end, so it extends upward
-     rather than changing the banner's own height. */
-  height: 144px;
+  height: calc(9rem * var(--page-scale));
   width: auto;
   max-width: 100%;
-  /* Nudged further left than the tagline/button beneath it (which stay
-     at .content's own flex-start edge) — a bare PNG logo mark often has
-     built-in whitespace around its art, so this pulls the visible mark
-     itself closer to the edge. Applies at both breakpoints (all 4
-     slides share this one class). */
-  margin-left: -16px;
+  margin-left: calc(-2rem * var(--page-scale));
 }
 
-/* Pinned to dark mode's own literal neutral-100 value (not the token)
-   on request — the banner's text/button must look identical in both
-   themes instead of following the light-mode neutral reversal. */
 .tagline {
   font-family: var(--font-family-base);
-  font-size: var(--font-hero-tagline-size);
+  font-size: calc(var(--font-hero-tagline-size) * var(--page-scale));
   font-weight: var(--font-hero-tagline-weight);
   line-height: var(--font-hero-tagline-line-height);
   letter-spacing: var(--font-hero-tagline-letter-spacing);
-  color: #f2f0ec;
+  color: var(--fg-neutral-inverted);
   white-space: nowrap;
 }
 
-/* Same reasoning as .tagline above — pinned to Button's own colorWhite
-   values (dark mode's literal neutral-100/-1000/-300) so the CTA button
-   doesn't flip with the theme either. Scoped here rather than in
-   Button.module.css so it doesn't affect color="white"'s other
-   consumers (Donation's donate button, FAQ's CTA).
-
-   Selector doubled (.ctaButton.ctaButton) to bump specificity above
-   Button.module.css's own .colorWhite — both are single-class selectors
-   otherwise, so with equal specificity, whichever module's CSS happens
-   to land later in Vite's bundle wins; .colorWhite was winning and this
-   override was silently doing nothing (caught after the fact — the
-   banner CTA visibly didn't change color in light mode). */
-.ctaButton.ctaButton {
-  background-color: #f2f0ec;
-  color: #0d0d0f;
+.ctaButton {
+  flex-shrink: 0;
 }
 
-.ctaButton.ctaButton:hover:not(:disabled) {
-  background-color: #b8b5ae;
-}
-
-
-/* Pushed further down than the raw "56px from the bottom edge" default,
-   opening up more space between the banner content (tagline/button)
-   above and the dots — this screen's own placement choice, not a
-   CarouselDots change (that component's other consumers are untouched). */
+/* Pushed down from the raw "content padding-bottom" default, opening up
+   space between the banner content (tagline/button) above and the dots
+   — this screen's own placement choice, not a CarouselDots change (that
+   component's other consumers are untouched). */
 .dots {
   position: absolute;
   left: 50%;
-  /* 94(content padding-bottom) - 30 = 64px gap from content, on request. */
-  bottom: var(--space-30);
+  bottom: calc(1.5rem * var(--page-scale));
   transform: translateX(-50%);
-}
-
-@media (max-width: 1440px) {
-  .dots {
-    bottom: var(--space-12);
-  }
 }

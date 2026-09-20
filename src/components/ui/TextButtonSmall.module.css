@@ -17,7 +17,9 @@
   letter-spacing: var(--font-label-m-letter-spacing);
   text-align: center;
   white-space: nowrap;
-  color: var(--color-neutral-300);
+  /* Search dropdown (this component's only consumer today) is now a
+     light panel — muted secondary text. */
+  color: var(--fg-neutral-soft);
   transition: color 0.15s ease;
 }
 
@@ -33,7 +35,7 @@
 }
 
 .button:hover:not(:disabled) {
-  color: var(--color-neutral-100);
+  color: var(--fg-neutral-default);
 }
 
 .button:disabled {

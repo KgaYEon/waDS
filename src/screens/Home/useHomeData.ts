@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import type { NavigateFunction } from "react-router-dom";
 import type { HeroSlide } from "./sections/HeroBannerSection";
 import type { Game } from "../../types/game";
-import { GAMES, type GameCatalogEntry } from "../../data/games";
+import { GAMES, toGame } from "../../data/games";
 
 // Fisher-Yates — doesn't mutate the input array.
 function shuffle<T>(items: T[]): T[] {
@@ -20,21 +20,17 @@ function shuffle<T>(items: T[]): T[] {
 // not a real personalization/ranking.
 const PLAYABLE_GAMES = GAMES.filter((entry) => entry.type === "Game");
 
-function toGame(entry: GameCatalogEntry, navigate: NavigateFunction): Game {
-  return {
-    id: entry.id,
-    title: entry.title,
-    category: entry.genre,
-    imageUrl: entry.imageFile,
-    imageAlt: entry.title,
-    onClick: () => navigate(`/game/${entry.id}`),
-  };
-}
-
 export interface HomeData {
   heroSlides: HeroSlide[];
   recentlyPlayed: Game[];
   recommended: Game[];
+  /** Third static row ("부동의 인기작") — same "no real ranking yet" caveat
+   * as recommended, just a distinct shuffle so the three rows don't show
+   * identical games. */
+  popular: Game[];
+  /** WeeklyPickSection's "많이 검색된 게임" chip labels — no real search-
+   * trend data exists yet, so this is just arbitrary catalog titles. */
+  trendingSearches: string[];
 }
 
 /**
@@ -48,9 +44,13 @@ export function useHomeData(navigate: NavigateFunction): HomeData {
   // Memoized so the order doesn't reshuffle on every re-render — only
   // once per Home mount.
   const recommended = useMemo(() => shuffle(GAMES).map((g) => toGame(g, navigate)), [navigate]);
+  const popular = useMemo(() => shuffle(PLAYABLE_GAMES).map((g) => toGame(g, navigate)), [navigate]);
+  const trendingSearches = useMemo(() => shuffle(GAMES).slice(0, 6).map((g) => g.title), []);
 
   return {
     recommended,
+    popular,
+    trendingSearches,
     heroSlides: [
       {
         id: "hero-mandu",

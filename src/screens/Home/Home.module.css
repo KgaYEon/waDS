@@ -1,25 +1,44 @@
+/*
+ * Re-measured from Figma node 543:2250 ("1920/Home"). Every non-token
+ * pixel value in Home's own sections (this file and sections/*.module.css)
+ * is expressed in rem and multiplied by --page-scale — a local custom
+ * property, same pattern as Header's own --header-scale (see
+ * Header.module.css). It's a clamp that reads 1 (100%) at 1920px viewport
+ * width and floors at 0.75 (75%) at 1440px and below, so every size
+ * (including font-size/line-height on shared typography tokens, wrapped
+ * as calc(var(--font-x-size) * var(--page-scale))) shrinks smoothly
+ * instead of jumping between two fixed values at a breakpoint. Deliberately
+ * NOT combined with the older "swap to a -s suffixed token at
+ * max-width:1440px" pattern (see NavTab/BoardNav) — mixing the two means
+ * the clamp-scaled value keeps shrinking right past the point where the
+ * media query then jumps it to a different fixed token, fighting itself.
+ * Scoped to .page so it never leaks into Header/Footer, which are
+ * rendered outside Home by Layout.tsx. --page-scale is the shared
+ * convention name for this pattern (GameGroupScreen.module.css defines
+ * the same name on its own root) — GameCard.module.css reads it via
+ * var(--page-scale, 1) so its own caption padding/font shrink in step
+ * with the card on any screen that defines it, falling back to 1
+ * (unscaled) everywhere else.
+ */
 .page {
+  --page-scale: clamp(0.75, calc(0.75 + (100vw - 1440px) / (1920px - 1440px) * 0.25), 1);
+
   display: flex;
   flex-direction: column;
-  background-color: var(--color-neutral-1000);
+  background-color: var(--bg-neutral-default);
   min-height: 100vh;
 }
 
 .body {
-  padding-bottom: var(--spacing-xl);
+  padding-top: calc(3rem * var(--page-scale));
+  padding-bottom: calc(var(--spacing-xl) * var(--page-scale));
 }
 
-/* Vertical rhythm between in-flow sections (not the grid's own
-   column gutter, which is for the card grid inside each section). */
+/* Vertical rhythm between every in-flow body section, including
+   SeriesBandSection (not the grid's own column gutter, which is for the
+   card grid inside each section). */
 .sections {
   display: flex;
   flex-direction: column;
-  gap: var(--space-56);
-  padding-top: var(--spacing-xl);
-}
-
-@media (max-width: 1440px) {
-  .sections {
-    padding-top: var(--space-48);
-  }
+  gap: calc(3.5rem * var(--page-scale));
 }

@@ -12,7 +12,8 @@
      (94px) version than the one the shared Header component now uses
      (103px) — trusted the shared token over this frame's stale header,
      per CLAUDE.md ("don't source Header from a screen frame"). */
-  padding-top: var(--space-191);
+  /* Rounded from an odd 191px to the nearest even spacing token. */
+  padding-top: var(--space-192);
   padding-bottom: var(--spacing-xl);
 }
 
@@ -151,7 +152,8 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: var(--space-11);
+  /* Rounded from an odd 11px to the nearest even spacing token. */
+  gap: var(--space-8);
 }
 
 /* BigChip's size prop is a discrete JS value like Button's — kept at

@@ -8,9 +8,11 @@
   align-items: center;
   /* Same header-to-sub-nav padding as the other board screens
      (Announcements/FAQ/Suggestions) — identical sub-nav position. */
-  padding-top: var(--space-191);
-  /* Board-box-bottom to Footer-top gap, measured from this frame directly. */
-  padding-bottom: var(--space-73);
+  /* Rounded from an odd 191px to the nearest even spacing token. */
+  padding-top: var(--space-192);
+  /* Board-box-bottom to Footer-top gap, measured from this frame directly;
+     rounded from an odd 73px to the nearest even spacing token. */
+  padding-bottom: var(--space-72);
 }
 
 @media (max-width: 1440px) {

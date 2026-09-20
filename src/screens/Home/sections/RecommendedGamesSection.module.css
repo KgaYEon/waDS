@@ -1,25 +1,31 @@
+/* Re-measured from Figma node 617:4675 ("gameCards") — the "부동의
+   인기작" rows. Sizes are rem * --page-scale (defined on Home.module.css's
+   .page, inherited here) — see the comment there. */
 .section {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-md);
+  gap: calc(1.5rem * var(--page-scale));
   width: 100%;
 }
 
-/* Lowered one step on request (was Heading-3, same at every breakpoint
-   before this): Heading-4, now also same at every breakpoint. */
+/* Raised back to Heading-3 (matches this frame's own title-txt style) —
+   the previous Heading-4 was from the old, now-discarded Home layout.
+   12px inline inset matches Figma's title-txt wrapper. */
 .heading {
   font-family: var(--font-family-base);
-  font-size: var(--font-heading-4-size);
-  font-weight: var(--font-heading-4-weight);
-  line-height: var(--font-heading-4-line-height);
-  letter-spacing: var(--font-heading-4-letter-spacing);
-  color: var(--color-neutral-100);
+  font-size: calc(var(--font-heading-3-size) * var(--page-scale));
+  font-weight: var(--font-heading-3-weight);
+  line-height: calc(var(--font-heading-3-line-height) * var(--page-scale));
+  letter-spacing: var(--font-heading-3-letter-spacing);
+  color: var(--fg-neutral-default);
+  padding-inline: calc(0.75rem * var(--page-scale));
 }
 
-/* Same 5-across card grid as RecentlyPlayedSection (at every
-   breakpoint), just without pagination — a static list instead of a
-   carousel. (A 4-up variant at 1440 was tried and reverted — the
-   redesigned GameCard itself shrinks instead.) */
+/* Same 5-across card grid as before, just without pagination — a static
+   list instead of a carousel (RecentlyPlayedSection's own carousel +
+   pagination UI was dropped for Home; this component is now reused for
+   all three "부동의 인기작"-style rows, each with a different
+   title/games slice). */
 .cards {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));

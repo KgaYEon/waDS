@@ -1,91 +1,140 @@
-.box {
+/* Outer slot — a small FIXED footprint (just big enough for the trigger
+   icon), the same size whether collapsed or expanded, so Header's .right
+   flex row (justify-content: flex-end) always reserves exactly this much
+   space for it: neither its width nor its height ever changes, so
+   expanding the search box can't shift later siblings (theme toggle,
+   avatar) OR change Header's own measured height. The expanded .box
+   below is instead taken out of flow entirely (position: absolute) and
+   overlays on top, anchored to this wrapper's own position:relative —
+   it's allowed to be visually bigger than the wrapper precisely because
+   an absolutely positioned element doesn't contribute to its parent's
+   layout size at all. */
+.wrapper {
   position: relative;
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  /* A margin-top nudge here was a guess and didn't land — this is the
-     actual fix: pin the box's own outer height to exactly match the
-     round profile button's real height (48px = 32px icon + 8px
-     padding top/bottom, see Header.module.css .profile/.profileIcon),
-     then center this box's content inside that fixed height. Two boxes
-     of the identical height, both cross-centered by .right's
-     align-items:center, land on the same vertical center by
-     construction — no more hand-measuring/guessing needed. The content
-     (input row + 10px gap + 1px divider, ~49.4px) is fractionally
-     taller than 48px, so it overflows this box by under 2px, split
-     evenly top/bottom by justify-content:center — invisible in
-     practice. */
-  height: 48px;
+  align-items: center;
   justify-content: center;
-  /* .trigger (the collapsed state) is the position reference: it's just
-     the icon, centered on the row with no padding. Here, the icon sits
-     inside .expanded (inputRow + gap + 1px divider stacked), and
-     justify-content:center centers that whole BLOCK — which pulls the
-     icon itself above the box's true center, since the divider adds
-     height below it that the icon doesn't share above. Padding-top
-     exactly equal to (gap + divider height) cancels that pull, so the
-     icon (not the block) ends up centered on the full box height,
-     matching .trigger's icon exactly: 10px gap + 1px divider = 11px. */
-  padding-top: 11px;
-  /* 8px (--spacing-xs) x1.2 = 9.6, closest existing token is --space-10. */
-  gap: var(--space-10);
-  /* min-width (not width: 100%) so this still works as a flex item next
-     to other header content (e.g. the profile button) instead of trying
-     to claim the whole row. Enlarged 1.2x on request: 280px -> 336px.
-     No matching spacing token at that value — treated as this
-     component's own intrinsic size (like RoundButton's 48px), not a
-     spacing token, same as every other fixed component dimension. */
-  min-width: 336px;
+  height: 48px;
+  width: 48px;
   font-family: var(--font-family-base);
 }
 
-/* Below 1440px, back to the pre-1.2x values (1920 keeps the enlarged
-   ones above) — same numbers this component used before that pass.
-   height matches the profile button's own 40px at this breakpoint
-   (24px icon + 8px padding top/bottom). */
 @media (max-width: 1440px) {
-  .box {
+  .wrapper {
     height: 40px;
-    /* Same derivation as 1920: gap (--spacing-xs, 8px) + divider (1px) = 9px. */
-    padding-top: 9px;
-    gap: var(--spacing-xs);
-    min-width: 280px;
+    width: 40px;
   }
 }
 
-.dropdown {
+/* Grows in from the icon's own edge on mount — matches this component's
+   existing 0.15s ease convention (Button/Chip's own hover transitions).
+   Only plays on expand: .trigger reappears instantly on collapse rather
+   than animating out, since React swaps the two as separate elements. */
+@keyframes searchBoxExpand {
+  from {
+    opacity: 0;
+    transform: scaleX(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+/* Out of flow (see .wrapper's comment) — right:0/top:0 anchors it to the
+   wrapper's own top-right corner, so it grows leftward over whatever
+   sits to the left in the header instead of pushing it. */
+.box {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  height: 100%;
+  /* Enlarged 1.2x on request: 280px -> 336px. No matching spacing token
+     at that value — treated as this component's own intrinsic size
+     (like RoundButton's 48px), not a spacing token. */
+  width: 336px;
+  /* The icon sits inside .expanded (inputRow + gap + 1px divider
+     stacked), and justify-content:center centers that whole BLOCK —
+     which pulls the icon itself above true center, since the divider
+     adds height below it that the icon doesn't share above. Padding-top
+     exactly equal to (gap + divider height) cancels that pull, so the
+     icon (not the block) ends up centered on the full height, matching
+     .trigger's icon exactly: 10px gap + 1px divider = 11px. */
+  padding-top: 11px;
+  /* 8px (--spacing-xs) x1.2 = 9.6, closest existing token is --space-10. */
+  gap: var(--space-10);
+  /* scaleX (not scale) so it only grows horizontally, from the same
+     right edge it's anchored to (see transform-origin) — height/vertical
+     position stay put throughout, matching the "icon position is fixed"
+     fix above instead of undoing it with a vertical pop. */
+  transform-origin: top right;
+  animation: searchBoxExpand 0.15s ease;
+}
+
+/* Below 1440px, back to the pre-1.2x values (1920 keeps the enlarged
+   ones above) — same numbers this component used before that pass. */
+@media (max-width: 1440px) {
+  .box {
+    width: 280px;
+    /* Same derivation as 1920: gap (--spacing-xs, 8px) + divider (1px) = 9px. */
+    padding-top: 9px;
+    gap: var(--spacing-xs);
+  }
+}
+
+/* Scoped through .wrapper (same fix as Header's own .right .loginChip)
+   so this width reliably beats SearchResultsPanel's own .panel {
+   width: 100% } regardless of which CSS module happens to land later in
+   the build — both are otherwise single-class selectors of equal
+   specificity. Before .wrapper shrank to 48px (fixing the header-shift
+   bug), .panel's width:100% winning was invisible by coincidence (it
+   resolved against the old ~336px-wide containing block); now it would
+   resolve against .wrapper's own 48px, which is exactly the "every
+   character wraps onto its own line" bug this fixes. */
+.wrapper .dropdown {
   position: absolute;
   top: calc(100% + var(--spacing-xs));
   right: 0;
   /* 320px x1.2 = 384px. No spacing token applies (component intrinsic
-     size, same rule as .box's min-width above). */
+     size, same rule as .box's own width above). */
   width: 384px;
   max-width: 90vw;
   z-index: 20;
+  /* Scaled down uniformly (both axes, same ratio — not just width, which
+     would leave its own padding/gaps/font-sizes full-size and cramped)
+     so it visually matches the search bar's own width (.box, 336px)
+     instead of being wider than the bar it drops down from.
+     transform-origin: top right keeps it anchored to the same corner as
+     .box (both are right:0 off .wrapper), so it shrinks toward that
+     corner rather than drifting out of alignment. 336 / 384 = 0.875. */
+  transform-origin: top right;
+  transform: scale(0.875);
 }
 
-/* This collapsed icon-only button is what's actually visible in the
-   header by default, and is the position REFERENCE — it's just the
-   icon with no extra height/padding, so .right's align-items:center
-   naturally centers the icon itself on the row. .box (the expanded
-   state) is the one that gets adjusted to match this, not the other
-   way around — see its padding-top comment below. */
+@media (max-width: 1440px) {
+  .wrapper .dropdown {
+    /* .box is 280px at this breakpoint: 280 / 384 = 0.729. */
+    transform: scale(0.729);
+  }
+}
+
+/* Collapsed icon-only button — fills .wrapper's small fixed footprint,
+   centered. */
 .trigger {
   display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
   background: none;
   border: none;
   padding: 0;
   cursor: pointer;
-  color: var(--color-neutral-100);
-}
-
-/* Was neutral-300 (2 steps up from the original neutral-100), raised
-   another 2 steps to neutral-500 on request — light theme only, light
-   mode reverses the neutral scale, so "brighter" there means a HIGHER
-   numbered token (100 is light mode's darkest end), the opposite
-   direction from dark mode. */
-:global([data-theme="light"]) .trigger {
-  color: var(--color-neutral-500);
+  color: var(--fg-neutral-subtle);
 }
 
 .icon {
@@ -148,7 +197,10 @@
   font-weight: var(--font-body-s-weight);
   line-height: var(--font-body-s-line-height);
   letter-spacing: var(--font-body-s-letter-spacing);
-  color: var(--color-neutral-100);
+  /* Was --color-neutral-100 (dead) — this input sits on Header's own
+     always-light background, so it needs dark text, not the old dark-
+     mode-default near-white value. */
+  color: var(--fg-neutral-default);
 }
 
 /* Was Body-S (16px) — lowered one more step on request. Body-S is the
@@ -164,41 +216,53 @@
   }
 }
 
+/* Was --color-neutral-300 (dead), with a [data-theme="light"] override
+   to neutral-400 — same reasoning as .trigger above: that reversal no
+   longer exists, and this placeholder sits on the always-light input,
+   so it goes straight to the override's intent (--fg-neutral-soft is
+   that same primitive step) as the one unconditional value. */
 .input::placeholder {
-  color: var(--color-neutral-300);
+  color: var(--fg-neutral-soft);
 }
 
-/* Was neutral-200 (1 step up from neutral-300), raised another 2 steps
-   to neutral-400 on request — light theme only. */
-:global([data-theme="light"]) .input::placeholder {
-  color: var(--color-neutral-400);
-}
-
+/* Same color reasoning as .trigger above. Width matches .trigger's own
+   48px slot (icon centered inside it) — before, this button had no
+   width of its own and just sat flush against .inputRow's right edge
+   (icon center ~13px from the edge), which put it noticeably left of
+   .trigger's icon (centered in 48px, so ~24px from the edge). Both are
+   now centered in the same 48px-wide, right-anchored slot, so the icon
+   doesn't visibly shift position when expanding/collapsing. Height is
+   left alone (auto) so the careful padding-top math on .box above,
+   which centers this icon vertically, isn't disturbed. */
 .searchButton {
   display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
   flex-shrink: 0;
   background: none;
   border: none;
   padding: 0;
   cursor: pointer;
-  color: var(--color-neutral-100);
+  color: var(--fg-neutral-subtle);
 }
 
-/* Same light-theme-only brightening as .trigger above. */
-:global([data-theme="light"]) .searchButton {
-  color: var(--color-neutral-500);
+@media (max-width: 1440px) {
+  .searchButton {
+    width: 40px;
+  }
 }
 
+/* Was --color-neutral-700 (dead), with a [data-theme="light"] override
+   to neutral-800 — same reasoning as .trigger above: goes straight to
+   the override's intent as the one unconditional value, since this
+   divider always sits on the light expanded search box now. No exact
+   semantic stroke token for that specific step, so --stroke-neutral-soft
+   (one step lighter) is used as the closest reasonable match. */
 .divider {
   width: 100%;
   height: 1px;
   border: none;
   margin: 0;
-  background-color: var(--color-neutral-700);
-}
-
-/* Was neutral-600 (1 step up from neutral-700), raised another 2 steps
-   to neutral-800 on request — light theme only. */
-:global([data-theme="light"]) .divider {
-  background-color: var(--color-neutral-800);
+  background-color: var(--stroke-neutral-soft);
 }

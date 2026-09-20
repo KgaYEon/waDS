@@ -1,0 +1,54 @@
+/* Re-measured from Figma node 562:2298 — a bg-strong rounded band of
+   series avatars sitting under the hero banner, separated by hairline
+   vertical dividers. All sizes are rem * --page-scale (defined on
+   Home.module.css's .page, inherited here) — see the comment there. */
+/* justify-content: space-between (no fixed gap) instead of a manual
+   rem+clamp gap — lets flexbox auto-distribute the leftover width into
+   equal gaps between every entry/divider pair, so the band always fills
+   the panel's full width edge-to-edge regardless of viewport, rather
+   than centering with whitespace left over on both sides. */
+.band {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: calc(1.25rem * var(--page-scale)) calc(4rem * var(--page-scale));
+  border-radius: var(--radius-lg);
+  background-color: var(--bg-neutral-strong);
+}
+
+.entry {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(0.25rem * var(--page-scale));
+  width: calc(6.25rem * var(--page-scale));
+}
+
+.avatar {
+  width: calc(4.5rem * var(--page-scale));
+  height: calc(4.5rem * var(--page-scale));
+  border-radius: var(--radius-full);
+  object-fit: cover;
+}
+
+.label {
+  min-width: 0;
+  max-width: 100%;
+  font-family: var(--font-family-base);
+  font-size: calc(var(--font-card-2-size) * var(--page-scale));
+  font-weight: var(--font-card-2-weight);
+  line-height: calc(var(--font-card-2-line-height) * var(--page-scale));
+  letter-spacing: var(--font-card-2-letter-spacing);
+  color: var(--fg-neutral-muted);
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.divider {
+  width: 1px;
+  height: calc(4.625rem * var(--page-scale));
+  flex-shrink: 0;
+  background-color: var(--stroke-neutral-subtle);
+}

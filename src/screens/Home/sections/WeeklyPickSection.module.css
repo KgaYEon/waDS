@@ -1,0 +1,107 @@
+/* Re-measured from Figma node 562:2367 ("금주의 추천게임"). All sizes are
+   rem * --page-scale (defined on Home.module.css's .page) — see the
+   comment there. */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: calc(1.4375rem * var(--page-scale));
+  width: 100%;
+}
+
+/* 12px inline inset matches Figma's "title-txt" wrapper on every section
+   heading in this frame (left-aligned, not centered — the "items-center"
+   in the raw extraction is cross-axis/vertical only). Font bumped from
+   Heading-4 (this frame's own raw 20px) to Heading-3 (24px) on request,
+   so this top-level heading matches the other three Home section
+   headings in RecommendedGamesSection.module.css — Figma actually draws
+   this one smaller, but the four are meant to read as one consistent
+   row of section titles. */
+.heading {
+  font-family: var(--font-family-base);
+  font-size: calc(var(--font-heading-3-size) * var(--page-scale));
+  font-weight: var(--font-heading-3-weight);
+  line-height: calc(var(--font-heading-3-line-height) * var(--page-scale));
+  letter-spacing: var(--font-heading-3-letter-spacing);
+  color: var(--fg-neutral-default);
+  padding-inline: calc(0.75rem * var(--page-scale));
+  margin: 0;
+}
+
+.row {
+  display: flex;
+  align-items: stretch;
+  gap: var(--grid-gutter);
+  width: 100%;
+}
+
+.picksPanel {
+  display: flex;
+  /* stretch (the default, stated explicitly) — each poster card now
+     fills the panel's full stretched height itself (its image grows via
+     flex: 1 1 auto in GameCard.module.css), so the card's top edge
+     starts at the same y-position as the trending panel's heading AND
+     its caption text ends at the same y-position as the trending
+     panel's last chip, both from the shared padding alone. */
+  align-items: stretch;
+  gap: calc(2.125rem * var(--page-scale));
+  padding: calc(2rem * var(--page-scale)) calc(2.5rem * var(--page-scale));
+  border-radius: var(--radius-lg);
+  background-color: var(--bg-neutral-strong);
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.pickCard {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.trendingPanel {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacing-md) * var(--page-scale));
+  padding: calc(2rem * var(--page-scale)) calc(2.5rem * var(--page-scale));
+  border-radius: var(--radius-lg);
+  background-color: var(--bg-neutral-strong);
+  flex: 0 0 auto;
+  min-width: calc(20rem * var(--page-scale));
+}
+
+.trendingHead {
+  display: flex;
+  flex-direction: column;
+  gap: calc(0.375rem * var(--page-scale));
+}
+
+.trendingTitle {
+  font-family: var(--font-family-base);
+  font-size: calc(var(--font-heading-4-size) * var(--page-scale));
+  font-weight: var(--font-heading-4-weight);
+  line-height: calc(var(--font-heading-4-line-height) * var(--page-scale));
+  letter-spacing: var(--font-heading-4-letter-spacing);
+  color: var(--fg-neutral-default);
+}
+
+.trendingSubtitle {
+  font-family: var(--font-family-base);
+  font-size: calc(var(--font-label-s-size) * var(--page-scale));
+  font-weight: var(--font-label-s-weight);
+  line-height: calc(var(--font-label-s-line-height) * var(--page-scale));
+  letter-spacing: var(--font-label-s-letter-spacing);
+  color: var(--fg-neutral-soft);
+}
+
+.trendingList {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: calc(var(--spacing-xs) * var(--page-scale) * 2);
+}
+
+/* Chip's own CSS already sets white-space: nowrap; this just lets a
+   long trending title truncate instead of overflowing the panel. */
+.trendingChip {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

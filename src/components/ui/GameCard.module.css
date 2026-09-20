@@ -1,7 +1,9 @@
+/* Re-measured from Figma node 617:4541 ("game card") — full-bleed
+   thumbnail with the title/category overlaid on a gradient scrim at the
+   bottom, replacing the old split thumb+solid-body layout. */
 .card {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
+  position: relative;
+  display: block;
   width: 100%;
   /* This is the actual CSS Grid item in the parent card grids — without
      this, its default min-width:auto (content-based) can outgrow its
@@ -9,136 +11,158 @@
      grid definitions are already even. Belt-and-suspenders alongside
      the parent grids' minmax(0, 1fr). */
   min-width: 0;
-  cursor: pointer;
+  aspect-ratio: 278.8 / 191;
+  overflow: hidden;
   border: none;
-  background: none;
+  border-radius: var(--radius-md);
   padding: 0;
+  background: none;
+  cursor: pointer;
   text-align: left;
   font-family: var(--font-family-base);
 }
 
-.thumb {
-  position: relative;
-  width: 100%;
-  /* Fixed, not aspect-ratio: 281/164 as this was before. Re-measured
-     against the fill-container card and the thumbnail height stays a
-     constant 164px regardless of card width — it doesn't scale
-     proportionally with the card. */
-  height: 164px;
-  overflow: hidden;
-  /* Was --radius-sm (4px) top-only — raised to 8px on request, now also
-     applied to .body below so the card is rounded on all four corners. */
-  border-radius: var(--radius-8) var(--radius-8) 0 0;
-  background-color: var(--color-neutral-900);
-}
-
-/* Light theme only: neutral-50 on request — dark mode keeps its
-   original neutral-900. (neutral-50 isn't part of the neutral-scale
-   reversal in tokens.css, so it needs an explicit override here rather
-   than inheriting one.) */
-:global([data-theme="light"]) .thumb {
-  background-color: var(--color-neutral-50);
-}
-
-/* Re-measured against the dedicated "game card" states frame (node
-   61:1754, "state=mini" = this card's real 1440 design). Figma's own
-   instance was 200x113 (161px card design), which isn't quite
-   proportional to the 1920 box (281x164) — corrected to 116.7px so the
-   281:164 ratio holds exactly, per request ("이미지 비율은 1920과
-   동일해야"). Body padding/gap are unchanged at 1440 (re-measured, both
-   identical to 1920); only this height and the title font change. */
-@media (max-width: 1440px) {
-  .thumb {
-    height: 116.7px;
-  }
-}
-
-.thumb img {
+.image {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* Source images carry a thin baked-in border at their own edges —
-     object-fit: cover crops height to fill but width lands almost
-     exactly on the box, so that border survives on the left/right
-     edges. Scaling the image itself (not the box) pushes it past
-     .thumb's overflow: hidden instead, with no effect on card size or
-     aspect ratio (uniform scale + object-fit: cover already preserves
-     ratio). Applies identically in light/dark since both themes share
-     this same rule. */
-  transform: scale(1.03);
+  pointer-events: none;
   transition: transform 0.2s ease;
 }
 
-.overlay {
-  position: absolute;
-  inset: 0;
-  background-color: transparent;
-  transition: background-color 0.2s ease;
-}
-
-/* On top of the base 1.03 scale above, so hover still reads as an
-   extra zoom rather than nothing (1.03 * 1.03 ≈ 1.06). */
-.card:hover .thumb img {
+.card:hover .image {
   transform: scale(1.06);
 }
-.card:hover .overlay {
-  background-color: color-mix(in srgb, var(--color-neutral-1000) 50%, transparent);
-}
 
-.body {
+/* Text scrim is a dark gradient over the photo itself (no solid
+   background panel underneath it anymore), so unlike the old .thumb/
+   .body it stays the same in light and dark theme — it's there for text
+   legibility on the image, not to match the page background.
+
+   caption's box height is 44.24%/55.76% of the card — purely
+   proportional, so it always shrinks in step with the card. Its
+   padding/gap used to be fixed px, which didn't: on Home, the card
+   grid's track width (and so the card itself) shrinks noticeably more
+   at 1440 than a plain --page-scale ratio (Container's own grid-margin
+   is a fixed 120px, not scaled), so the fixed-px padding/gap eventually
+   overflowed the now-shorter caption box and got clipped by .card's own
+   overflow:hidden. var(--page-scale, 1) scales it down to match on Home
+   (where --page-scale is defined) while falling back to 1 — i.e. the
+   original fixed value — everywhere else (Filter, SearchResults,
+   NewReleases, ...), which never defines that variable. */
+.caption {
+  position: absolute;
+  inset: 44.24% 0 0 0;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-xs);
-  width: 100%;
-  padding: var(--space-19) var(--spacing-sm) var(--spacing-md);
-  background-color: var(--color-neutral-900);
-  /* Bottom corners rounded to match .thumb's top corners, on request. */
-  border-radius: 0 0 var(--radius-8) var(--radius-8);
-}
-
-/* Same light-theme-only swap as .thumb above. */
-:global([data-theme="light"]) .body {
-  background-color: var(--color-neutral-50);
+  gap: calc(var(--spacing-xs) * var(--page-scale, 1));
+  justify-content: flex-end;
+  padding: calc(var(--spacing-md) * var(--page-scale, 1)) calc(var(--spacing-sm) * var(--page-scale, 1));
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  background-image: linear-gradient(
+    -1.116deg,
+    rgb(22, 22, 24) 6.7%,
+    rgba(0, 0, 0, 0.7) 49.47%,
+    rgba(55, 55, 60, 0.54) 72.16%,
+    rgba(116, 116, 126, 0) 97.48%
+  );
 }
 
 .title {
-  /* Flex items default to min-width:auto, which lets long text overflow
-     past the card instead of actually triggering the ellipsis below —
-     needed so every card stays the same height regardless of title length. */
   min-width: 0;
-  font-size: var(--font-card-1-size);
-  font-weight: var(--font-card-1-weight);
-  line-height: var(--font-card-1-line-height);
-  letter-spacing: var(--font-card-1-letter-spacing);
-  color: var(--color-neutral-100);
+  font-size: calc(var(--font-page-title-s-size) * var(--page-scale, 1));
+  font-weight: var(--font-page-title-s-weight);
+  line-height: calc(var(--font-page-title-s-line-height) * var(--page-scale, 1));
+  letter-spacing: var(--font-page-title-s-letter-spacing);
+  color: var(--fg-neutral-inverted);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-
-/* Moved to Card-2 at 1440 on request (was Label-L). */
-@media (max-width: 1440px) {
-  .title {
-    font-size: var(--font-card-2-size);
-    font-weight: var(--font-card-2-weight);
-    line-height: var(--font-card-2-line-height);
-    letter-spacing: var(--font-card-2-letter-spacing);
-  }
 }
 
 .subtitle {
-  /* Same min-width/overflow fix as .title — the real genre data includes
-     longer strings (e.g. "스포츠·레이싱", "탈출·추리") that would otherwise
-     wrap to a second line and make that one card taller than the rest. */
   min-width: 0;
+  font-size: calc(var(--font-label-s-size) * var(--page-scale, 1));
+  font-weight: var(--font-label-s-weight);
+  line-height: calc(var(--font-label-s-line-height) * var(--page-scale, 1));
+  letter-spacing: var(--font-label-s-letter-spacing);
+  color: var(--fg-neutral-subtle);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-size: var(--font-label-s-size);
-  font-weight: var(--font-label-s-weight);
-  line-height: var(--font-label-s-line-height);
-  letter-spacing: var(--font-label-s-letter-spacing);
-  color: var(--color-neutral-400);
+}
+
+/* Poster variant — Figma node 562:2314 ("recommand"): portrait cover
+   image, title/category sit below it instead of overlaid. Gap/padding
+   values (12/3/4px) don't land on the shared --spacing-* scale; they're
+   literal per this Figma frame, same convention as .card's own numbers. */
+.posterCard {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+  min-width: 0;
+  gap: calc(12px * var(--page-scale, 1));
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--font-family-base);
+}
+
+/* No fixed aspect-ratio (Figma's raw 254:332) — this card sits next to
+   a sibling panel ("많이 검색된 게임") in Home's WeeklyPickSection whose
+   height depends on how many trending chips there are, and that row
+   stretches both panels to equal height. flex:1 lets the image grow to
+   fill whatever height picksPanel ends up stretched to, so .posterBody
+   (the caption) always lands flush with the panel's bottom padding —
+   same position as the trending panel's last chip — instead of chasing
+   a guessed fixed ratio/height. Only consumer today is that one panel,
+   so this is a page-specific tweak, not a Figma re-measure. */
+.posterImage {
+  width: 100%;
+  flex: 1 1 auto;
+  min-height: 0;
+  border-radius: var(--radius-md);
+  object-fit: cover;
+}
+
+.posterBody {
+  display: flex;
+  flex-direction: column;
+  gap: calc(3px * var(--page-scale, 1));
+  width: 100%;
+  min-width: 0;
+  padding-inline: calc(4px * var(--page-scale, 1));
+}
+
+.posterCategory {
+  min-width: 0;
+  font-size: calc(var(--font-card-3-size) * var(--page-scale, 1));
+  font-weight: var(--font-card-3-weight);
+  line-height: calc(var(--font-card-3-line-height) * var(--page-scale, 1));
+  letter-spacing: var(--font-card-3-letter-spacing);
+  color: var(--fg-neutral-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Figma's raw text style here (18px/700/24) doesn't match any named
+   type token — closest semantic "card title" token is Card-1
+   (16/600/24), used as an approximation rather than inventing an
+   unbound size. */
+.posterTitle {
+  min-width: 0;
+  font-size: calc(var(--font-card-1-size) * var(--page-scale, 1));
+  font-weight: var(--font-card-1-weight);
+  line-height: calc(var(--font-card-1-line-height) * var(--page-scale, 1));
+  letter-spacing: var(--font-card-1-letter-spacing);
+  color: var(--fg-neutral-default);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

@@ -269,6 +269,12 @@
   gap: 12px;
 }
 
+.gameCardGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+
 .iconGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));

@@ -14,6 +14,8 @@ import { spacingTokens, radiusTokens, type ScaleToken } from "./spacingTokenData
 import { iconEntries } from "./iconTokenData";
 import Button, { type ButtonColor, type ButtonSize } from "../../components/ui/Button";
 import Chip, { type ChipVariant, type ChipSize } from "../../components/ui/Chip";
+import GameCard from "../../components/ui/GameCard";
+import { GAMES } from "../../data/games";
 
 type Tab = "primitive" | "semantic" | "typography" | "spacing" | "components" | "icons";
 
@@ -22,7 +24,7 @@ const TABS: { id: Tab; label: string }[] = [
   { id: "semantic", label: "시맨틱 매핑" },
   { id: "typography", label: "타이포" },
   { id: "spacing", label: "스페이싱" },
-  { id: "components", label: "버튼·칩" },
+  { id: "components", label: "버튼·칩·카드" },
   { id: "icons", label: "아이콘" },
 ];
 
@@ -36,6 +38,7 @@ const CHIP_VARIANTS: ChipVariant[] = [
   "ghost",
 ];
 const CHIP_SIZES: ChipSize[] = ["S", "M", "L"];
+const GAME_CARD_SAMPLES = GAMES.slice(0, 4);
 
 const SAMPLE_TEXT = "Aa 가나다";
 
@@ -270,6 +273,21 @@ export default function ColorTokensScreen() {
                 </div>
               </div>
             ))}
+          </section>
+          <section className={styles.section}>
+            <h2 className={styles.sectionTitle}>GameCard</h2>
+            <p className={styles.sectionMeta}>Figma node 617:4541 · 모든 게임 카드가 공유하는 컴포넌트</p>
+            <div className={styles.gameCardGrid}>
+              {GAME_CARD_SAMPLES.map((game) => (
+                <GameCard
+                  key={game.id}
+                  imageUrl={game.imageFile}
+                  imageAlt={game.title}
+                  title={game.title}
+                  category={game.genre}
+                />
+              ))}
+            </div>
           </section>
         </>
       )}
