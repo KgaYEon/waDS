@@ -1,193 +1,86 @@
-.screen {
-  position: relative;
-}
-
-.column {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  /* Same header-to-sub-nav padding as the other board screens
-     (Announcements/FAQ/Suggestions) — identical sub-nav position. */
-  /* Rounded from an odd 191px to the nearest even spacing token. */
-  padding-top: var(--space-192);
-  /* Board-box-bottom to Footer-top gap, measured from this frame directly;
-     rounded from an odd 73px to the nearest even spacing token. */
-  padding-bottom: var(--space-72);
-}
-
-@media (max-width: 1440px) {
-  .column {
-    padding-top: var(--space-194);
-    padding-bottom: var(--space-56);
-  }
-}
-
-/* Centered at 1920 on request, matching 1440 (was pulled left of the
-   grid margin, then cancelled, then re-centered) — opts into .column's
-   own align-items:center instead of flex-start. Now the same at both
-   breakpoints, so the old 1440-only override is gone. */
-.subNav {
-  align-self: center;
-}
-
-/* Lowered one weight step on request, this page only, 1920 only (was
-   Navigation-L's Bold/700): SemiBold/600 — same treatment as
-   Announcements' .subNav override, see that file's comment. */
-@media (min-width: 1441px) {
-  .subNav button {
-    font-weight: 600;
-  }
-}
-
-/* 739px is this screen's own measured intrinsic width — identical at
-   both breakpoints (unlike the other board screens' reading columns,
-   which narrow at 1440; re-measured directly, not assumed). */
+/*
+ * Re-measured from Figma's "1920/donation" frame (node 571:3087). The
+ * title/description header and side nav are handled by the shared
+ * BoardPageLayout — this file only covers the hero + wall section
+ * below it. Uses BoardPageLayout's own --page-scale (defined on its
+ * ancestor .page, no fallback needed here since this content always
+ * renders inside it).
+ */
 .hero {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--spacing-lg);
+  text-align: center;
+  gap: calc(2rem * var(--page-scale));
   width: 100%;
-  max-width: 739px;
-  /* Was space-82 (this frame's own measured sub-nav-to-hero gap) — then
-     matched to Suggestions/FAQ/Announcements' unified title margin-top
-     (spacing-xl/space-78) so the logo's top edge (the first child here,
-     playing the title's role) lines up with their title's top edge
-     exactly — .column's own padding-top is already identical across all
-     four screens, so equal margin-top here gives equal absolute
-     position. Since then, all four were widened further together to
-     space-86/space-94 on request. */
-  margin-top: var(--space-86);
-}
-
-@media (max-width: 1440px) {
-  .hero {
-    margin-top: var(--space-94);
-  }
+  max-width: calc(46.1875rem * var(--page-scale));
+  margin-inline: auto;
 }
 
 .logo {
-  width: 132.872px;
-  height: 63.565px;
-}
-
-@media (max-width: 1440px) {
-  .logo {
-    width: 95.019px;
-    height: 45.457px;
-  }
+  width: calc(8.3045rem * var(--page-scale));
+  height: calc(3.9728rem * var(--page-scale));
 }
 
 .heroBody {
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center;
-  gap: var(--spacing-lg);
+  gap: calc(2rem * var(--page-scale));
   width: 100%;
 }
 
-@media (max-width: 1440px) {
-  .heroBody {
-    gap: var(--spacing-md);
-  }
-}
-
-.title {
+/* BoardPageLayout already renders the page's own <h1> ("후원하기") — this
+   is a second, larger heading inside the hero, so it's an <h2>. Weight
+   matches Heading-3's own token (500) exactly here, unlike the page
+   title which needed a literal bold override. */
+.heroTitle {
   margin: 0;
   font-family: var(--font-family-base);
-  font-size: var(--font-heading-3-size);
+  font-size: calc(var(--font-heading-3-size) * var(--page-scale));
   font-weight: var(--font-heading-3-weight);
-  line-height: var(--font-heading-3-line-height);
+  line-height: calc(var(--font-heading-3-line-height) * var(--page-scale));
   letter-spacing: var(--font-heading-3-letter-spacing);
-  color: var(--color-neutral-100);
+  color: var(--fg-neutral-default);
 }
 
-@media (max-width: 1440px) {
-  .title {
-    font-size: var(--font-heading-4-size);
-    font-weight: var(--font-heading-4-weight);
-    line-height: var(--font-heading-4-line-height);
-    letter-spacing: var(--font-heading-4-letter-spacing);
-  }
-}
-
-/* Body-S's size/weight match exactly, but Figma's own line-height here
-   (28px) doesn't match Body-S's own (24px) — kept as measured, same
-   treatment as other screens' small intentional line-height mismatches. */
 .description {
   margin: 0;
   font-family: var(--font-family-base);
-  font-size: var(--font-body-s-size);
-  font-weight: var(--font-body-s-weight);
-  line-height: 28px;
-  letter-spacing: var(--font-body-s-letter-spacing);
-  color: var(--color-neutral-300);
+  font-size: calc(var(--font-body-3-size) * var(--page-scale));
+  font-weight: var(--font-body-3-weight);
+  line-height: calc(var(--font-body-3-line-height) * var(--page-scale));
+  letter-spacing: var(--font-body-3-letter-spacing);
+  color: var(--fg-neutral-muted);
 }
 
-/* Same mismatch at 1440 — Label-M's size/weight match, line-height
-   (24px measured vs Label-M's own 18px) doesn't. */
-@media (max-width: 1440px) {
-  .description {
-    font-size: var(--font-label-m-size);
-    font-weight: var(--font-label-m-weight);
-    line-height: 24px;
-    letter-spacing: var(--font-label-m-letter-spacing);
-  }
-}
-
-/* Was space-16/space-12 — widened 4px on request. */
 .ctaGroup {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--spacing-sm);
-}
-
-@media (max-width: 1440px) {
-  .ctaGroup {
-    gap: var(--space-16);
-  }
-}
-
-/* Button's size="M" (padding-16/spacing-md, Label-L text) matches this
-   frame's own 1920 button exactly. At 1440 the frame steps down further
-   than size="M"'s own padding/text (to size="S"'s padding + Label-M
-   text, not Label-L) — scoped here rather than in Button.module.css,
-   same pattern as Suggestions' .submitButton / FAQ's .ctaButton. */
-@media (max-width: 1440px) {
-  .donateButton {
-    padding: var(--space-12) var(--spacing-md);
-    font-size: var(--font-label-m-size);
-    font-weight: var(--font-label-m-weight);
-    line-height: var(--font-label-m-line-height);
-    letter-spacing: var(--font-label-m-letter-spacing);
-  }
+  gap: calc(1rem * var(--page-scale));
 }
 
 .supporterLink {
   font-family: var(--font-family-base);
-  font-size: var(--font-label-m-size);
+  font-size: calc(var(--font-label-m-size) * var(--page-scale));
   font-weight: var(--font-label-m-weight);
-  line-height: var(--font-label-m-line-height);
+  line-height: calc(var(--font-label-m-line-height) * var(--page-scale));
   letter-spacing: var(--font-label-m-letter-spacing);
-  color: var(--color-neutral-400);
+  color: var(--fg-neutral-soft);
   text-decoration: underline;
   cursor: pointer;
   transition: color 0.15s ease;
 }
 
 .supporterLink:hover {
-  color: var(--color-neutral-300);
+  color: var(--fg-neutral-default);
 }
 
-@media (max-width: 1440px) {
-  .supporterLink {
-    font-size: var(--font-label-s-size);
-    font-weight: var(--font-label-s-weight);
-    line-height: var(--font-label-s-line-height);
-    letter-spacing: var(--font-label-s-letter-spacing);
-  }
+/* ~79px hero-to-wall gap, measured directly from the frame. */
+.wallSection {
+  width: 100%;
+  margin-top: calc(5rem * var(--page-scale));
 }
 
 .monthNav {
@@ -195,18 +88,9 @@
   align-items: center;
   justify-content: center;
   gap: var(--spacing-lg);
-  width: 100%;
-  margin-top: var(--space-82);
+  margin-bottom: calc(0.8125rem * var(--page-scale));
 }
 
-@media (max-width: 1440px) {
-  .monthNav {
-    margin-top: var(--space-56);
-  }
-}
-
-/* Now a real button (month nav is functional) instead of a bare inert
-   icon — reset to plain/unstyled so it doesn't look like a button box. */
 .monthArrowButton {
   display: flex;
   padding: 0;
@@ -219,64 +103,38 @@
   cursor: not-allowed;
 }
 
-/* Was 32px (via the size={32} prop) at 1920, 24px only at 1440 — now
-   24px at both breakpoints on request. */
 .monthArrow {
-  width: 24px;
-  height: 24px;
-  color: var(--color-neutral-100);
+  width: calc(1.5rem * var(--page-scale));
+  height: calc(1.5rem * var(--page-scale));
+  color: var(--fg-neutral-default);
   flex-shrink: 0;
 }
 
-/* October (CURRENT_MONTH) has nothing newer, so the right arrow starts
-   in this state; the left arrow reaches it once June (MIN_MONTH) is
-   hit. Same disabled color Button.module.css uses. */
 .monthArrowDisabled {
-  color: var(--color-neutral-600);
+  color: var(--fg-neutral-subtle);
 }
 
-/* Lowered two steps on request: 1920 Heading-3 -> Body-L, 1440
-   (was Body-L) -> Body-S. */
 .monthLabel {
   font-family: var(--font-family-base);
-  font-size: var(--font-body-l-size);
-  font-weight: var(--font-body-l-weight);
-  line-height: var(--font-body-l-line-height);
-  letter-spacing: var(--font-body-l-letter-spacing);
-  color: var(--color-neutral-100);
+  font-size: calc(var(--font-body-1-size) * var(--page-scale));
+  font-weight: var(--font-body-1-weight);
+  line-height: calc(var(--font-body-1-line-height) * var(--page-scale));
+  letter-spacing: var(--font-body-1-letter-spacing);
+  color: var(--fg-neutral-default);
   white-space: nowrap;
 }
 
-@media (max-width: 1440px) {
-  .monthLabel {
-    font-size: var(--font-body-s-size);
-    font-weight: var(--font-body-s-weight);
-    line-height: var(--font-body-s-line-height);
-    letter-spacing: var(--font-body-s-letter-spacing);
-  }
-}
-
-/* Inset by exactly one grid column (column width + one gutter) on each
-   side, both breakpoints, using the shared grid tokens so it tracks
-   --grid-margin/--grid-gutter if those ever change. Includes the "44%"
-   label row too, so it stays aligned with the bar's right edge.
-   .column is a flex container (align-items:center), where a plain
-   width:auto shrinks to content instead of "100% minus margins" — so
-   the narrowed width has to be computed explicitly rather than left to
-   auto-margin shrinkage. */
-.progressSection {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-xs);
-  width: calc(100% - 2 * ((100% - var(--grid-gutter) * 11) / 12 + var(--grid-gutter)));
-  margin-inline: calc((100% - var(--grid-gutter) * 11) / 12 + var(--grid-gutter));
-  margin-top: var(--spacing-lg);
-}
-
-@media (max-width: 1440px) {
-  .progressSection {
-    margin-top: var(--space-30);
-  }
+.wallCaption {
+  margin: 0 0 calc(1.3125rem * var(--page-scale)) 0;
+  text-align: center;
+  font-family: var(--font-family-base);
+  font-size: calc(var(--font-label-s-size) * var(--page-scale));
+  font-weight: var(--font-label-s-weight);
+  line-height: calc(var(--font-label-s-line-height) * var(--page-scale));
+  letter-spacing: var(--font-label-s-letter-spacing);
+  /* Closest existing token by value (#2a2a2e), same reasoning as
+     QuestionHead's .divider. */
+  color: var(--fg-neutral-muted);
 }
 
 /* New — no Figma source for this label, see DonationScreen.tsx. */
@@ -284,80 +142,58 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
+  margin-bottom: var(--spacing-xs);
 }
 
 .progressLabel {
   font-family: var(--font-family-base);
-  font-size: var(--font-label-m-size);
+  font-size: calc(var(--font-label-m-size) * var(--page-scale));
   font-weight: var(--font-label-m-weight);
-  line-height: var(--font-label-m-line-height);
+  line-height: calc(var(--font-label-m-line-height) * var(--page-scale));
   letter-spacing: var(--font-label-m-letter-spacing);
-  color: var(--color-neutral-400);
-}
-
-@media (max-width: 1440px) {
-  .progressLabel {
-    font-size: var(--font-label-s-size);
-    font-weight: var(--font-label-s-weight);
-    line-height: var(--font-label-s-line-height);
-    letter-spacing: var(--font-label-s-letter-spacing);
-  }
+  color: var(--fg-neutral-soft);
 }
 
 .progressPercent {
   font-family: var(--font-family-base);
-  font-size: var(--font-label-m-size);
+  font-size: calc(var(--font-label-m-size) * var(--page-scale));
   font-weight: var(--font-label-m-weight);
-  line-height: var(--font-label-m-line-height);
+  line-height: calc(var(--font-label-m-line-height) * var(--page-scale));
   letter-spacing: var(--font-label-m-letter-spacing);
-  color: var(--color-neutral-300);
-}
-
-@media (max-width: 1440px) {
-  .progressPercent {
-    font-size: var(--font-label-s-size);
-    font-weight: var(--font-label-s-weight);
-    line-height: var(--font-label-s-line-height);
-    letter-spacing: var(--font-label-s-letter-spacing);
-  }
+  color: var(--fg-neutral-default);
 }
 
 .progressTrack {
   position: relative;
   width: 100%;
-  /* Was 15px (measured), thinned down on request. */
-  height: 10px;
+  height: calc(0.75rem * var(--page-scale));
   border-radius: var(--radius-full);
-  background-color: var(--color-neutral-600);
+  background-color: var(--bg-neutral-soft);
   overflow: hidden;
 }
 
 .progressFill {
   height: 100%;
-  background-color: var(--color-primary-400);
+  background-color: var(--bg-primary-default);
   border-radius: var(--radius-full);
 }
 
-/* Empty comment-board placeholder — background/border only, per request. */
-/* Same one-grid-column inset as .progressSection above, both breakpoints. */
+/* No populated example in the frame (just the empty box) — bg/radius
+   measured directly, individual comment card styling below is adapted
+   from the old dark-mode version rather than sourced from Figma; worth
+   a visual check. */
 .board {
   position: relative;
-  width: calc(100% - 2 * ((100% - var(--grid-gutter) * 11) / 12 + var(--grid-gutter)));
-  margin-inline: calc((100% - var(--grid-gutter) * 11) / 12 + var(--grid-gutter));
-  height: 641px;
-  margin-top: var(--space-48);
-  border-radius: var(--radius-sm);
-  background-color: var(--color-neutral-800);
+  width: 100%;
+  height: calc(33.375rem * var(--page-scale));
+  margin-top: calc(2.1875rem * var(--page-scale));
+  border-radius: var(--radius-md);
+  background-color: var(--bg-neutral-subtle);
   overflow: hidden;
 }
 
 /* Positioned by comment.x/y, both stored as a percentage of .board's own
    size — see useDonationWall.ts. */
-/* Was 18%, sized up on request — kept roughly in sync with
-   useDonationWall.ts's own FOOTPRINT estimate for the overlap-avoidance
-   check (not pixel-exact, just close enough that new placements don't
-   land right on top of existing, now-bigger items). */
 .wallItem {
   position: absolute;
   max-width: 22%;
@@ -366,28 +202,19 @@
 .wallText {
   margin: 0;
   padding: var(--spacing-md);
-  background-color: var(--color-neutral-900);
+  background-color: var(--bg-neutral-strong);
   border-radius: var(--radius-sm);
   font-family: var(--font-family-base);
   font-size: var(--font-label-l-size);
   font-weight: var(--font-label-l-weight);
   line-height: var(--font-label-l-line-height);
   letter-spacing: var(--font-label-l-letter-spacing);
-  color: var(--color-neutral-100);
+  color: var(--fg-neutral-default);
   overflow-wrap: break-word;
 }
 
-/* Was 160x38 — scaled up ~1.35x, keeping the 477:113 aspect ratio the
-   viewBox is drawn in (see DonationScreen.tsx). */
 .wallDrawing {
   display: block;
   width: 216px;
   height: 51px;
-}
-
-@media (max-width: 1440px) {
-  .board {
-    height: 495px;
-    margin-top: var(--spacing-lg);
-  }
 }

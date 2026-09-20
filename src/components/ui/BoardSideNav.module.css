@@ -1,0 +1,56 @@
+/*
+ * Re-measured from Figma's "listBox" component (node 627:5405,
+ * https://www.figma.com/design/SdECmcZVD0Gr8Gdlgn12iI/waflash-designsystem?node-id=627-5405)
+ * and its state=hover symbol (node 627:5390).
+ *
+ * Unlike Button/Chip (truly fixed-size atoms), this one opts into
+ * var(--page-scale, 1) — the fallback keeps it fixed on any screen that
+ * doesn't define one, same escape hatch GameCard uses. Left unscaled,
+ * its fixed 212px would eat a growing share of the row at 1440 (the
+ * whole row's own available width shrinks with --page-scale, but a
+ * fixed sidebar wouldn't), squeezing the main content more than the
+ * frames intend.
+ */
+.box {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: calc(var(--spacing-md) * var(--page-scale, 1));
+  width: calc(212px * var(--page-scale, 1));
+  flex-shrink: 0;
+  padding: calc(var(--space-12) * var(--page-scale, 1));
+  background-color: var(--bg-neutral-subtle);
+  border-radius: var(--radius-md);
+}
+
+.item {
+  padding: calc(16px * var(--page-scale, 1)) calc(32px * var(--page-scale, 1)) calc(16px * var(--page-scale, 1))
+    calc(24px * var(--page-scale, 1));
+  border: none;
+  border-radius: var(--radius-md);
+  background: none;
+  cursor: pointer;
+  text-align: center;
+  font-family: var(--font-family-base);
+  /* Figma's own bound style for this text is "Navigation-S" but at a
+     literal 16px/24px line-height — matches neither --font-navigation-l
+     (16px/600/28) nor --font-navigation-s (14px/600/24) exactly; the
+     closest existing token (-l, same size+weight) is used with the
+     line-height overridden to the measured 24px. */
+  font-size: calc(var(--font-navigation-l-size) * var(--page-scale, 1));
+  font-weight: var(--font-navigation-l-weight);
+  line-height: calc(24px * var(--page-scale, 1));
+  letter-spacing: var(--font-navigation-l-letter-spacing);
+  color: var(--fg-neutral-soft);
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.item:hover:not([data-active="true"]) {
+  background-color: var(--bg-neutral-soft);
+  color: var(--fg-neutral-inverted);
+}
+
+.item[data-active="true"] {
+  background-color: var(--bg-primary-default);
+  color: var(--fg-neutral-inverted);
+}

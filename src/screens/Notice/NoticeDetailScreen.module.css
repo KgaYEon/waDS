@@ -1,62 +1,32 @@
+/*
+ * Re-measured from Figma's "1920/notice-in" frame (node 571:3022). This
+ * screen isn't one of the four board pages and doesn't use
+ * BoardPageLayout, so it defines its own --page-scale here (per
+ * CLAUDE.md's responsive rule) rather than inheriting one.
+ */
 .screen {
+  --page-scale: clamp(0.75, calc(0.75 + (100vw - 1440px) / (1920px - 1440px) * 0.25), 1);
+  background-color: var(--bg-neutral-default);
   position: relative;
 }
 
 .column {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  /* Same header-to-sub-nav padding as AnnouncementsScreen — identical
-     sub-nav position in both frames. */
-  /* Rounded from an odd 191px to the nearest even spacing token. */
-  padding-top: var(--space-192);
-  padding-bottom: var(--spacing-xl);
-}
-
-@media (max-width: 1440px) {
-  .column {
-    padding-top: var(--space-194);
-  }
-}
-
-/* Centered at 1920 on request, matching 1440 (was pulled left of the
-   grid margin, then cancelled, then re-centered) — opts into .column's
-   own align-items:center instead of flex-start. Now the same at both
-   breakpoints, so the old 1440-only override is gone. */
-.subNav {
-  align-self: center;
+  align-items: stretch;
+  /* Literal frame margin, not the 12-column Grid — ~262px, symmetric on
+     both sides (no side nav here to throw it off-center). */
+  padding-top: calc(6rem * var(--page-scale));
+  padding-bottom: calc(var(--spacing-xl) * var(--page-scale));
+  padding-left: calc(16.375rem * var(--page-scale));
+  padding-right: calc(16.375rem * var(--page-scale));
 }
 
 .notFound {
   margin-top: var(--space-56);
   font-family: var(--font-family-base);
-  font-size: var(--font-body-l-size);
-  color: var(--color-neutral-300);
-}
-
-/* Reading column: 1920 is now inset by exactly 2 grid columns + 2
-   gutters on each side (one column narrower than before, which landed
-   on 1 column + 1 gutter by coincidence — this makes it exact and grid
-   line-accurate instead of a hand-measured px value), same calc pattern
-   Donation's .board/.progressSection use. 996px at 1440 is still this
-   screen's own measured intrinsic width (same treatment as
-   Announcements' listWrap / SearchBox's min-width), not grid-derived. */
-.content {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  width: 100%;
-  max-width: calc(
-    100% - 2 * (2 * ((100% - var(--grid-gutter) * 11) / 12) + 2 * var(--grid-gutter))
-  );
-  margin-top: var(--space-68);
-}
-
-@media (max-width: 1440px) {
-  .content {
-    max-width: 996px;
-    margin-top: var(--space-78);
-  }
+  font-size: var(--font-body-1-size);
+  color: var(--fg-neutral-subtle);
 }
 
 .backLink {
@@ -69,178 +39,100 @@
   background: none;
   cursor: pointer;
   font-family: var(--font-family-base);
-  /* Mapped to Label-L on request — same at both breakpoints, no media
-     query override needed anymore. */
-  font-size: var(--font-label-l-size);
-  font-weight: var(--font-label-l-weight);
-  line-height: var(--font-label-l-line-height);
-  letter-spacing: var(--font-label-l-letter-spacing);
-  color: var(--color-neutral-100);
+  font-size: calc(var(--font-button-3-size) * var(--page-scale));
+  font-weight: var(--font-button-3-weight);
+  line-height: calc(var(--font-button-3-line-height) * var(--page-scale));
+  letter-spacing: var(--font-button-3-letter-spacing);
+  color: var(--fg-neutral-soft);
 }
 
-/* Same glyph as IconArrowLeft (confirmed by comparing path data), just
-   rendered at this component's own 14px box. */
 .backIcon {
-  width: 14px;
-  height: 14px;
-  color: var(--color-neutral-300);
+  width: calc(0.875rem * var(--page-scale));
+  height: calc(0.875rem * var(--page-scale));
+  color: var(--fg-neutral-soft);
 }
 
 .header {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: var(--spacing-md);
-  margin-top: var(--space-46);
+  gap: calc(1.5rem * var(--page-scale));
+  margin-top: calc(4rem * var(--page-scale));
 }
 
 .titleRow {
   display: flex;
   align-items: center;
-  gap: var(--space-12);
+  gap: calc(1rem * var(--page-scale));
 }
 
-/* "알림" chip here is bordered/outlined (SmallChip's primaryBorder
-   color), unlike the list screen's filled "whiteBorder" chip — bigger
-   too (Chip-1, not the component's default Chip-2), so padding/font
-   are overridden here via passthrough className rather than changing
-   SmallChip's own defaults. */
+/* "고정" chip here (Chip-2, node 625:5097) is smaller than the list
+   screen's own pinned "알림" chip (Chip-1) — SmallChip's own default
+   sizing already matches Chip-2, so no override is needed here. */
 .chip {
-  padding: var(--spacing-xs) var(--space-20);
-  font-size: var(--font-chip-1-size);
-  font-weight: var(--font-chip-1-weight);
-  line-height: var(--font-chip-1-line-height);
-  letter-spacing: var(--font-chip-1-letter-spacing);
+  flex-shrink: 0;
 }
 
-/* Heading-4 is the base/1440 value; 1920 steps back up to Heading-3 on
-   request (this screen's own exception, opposite of the usual "1920
-   bigger" default already applying at both before this). */
 .title {
   margin: 0;
   font-family: var(--font-family-base);
-  font-size: var(--font-heading-4-size);
-  font-weight: var(--font-heading-4-weight);
-  line-height: var(--font-heading-4-line-height);
-  letter-spacing: var(--font-heading-4-letter-spacing);
-  color: var(--color-neutral-100);
-}
-
-@media (min-width: 1441px) {
-  .title {
-    font-size: var(--font-heading-3-size);
-    font-weight: var(--font-heading-3-weight);
-    line-height: var(--font-heading-3-line-height);
-    letter-spacing: var(--font-heading-3-letter-spacing);
-  }
+  font-size: calc(var(--font-heading-2-size) * var(--page-scale));
+  font-weight: var(--font-heading-2-weight);
+  line-height: calc(var(--font-heading-2-line-height) * var(--page-scale));
+  letter-spacing: var(--font-heading-2-letter-spacing);
+  color: var(--fg-neutral-default);
 }
 
 .meta {
   display: flex;
   align-items: center;
-  gap: var(--space-14);
+  gap: calc(0.875rem * var(--page-scale));
   font-family: var(--font-family-base);
-  font-size: var(--font-body-s-size);
-  font-weight: var(--font-body-s-weight);
-  color: var(--color-neutral-300);
+  font-size: calc(var(--font-body-3-size) * var(--page-scale));
+  font-weight: var(--font-body-3-weight);
+  line-height: calc(var(--font-body-3-line-height) * var(--page-scale));
+  color: var(--fg-neutral-soft);
 }
 
 .metaDivider {
   width: 2px;
   height: 14px;
-  border-radius: var(--radius-sm);
-  /* Figma's literal #d9d9d9 doesn't match any neutral token; normalized
-     to neutral-300 (same color as the surrounding author/date text). */
-  background-color: var(--color-neutral-300);
+  background-color: var(--fg-neutral-subtle);
 }
 
-.divider {
-  width: 100%;
-  height: 1px;
-  border: none;
-  margin: 0;
-  background-color: var(--color-neutral-700);
-}
-
-/* Gap between the meta row ("관리자 | 날짜") and this divider was
-   missing — corrected to the measured header-to-divider gap (was
-   mistakenly applied to .body below instead, which needed the
-   divider-to-body gap). */
 .topDivider {
   width: 100%;
   height: 1px;
   border: none;
-  margin: 0;
-  margin-top: var(--space-40);
-  background-color: var(--color-neutral-700);
+  margin: calc(2.5rem * var(--page-scale)) 0 0;
+  background-color: var(--fg-neutral-muted);
 }
 
-@media (max-width: 1440px) {
-  .topDivider {
-    /* Rounded from an odd 25px to the nearest even spacing token. */
-    margin-top: var(--space-24);
-  }
-}
-
-/* Own left/right padding removed on request — now flush with .content's
-   own edges, same as .title/.header/everything else in this reading
-   column (already inset by the page's grid margin via Container/Grid). */
 .body {
   display: flex;
   flex-direction: column;
   align-items: stretch;
   gap: var(--spacing-md);
-  margin-top: var(--space-28);
-}
-
-@media (max-width: 1440px) {
-  .body {
-    /* Rounded from an odd 31px to the nearest even spacing token. */
-    margin-top: var(--space-32);
-  }
+  margin-top: calc(1.75rem * var(--page-scale));
 }
 
 .text,
 .list {
   margin: 0;
   font-family: var(--font-family-base);
-  /* 1920 is now a plain Body-M match (was a custom 28.5px line-height,
-     dropped on request); 1440 is an exact Body-S match below. Figma's
-     rgba(242,240,236,0.85) is neutral-100 at 85% opacity — expressed via
-     color-mix() to stay token-derived instead of a hardcoded literal. */
-  font-size: var(--font-body-m-size);
-  font-weight: var(--font-body-m-weight);
-  line-height: var(--font-body-m-line-height);
-  letter-spacing: var(--font-body-m-letter-spacing);
-  color: color-mix(in srgb, var(--color-neutral-100) 85%, transparent);
-}
-
-@media (max-width: 1440px) {
-  .text,
-  .list {
-    font-size: var(--font-body-s-size);
-    font-weight: var(--font-body-s-weight);
-    line-height: var(--font-body-s-line-height);
-    letter-spacing: var(--font-body-s-letter-spacing);
-  }
+  font-size: calc(var(--font-body-3-size) * var(--page-scale));
+  font-weight: var(--font-body-3-weight);
+  line-height: calc(var(--font-body-3-line-height) * var(--page-scale));
+  letter-spacing: var(--font-body-3-letter-spacing);
+  color: var(--fg-neutral-default);
 }
 
 .list {
   padding-left: var(--space-28);
 }
 
-@media (max-width: 1440px) {
-  .list {
-    padding-left: var(--spacing-md);
-  }
-}
-
-/* Figma's own vertical rhythm around this block varied unpredictably
-   between the 1920/1440 mocks (an artifact of that mock's specific text
-   length, not a real design rule) — a flat --spacing-xl top margin is
-   used instead of chasing those numbers. */
 .adjacent {
-  margin-top: var(--spacing-xl);
+  margin-top: calc(var(--spacing-xl) * var(--page-scale));
 }
 
 .adjacentRow {
@@ -248,63 +140,44 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  padding: var(--space-22) var(--spacing-md);
+  padding: calc(1.375rem * var(--page-scale)) var(--spacing-md);
   border: none;
   background: none;
   cursor: pointer;
   text-align: left;
   font-family: var(--font-family-base);
-  font-size: var(--font-body-m-size);
-  font-weight: var(--font-body-m-weight);
-  color: var(--color-neutral-300);
-}
-
-@media (max-width: 1440px) {
-  .adjacentRow {
-    font-size: var(--font-body-s-size);
-    font-weight: var(--font-body-s-weight);
-  }
+  font-size: calc(var(--font-body-2-size) * var(--page-scale));
+  /* Figma's own weight here (Medium/500) is heavier than Body-2's own
+     token weight (400) — literal override, same treatment as
+     TextField's required asterisk. */
+  font-weight: 500;
+  color: var(--fg-neutral-muted);
 }
 
 .adjacentLeft {
   display: flex;
   align-items: center;
-  gap: var(--space-28);
+  gap: calc(1.75rem * var(--page-scale));
 }
 
 .adjacentLabel {
-  color: var(--color-neutral-100);
+  color: var(--fg-neutral-muted);
 }
 
-/* 1920 raised on request from .adjacentRow's inherited Body-M to
-   Label-L. 1440 keeps its own further step-down to Label-M — Body has
-   no smaller tier than Body-S, so that one crosses into the Label
-   ladder, same as elsewhere in this codebase when a "one step down"
-   needed a size Body doesn't have. */
 .adjacentDate {
-  font-size: var(--font-label-l-size);
-  font-weight: var(--font-label-l-weight);
-  line-height: var(--font-label-l-line-height);
-  letter-spacing: var(--font-label-l-letter-spacing);
+  color: var(--fg-neutral-soft);
 }
 
-@media (max-width: 1440px) {
-  .adjacentDate {
-    font-size: var(--font-label-m-size);
-    font-weight: var(--font-label-m-weight);
-    line-height: var(--font-label-m-line-height);
-    letter-spacing: var(--font-label-m-letter-spacing);
-  }
+.divider {
+  width: 100%;
+  height: 1px;
+  border: none;
+  margin: 0;
+  background-color: var(--fg-neutral-muted);
 }
 
-/* Same --spacing-xl approximation as .adjacent above. */
 .backButtonRow {
   display: flex;
   justify-content: center;
-  margin-top: var(--spacing-xl);
+  margin-top: calc(var(--spacing-xl) * var(--page-scale));
 }
-
-/* Was size="L" with a scoped 1440 override stepping it down to match
-   size="S" — switched to size="M" directly on request, which already
-   has no internal 1440 variation (Button.module.css's .sizeM), so no
-   override is needed here anymore. */

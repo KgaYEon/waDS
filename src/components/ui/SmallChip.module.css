@@ -14,19 +14,22 @@
 }
 
 .colorPrimary {
-  background-color: var(--color-primary-400);
-  border-color: var(--color-primary-400);
-  color: var(--color-neutral-100);
+  background-color: var(--bg-primary-default);
+  border-color: var(--stroke-primary-default);
+  color: var(--fg-neutral-inverted);
 }
 
 .colorWhiteBorder {
-  background-color: var(--color-neutral-900);
-  border-color: var(--color-neutral-100);
-  color: var(--color-neutral-100);
+  background-color: var(--bg-neutral-inverted);
+  border-color: var(--stroke-neutral-inverted);
+  color: var(--fg-neutral-inverted);
 }
 
+/* Re-measured against the "공지사항" frame's own "알림" pinned chip (node
+   625:5237): light fill, not a dark one — the previous dark-bg guess
+   never matched an actual frame. */
 .colorPrimaryBorder {
-  background-color: var(--color-neutral-1000);
-  border-color: var(--color-primary-400);
-  color: var(--color-primary-400);
+  background-color: var(--bg-neutral-default);
+  border-color: var(--stroke-primary-default);
+  color: var(--fg-primary-default);
 }

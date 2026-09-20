@@ -36,7 +36,7 @@
   /* 20px closed, 22px open — a small (likely unintentional) 2px
      difference in the source file, kept as measured. */
   gap: var(--spacing-sm);
-  color: var(--color-neutral-100);
+  color: var(--fg-neutral-default);
   transition: color 0.15s ease;
 }
 
@@ -44,48 +44,33 @@
   gap: var(--space-22);
 }
 
-/* Lowered one step on request, 1920 only (was Body-L, FAQ's own
-   accordion — not the pinned/compact variants): Body-M. */
+/* Body-2 (18px) at both breakpoints — re-measured against the "FAQ"
+   frame's own open/closed accordion rows (node 573:3805 / 571:2975),
+   both land on the same size, only the open row is bold (see below). */
 .qMark {
-  font-size: var(--font-body-m-size);
-  font-weight: var(--font-body-m-weight);
+  font-size: var(--font-body-2-size);
+  font-weight: var(--font-body-2-weight);
 }
 
-@media (max-width: 1440px) {
-  .qMark {
-    font-size: var(--font-body-s-size);
-    font-weight: var(--font-body-s-weight);
-    line-height: var(--font-body-s-line-height);
-    letter-spacing: var(--font-body-s-letter-spacing);
-  }
-}
-
-/* Lowered one step on request, 1920 only (was Heading-4, 20px): Body-M
-   (18px) — Body-L is also 20px, so Body-M is the first actually-smaller
-   step, same reasoning as elsewhere in this file. */
+/* Body-3 (16px), same reasoning as .qMark above. */
 .question {
-  font-size: var(--font-body-m-size);
-  font-weight: var(--font-body-m-weight);
-  line-height: var(--font-body-m-line-height);
+  font-size: var(--font-body-3-size);
+  font-weight: var(--font-body-3-weight);
+  line-height: var(--font-body-3-line-height);
 }
 
-/* At 1440 the question drops out of Heading-4 (bold) entirely and
-   matches Body-S (medium) instead — a real weight change, not just a
-   smaller size, confirmed in both open and closed states. */
-@media (max-width: 1440px) {
-  .question {
-    font-size: var(--font-body-s-size);
-    font-weight: var(--font-body-s-weight);
-    line-height: var(--font-body-s-line-height);
-    letter-spacing: var(--font-body-s-letter-spacing);
-  }
+/* Open row's Q./question go bold, per the FAQ frame's own open state
+   (node 573:3805) — the closed rows never do. */
+.item[data-expanded="true"] .qMark,
+.item[data-expanded="true"] .question {
+  font-weight: 700;
 }
 
 .chevron {
   width: 24px;
   height: 24px;
   flex-shrink: 0;
-  color: var(--color-neutral-300);
+  color: var(--fg-neutral-subtle);
   transition: color 0.15s ease, transform 0.2s ease;
 }
 
@@ -98,12 +83,12 @@
 
 .trigger:hover .qa,
 .trigger:hover .chevron {
-  color: var(--color-primary-400);
+  color: var(--fg-primary-default);
 }
 
 .item[data-expanded="true"] .qa,
 .item[data-expanded="true"] .chevron {
-  color: var(--color-primary-400);
+  color: var(--fg-primary-default);
 }
 
 .divider {
@@ -111,7 +96,11 @@
   height: 1px;
   border: none;
   margin: 0;
-  background-color: var(--color-neutral-700);
+  /* Closest existing token by value (#2a2a2e) — no --stroke- step lands
+     on this exact primitive, and this codebase's own stale-token
+     comments (tokens.css) already establish reusing an --fg- token by
+     value when no --stroke- one matches. */
+  background-color: var(--fg-neutral-muted);
 }
 
 /* Answer is now always rendered (not conditionally on `open`) so its
@@ -144,26 +133,16 @@
   overflow: hidden;
 }
 
-/* Lowered one step on request, 1920 only (was Body-M): Body-S. */
+/* Re-measured against the FAQ frame's own open answer text (node
+   573:3811): Label-M (14px), not a Body step. */
 .answer {
   padding-inline: var(--space-12);
-  font-size: var(--font-body-s-size);
-  font-weight: var(--font-body-s-weight);
-  line-height: var(--font-body-s-line-height);
-  letter-spacing: var(--font-body-s-letter-spacing);
-  color: var(--color-neutral-100);
+  font-size: var(--font-label-m-size);
+  font-weight: var(--font-label-m-weight);
+  line-height: var(--font-label-m-line-height);
+  letter-spacing: var(--font-label-m-letter-spacing);
+  color: var(--fg-neutral-default);
   margin: 0;
-}
-
-/* Genuine identity change at 1440, not just a smaller Body size — Figma
-   switches the answer text to Label-M (SemiBold, 14px) outright. */
-@media (max-width: 1440px) {
-  .answer {
-    font-size: var(--font-label-m-size);
-    font-weight: var(--font-label-m-weight);
-    line-height: var(--font-label-m-line-height);
-    letter-spacing: var(--font-label-m-letter-spacing);
-  }
 }
 
 .pinnedRow {
@@ -190,7 +169,7 @@
   font-weight: var(--font-label-m-weight);
   line-height: var(--font-label-m-line-height);
   letter-spacing: var(--font-label-m-letter-spacing);
-  color: var(--color-neutral-100);
+  color: var(--fg-neutral-default);
 }
 
 /* Lowered one step on request, 1920 only (was Body-S, the ladder's
@@ -205,18 +184,8 @@
   font-weight: var(--font-label-m-weight);
   line-height: var(--font-label-m-line-height);
   letter-spacing: var(--font-label-m-letter-spacing);
-  color: var(--color-neutral-100);
+  color: var(--fg-neutral-soft);
   white-space: nowrap;
-}
-
-/* "알림" chip's own vertical padding shrinks (6px -> 4px) at 1440 in the
-   Announcements frame; scoped here via a passthrough className rather
-   than changed on SmallChip itself, since SmallChip is shared by
-   ChipLabelToggle elsewhere and that usage hasn't been re-measured. */
-@media (max-width: 1440px) {
-  .pinnedChip {
-    padding-block: var(--space-4);
-  }
 }
 
 .compactRow {
@@ -228,19 +197,10 @@
   padding-right: var(--spacing-md);
 }
 
-/* Lowered one step on request, 1920 only (was Body-S floor): Label-M.
-   ≤1440 keeps the original Body-S. */
 .compactIndex {
   font-size: var(--font-label-m-size);
   font-weight: var(--font-label-m-weight);
-  color: var(--color-neutral-100);
-}
-
-@media (max-width: 1440px) {
-  .compactIndex {
-    font-size: var(--font-body-s-size);
-    font-weight: var(--font-body-s-weight);
-  }
+  color: var(--fg-neutral-default);
 }
 
 .compactBody {
@@ -249,7 +209,7 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--spacing-sm);
-  color: var(--color-neutral-100);
+  color: var(--fg-neutral-default);
 }
 
 /* Size/line-height/letter-spacing stepped Body-M/Body-S -> Label-S ->
@@ -272,5 +232,6 @@
   font-weight: var(--font-label-m-weight);
   line-height: var(--font-label-m-line-height);
   letter-spacing: var(--font-label-m-letter-spacing);
+  color: var(--fg-neutral-soft);
   white-space: nowrap;
 }

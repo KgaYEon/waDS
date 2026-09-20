@@ -7,6 +7,9 @@
 
 /* 36x36 button box, 18px icon — component-intrinsic sizes (same
    treatment as SquareNavButton), not spacing tokens. */
+/* Figma draws this button at a 6px corner radius, between the token
+   scale's sm (4px) and md (12px) — closest existing step (sm) used
+   rather than adding a one-off token. */
 .arrowButton {
   display: inline-flex;
   align-items: center;
@@ -15,15 +18,15 @@
   height: 36px;
   padding: 0;
   border: none;
-  border-radius: var(--radius-6);
+  border-radius: var(--radius-sm);
   background: none;
   cursor: pointer;
-  color: var(--color-neutral-100);
+  color: var(--fg-neutral-soft);
 }
 
 .arrowButton:disabled {
   cursor: not-allowed;
-  color: var(--color-neutral-600);
+  color: var(--fg-neutral-subtle);
 }
 
 .arrowIcon {
@@ -46,20 +49,20 @@
   height: 36px;
   padding: 0;
   border: none;
-  border-radius: var(--radius-6);
+  border-radius: var(--radius-sm);
   background: none;
   cursor: pointer;
   font-family: var(--font-family-base);
   /* Figma's 1920 page numbers use Pretendard at 17.955px — excluded per
-     the project's standing Pretendard rule, so Body-S (Noto Sans KR,
+     the project's standing Pretendard rule, so Body-3 (Noto Sans KR,
      the 1440 frame's own spec) is used at both breakpoints instead. */
-  font-size: var(--font-body-s-size);
-  font-weight: var(--font-body-s-weight);
-  line-height: var(--font-body-s-line-height);
-  color: var(--color-neutral-600);
+  font-size: var(--font-body-3-size);
+  font-weight: var(--font-body-3-weight);
+  line-height: var(--font-body-3-line-height);
+  color: var(--fg-neutral-soft);
 }
 
 .pageButton[data-active="true"] {
-  background-color: var(--color-primary-400);
-  color: var(--color-neutral-100);
+  background-color: var(--bg-primary-default);
+  color: var(--fg-neutral-inverted);
 }

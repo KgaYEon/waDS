@@ -171,7 +171,7 @@ export default function DonationCommentModal({ onClose }: DonationCommentModalPr
                           key={i}
                           d={d}
                           fill="none"
-                          stroke="var(--color-primary-400)"
+                          stroke="var(--fg-primary-default)"
                           strokeWidth={3}
                           strokeLinecap="round"
                           strokeLinejoin="round"
@@ -181,7 +181,7 @@ export default function DonationCommentModal({ onClose }: DonationCommentModalPr
                         <path
                           d={currentPath}
                           fill="none"
-                          stroke="var(--color-primary-400)"
+                          stroke="var(--fg-primary-default)"
                           strokeWidth={3}
                           strokeLinecap="round"
                           strokeLinejoin="round"

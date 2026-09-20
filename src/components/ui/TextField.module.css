@@ -18,7 +18,7 @@
   font-weight: var(--font-label-l-weight);
   line-height: var(--font-label-l-line-height);
   letter-spacing: var(--font-label-l-letter-spacing);
-  color: var(--color-neutral-100);
+  color: var(--fg-neutral-default);
 }
 
 /* Re-measured against the "건의함" frame (node 202:1702/287:6300), this
@@ -34,46 +34,47 @@
   }
 }
 
+/* Figma's required asterisk is size/line-height 18/26 (Body-2) at a
+   heavier weight (500) than Body-2's own token weight (400) — kept as a
+   literal override here rather than inventing a new token for one
+   digit, same treatment as QuestionHead's .compactQuestion. */
 .required {
-  font-size: var(--font-body-m-size);
-  font-weight: var(--font-body-m-weight);
-  line-height: var(--font-body-m-line-height);
-  color: var(--color-primary-400);
+  font-size: var(--font-body-2-size);
+  font-weight: 500;
+  line-height: var(--font-body-2-line-height);
+  color: var(--fg-primary-default);
 }
 
 .optionalTag {
-  border: 1px solid var(--color-neutral-300);
+  border: 1px solid var(--stroke-neutral-subtle);
   border-radius: var(--radius-sm);
   padding: var(--space-2) var(--spacing-xs);
   font-size: var(--font-label-m-size);
   font-weight: var(--font-label-m-weight);
   line-height: var(--font-label-m-line-height);
   letter-spacing: var(--font-label-m-letter-spacing);
-  color: var(--color-neutral-300);
+  color: var(--fg-neutral-subtle);
 }
 
+/* Re-measured against the "건의함" frame's own Text Input (node
+   573:3758): no fill (the previous dark background was never a real
+   frame value), border/text/placeholder sized and colored off that
+   node directly — Label-M at both breakpoints, not Body-S shrinking to
+   Label-M, so the 1440 override below is now redundant but left in
+   place since it matches. */
 .input {
   width: 100%;
-  border: 1px solid var(--color-neutral-400);
+  border: 1px solid var(--stroke-neutral-subtle);
   border-radius: var(--radius-md);
-  background-color: var(--color-neutral-900);
+  background-color: transparent;
   padding: var(--space-18) var(--spacing-md);
-  color: var(--color-neutral-100);
+  color: var(--fg-neutral-default);
   font-family: var(--font-family-base);
-  font-size: var(--font-body-s-size);
-  font-weight: var(--font-body-s-weight);
-  line-height: var(--font-body-s-line-height);
-  letter-spacing: var(--font-body-s-letter-spacing);
+  font-size: var(--font-label-m-size);
+  font-weight: var(--font-label-m-weight);
+  line-height: var(--font-label-m-line-height);
+  letter-spacing: var(--font-label-m-letter-spacing);
   resize: none;
-}
-
-@media (max-width: 1440px) {
-  .input {
-    font-size: var(--font-label-m-size);
-    font-weight: var(--font-label-m-weight);
-    line-height: var(--font-label-m-line-height);
-    letter-spacing: var(--font-label-m-letter-spacing);
-  }
 }
 
 /* Textarea only (inputs don't carry a `rows` attribute) — fixed 200px
@@ -83,12 +84,12 @@
 }
 
 .input::placeholder {
-  color: var(--color-neutral-400);
+  color: var(--fg-neutral-subtle);
 }
 
 .input:focus {
   outline: none;
-  border-color: var(--color-primary-400);
+  border-color: var(--stroke-primary-default);
 }
 
 .counterRow {
@@ -96,25 +97,16 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  font-size: var(--font-body-s-size);
-  font-weight: var(--font-body-s-weight);
-  line-height: var(--font-body-s-line-height);
-  letter-spacing: var(--font-body-s-letter-spacing);
-}
-
-@media (max-width: 1440px) {
-  .counterRow {
-    font-size: var(--font-label-m-size);
-    font-weight: var(--font-label-m-weight);
-    line-height: var(--font-label-m-line-height);
-    letter-spacing: var(--font-label-m-letter-spacing);
-  }
+  font-size: var(--font-label-m-size);
+  font-weight: var(--font-label-m-weight);
+  line-height: var(--font-label-m-line-height);
+  letter-spacing: var(--font-label-m-letter-spacing);
 }
 
 .counterHint {
-  color: var(--color-neutral-400);
+  color: var(--fg-neutral-subtle);
 }
 
 .counterValue {
-  color: var(--color-neutral-600);
+  color: var(--fg-neutral-soft);
 }

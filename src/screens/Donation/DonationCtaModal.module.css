@@ -10,7 +10,7 @@
   align-items: center;
   justify-content: center;
   padding: var(--spacing-md);
-  background-color: color-mix(in srgb, var(--color-neutral-1000) 70%, transparent);
+  background-color: color-mix(in srgb, var(--primitive-neutral-1000) 70%, transparent);
 }
 
 /* 559px, 1920 frame value reused as-is at 1440 too (no media query), per
@@ -25,11 +25,13 @@
   /* Was neutral-1000 (invisible, same as background), then neutral-900
      (still too subtle) — one step further to neutral-800. Width bumped
      1px -> 2px on request. */
-  border: 2px solid var(--color-neutral-800);
+  border: 2px solid var(--primitive-neutral-800);
   /* Whole box uniformly rounded on request (was 12px top / 16px bottom,
      split across .header/.body) — rounded here instead, with overflow
-     hidden so their own backgrounds get clipped to match. */
-  border-radius: var(--radius-8);
+     hidden so their own backgrounds get clipped to match. --radius-8
+     never existed as a token; sm (4px) used as the closest existing
+     step over md (12px). */
+  border-radius: var(--radius-sm);
   overflow: hidden;
 }
 
@@ -44,8 +46,8 @@
   justify-content: center;
   padding-block: var(--space-14);
   padding-inline: var(--spacing-md);
-  background-color: var(--color-neutral-900); /* Was neutral-1000 */
-  border-bottom: 1px solid var(--color-neutral-600);
+  background-color: var(--bg-neutral-inverted); /* Was neutral-1000 */
+  border-bottom: 1px solid var(--primitive-neutral-600);
 }
 
 /* Was Heading-4 at both breakpoints (matching the Figma frame exactly),
@@ -68,7 +70,7 @@
   font-weight: var(--font-label-l-weight);
   line-height: 1;
   letter-spacing: var(--font-label-l-letter-spacing);
-  color: var(--color-neutral-300);
+  color: var(--fg-neutral-subtle);
   text-align: center;
 }
 
@@ -95,7 +97,7 @@
   border: none;
   background: none;
   cursor: pointer;
-  color: var(--color-neutral-100);
+  color: var(--fg-neutral-inverted);
 }
 
 /* Was 28px both breakpoints. */
@@ -122,7 +124,7 @@
   align-items: center;
   gap: 32px;
   padding: var(--spacing-md) 41px;
-  background-color: var(--color-neutral-900); /* Was neutral-1000 */
+  background-color: var(--bg-neutral-inverted); /* Was neutral-1000 */
 }
 
 .textGroup {
@@ -137,19 +139,19 @@
 .heading {
   margin: 0;
   font-family: var(--font-family-base);
-  font-size: var(--font-body-l-size);
-  font-weight: var(--font-body-l-weight);
-  line-height: var(--font-body-l-line-height);
-  letter-spacing: var(--font-body-l-letter-spacing);
-  color: var(--color-neutral-100);
+  font-size: var(--font-body-1-size);
+  font-weight: var(--font-body-1-weight);
+  line-height: var(--font-body-1-line-height);
+  letter-spacing: var(--font-body-1-letter-spacing);
+  color: var(--fg-neutral-inverted);
 }
 
 @media (max-width: 1440px) {
   .heading {
-    font-size: var(--font-body-m-size);
-    font-weight: var(--font-body-m-weight);
-    line-height: var(--font-body-m-line-height);
-    letter-spacing: var(--font-body-m-letter-spacing);
+    font-size: var(--font-body-2-size);
+    font-weight: var(--font-body-2-weight);
+    line-height: var(--font-body-2-line-height);
+    letter-spacing: var(--font-body-2-letter-spacing);
   }
 }
 
@@ -162,7 +164,7 @@
   font-weight: var(--font-label-m-weight);
   line-height: var(--font-label-m-line-height);
   letter-spacing: var(--font-label-m-letter-spacing);
-  color: var(--color-neutral-300);
+  color: var(--fg-neutral-subtle);
 }
 
 @media (max-width: 1440px) {

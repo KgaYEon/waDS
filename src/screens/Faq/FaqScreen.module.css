@@ -1,185 +1,39 @@
-.screen {
-  position: relative;
-}
-
-.column {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  /* Same header-to-sub-nav padding as Announcements/Notice detail —
-     identical sub-nav position in all three frames. */
-  /* Rounded from an odd 191px to the nearest even spacing token. */
-  padding-top: var(--space-192);
-  padding-bottom: var(--spacing-xl);
-}
-
-@media (max-width: 1440px) {
-  .column {
-    padding-top: var(--space-194);
-  }
-}
-
-/* Centered at 1920 on request, matching 1440 (was pulled left of the
-   grid margin, then cancelled, then re-centered) — opts into .column's
-   own align-items:center instead of flex-start. Now the same at both
-   breakpoints, so the old 1440-only override is gone. */
-.subNav {
-  align-self: center;
-}
-
-/* Lowered one weight step on request, this page only, 1920 only (was
-   Navigation-L's Bold/700): SemiBold/600 — same treatment as
-   Announcements' .subNav override, see that file's comment. */
-@media (min-width: 1441px) {
-  .subNav button {
-    font-weight: 600;
-  }
-}
-
-/* margin-top unified with Suggestions on request (was space-66/space-22,
-   this screen's own Figma measurement) — same subnav-to-title position
-   across Announcements/Suggestions/FAQ now. */
-.heading {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: var(--spacing-md);
-  margin-top: var(--space-86);
-}
-
-@media (max-width: 1440px) {
-  .heading {
-    gap: var(--space-16);
-    margin-top: var(--space-94);
-  }
-}
-
-/* Lowered on request, 1920 only (was Heading-1): Heading-3. */
-.title {
-  margin: 0;
-  font-family: var(--font-family-base);
-  font-size: var(--font-heading-3-size);
-  font-weight: var(--font-heading-3-weight);
-  line-height: var(--font-heading-3-line-height);
-  letter-spacing: var(--font-heading-3-letter-spacing);
-  color: var(--color-neutral-100);
-}
-
-@media (max-width: 1440px) {
-  .title {
-    /* Figma drops three tiers here (Heading-1 -> Heading-4), further
-       than the "one step" pattern seen elsewhere — kept as measured. */
-    font-size: var(--font-heading-4-size);
-    font-weight: var(--font-heading-4-weight);
-    line-height: var(--font-heading-4-line-height);
-    letter-spacing: var(--font-heading-4-letter-spacing);
-  }
-}
-
-/* Lowered one step on request, 1920 only (was Body-M): Body-S. */
-.subtitle {
-  margin: 0;
-  font-family: var(--font-family-base);
-  font-size: var(--font-body-s-size);
-  font-weight: var(--font-body-s-weight);
-  line-height: var(--font-body-s-line-height);
-  letter-spacing: var(--font-body-s-letter-spacing);
-  color: var(--color-neutral-300);
-}
-
-@media (max-width: 1440px) {
-  .subtitle {
-    font-size: var(--font-body-s-size);
-    font-weight: var(--font-body-s-weight);
-    line-height: var(--font-body-s-line-height);
-    letter-spacing: var(--font-body-s-letter-spacing);
-  }
-}
-
-/* 1198px/922px are this screen's own measured intrinsic widths (same
-   treatment as the other board screens' reading columns), not a
-   12-column span. */
-.content {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  width: 100%;
-  max-width: 1198px;
-  /* Rounded from an odd 57px to the nearest even spacing token. */
-  margin-top: var(--space-56);
-}
-
-@media (max-width: 1440px) {
-  .content {
-    max-width: 922px;
-    margin-top: var(--space-36);
-  }
-}
-
+/*
+ * Re-measured from Figma's "1920/FAQ" frame (node 571:2967). The
+ * title/description header and side nav are handled by the shared
+ * BoardPageLayout — only the accordion list and CTA button live here.
+ */
 .topDivider {
   width: 100%;
   height: 1px;
   border: none;
   margin: 0;
-  background-color: var(--color-neutral-700);
+  background-color: var(--fg-neutral-muted);
 }
 
+/* Was --space-28 — that's actually QuestionHead's own internal gap for
+   an OPEN item, not the gap between rows in this list (the list's own
+   wrapper, node 571:2972, gaps its children — the divider plus every
+   row — at a flat 24px regardless of open/closed state). */
 .rows {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: var(--spacing-md);
+  gap: var(--space-24);
   width: 100%;
-  margin-top: var(--spacing-md);
+  margin-top: var(--space-24);
 }
 
 .row {
   width: 100%;
 }
 
-/* Rows-to-CTA gap is 24px at 1920 but 40px at 1440 (larger, not
-   smaller) — kept as measured, same pattern seen on the Notice detail
-   screen's own header-to-back-link gap. */
+/* Right-aligned, flush with the list's own right edge — the frame has
+   no lead-in text next to this button, unlike the previous version.
+   Was --space-40 (guessed) — the frame's own list-bottom-to-button gap
+   is ~25px (content block ends at y≈722, button starts at y=747). */
 .cta {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-16);
-  margin-top: var(--spacing-md);
-}
-
-@media (max-width: 1440px) {
-  .cta {
-    margin-top: var(--space-40);
-  }
-}
-
-/* Lowered one step on request, 1920 only (was Body-M): Body-S. */
-.ctaText {
-  margin: 0;
-  font-family: var(--font-family-base);
-  font-size: var(--font-body-s-size);
-  font-weight: var(--font-body-s-weight);
-  line-height: var(--font-body-s-line-height);
-  letter-spacing: var(--font-body-s-letter-spacing);
-  color: var(--color-neutral-100);
-}
-
-@media (max-width: 1440px) {
-  .ctaText {
-    font-size: var(--font-body-s-size);
-    font-weight: var(--font-body-s-weight);
-    line-height: var(--font-body-s-line-height);
-    letter-spacing: var(--font-body-s-letter-spacing);
-  }
-}
-
-/* Was Label-M at 1920 via a scoped override — removed on request, this
-   button now uses size="M"'s own text (--font-button-2-*) untouched at
-   both breakpoints; only the padding still steps down at 1440. */
-@media (max-width: 1440px) {
-  .ctaButton {
-    padding: var(--space-12) var(--spacing-md);
-  }
+  justify-content: flex-end;
+  margin-top: var(--space-24);
 }

@@ -1,0 +1,73 @@
+/*
+ * Re-measured from Figma's "1920/FAQ" (571:2967), "1920/Notice"
+ * (571:2989), "1920/VOC" (571:3062) and "1920/donation" (571:3087)
+ * frames — all four position their title block and side nav the same
+ * way. 1440 is handled via a local rem+clamp scale variable per
+ * CLAUDE.md's responsive rule, not a media-query token swap.
+ */
+.page {
+  --page-scale: clamp(0.75, calc(0.75 + (100vw - 1440px) / (1920px - 1440px) * 0.25), 1);
+  background-color: var(--bg-neutral-default);
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  /* Literal frame margins, not the 12-column Grid — left ~250px, right
+     ~226px, consistent across all four frames (the side nav's own x is
+     a flat 1482px in every one of them). ~98px from Header's bottom
+     edge to the title block. */
+  padding-top: calc(6rem * var(--page-scale));
+  padding-bottom: calc(var(--spacing-xl) * var(--page-scale));
+  padding-left: calc(15.625rem * var(--page-scale));
+  padding-right: calc(14.125rem * var(--page-scale));
+}
+
+.heading {
+  display: flex;
+  flex-direction: column;
+  gap: calc(0.5rem * var(--page-scale));
+}
+
+/* Figma's title run is bold (700) even though Heading-3's own token
+   weight is 500 — kept as a literal override, same treatment as
+   TextField's required asterisk. */
+.title {
+  margin: 0;
+  font-family: var(--font-family-base);
+  font-size: calc(var(--font-heading-3-size) * var(--page-scale));
+  font-weight: 700;
+  line-height: calc(var(--font-heading-3-line-height) * var(--page-scale));
+  letter-spacing: var(--font-heading-3-letter-spacing);
+  color: var(--fg-neutral-strong);
+}
+
+.description {
+  margin: 0;
+  font-family: var(--font-family-base);
+  font-size: calc(var(--font-body-3-size) * var(--page-scale));
+  font-weight: var(--font-body-3-weight);
+  line-height: calc(var(--font-body-3-line-height) * var(--page-scale));
+  letter-spacing: var(--font-body-3-letter-spacing);
+  /* Figma's own "Sementic/disable" bound style — same token tokens.css
+     already maps it to elsewhere (Header's avatar). */
+  color: var(--bg-neutral-disabled);
+}
+
+.body {
+  display: flex;
+  align-items: flex-start;
+  gap: calc(4.75rem * var(--page-scale));
+  /* Was miscalculated as ~112px (subtracted the title block's own y
+     instead of its bottom edge) — corrected to the real ~32-62px gap,
+     set per-page via --content-gap (see BoardPageLayout.tsx's
+     `contentGap` prop). Falls back to 48px (a representative middle
+     value) if a screen doesn't pass one. */
+  margin-top: calc(var(--content-gap, 48px) * var(--page-scale));
+}
+
+.content {
+  flex: 1;
+  min-width: 0;
+}

@@ -2,7 +2,11 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding-inline: var(--chip-padding-inline);
+  /* --chip-padding-inline never existed as a token; Chip.module.css's
+     own sizeL (the same 12/20 padding, see node 571:3073's "chip") uses
+     --spacing-sm for this same 20px, so reused here instead of adding
+     a new one-off token. */
+  padding-inline: var(--spacing-sm);
   border-radius: var(--radius-full);
   border: 1px solid transparent;
   font-family: var(--font-family-base);
@@ -13,7 +17,7 @@
 }
 
 .sizeL {
-  padding-block: var(--chip-padding-block-l);
+  padding-block: 12px;
   font-size: var(--font-chip-1-size);
   font-weight: var(--font-chip-1-weight);
   line-height: var(--font-chip-1-line-height);
@@ -24,9 +28,10 @@
    641:5641), size=M still uses Chip-1, same as size=L; only size=S
    drops to Chip-2. BigChip has no S size, so both of its sizes now use
    Chip-1's values (padding is still what actually differs between L/M
-   here). */
+   here). --chip-padding-block-m never existed as a token either;
+   Chip.module.css's own sizeM uses a literal 8px for the same role. */
 .sizeM {
-  padding-block: var(--chip-padding-block-m);
+  padding-block: 8px;
   font-size: var(--font-chip-1-size);
   font-weight: var(--font-chip-1-weight);
   line-height: var(--font-chip-1-line-height);
@@ -49,12 +54,16 @@
   color: var(--fg-neutral-inverted);
 }
 
+/* Default/hover were swapped — Figma's own unselected chip (VOC frame,
+   node 571:3073's "neutral-stroke" type) is subtle by default, and
+   hover should read as more prominent than the resting state, not
+   less, so soft (the darker of the two) is the hover step. */
 .outline {
   background-color: transparent;
-  border-color: var(--stroke-neutral-soft);
-  color: var(--fg-neutral-soft);
-}
-.outline:hover:not(:disabled) {
   border-color: var(--stroke-neutral-subtle);
   color: var(--fg-neutral-subtle);
+}
+.outline:hover:not(:disabled) {
+  border-color: var(--stroke-neutral-soft);
+  color: var(--fg-neutral-soft);
 }
